@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "axios": "0.16.1",
-    "uuid.js": "3.5.3"
+    "axios": "0.16.1"
   },
   "ignore": [
     "*.*",
