@@ -1,9 +1,7 @@
 {
   "author": "Wire",
   "dependencies": {
-    "axios": "0.16.1",
-    "pure-uuid": "1.4.5",
-    "uuidjs": "3.5.3"
+    "axios": "0.16.1"
   },
   "devDependencies": {
     "@types/node": "7.0.18",
