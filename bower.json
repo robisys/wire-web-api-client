@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "axios": "0.16.1",
+    "uuid.js": "3.5.3"
+  },
+  "ignore": [
+    "*.*",
+    "**/.*",
+    "bower_components",
+    "coverage",
+    "dist/**/*",
+    "!dist/window/**/*",
+    "node_modules",
+    "spec",
+    "src",
+    "test",
+    "typings"
+  ],
+  "license": "GPL-3.0",
+  "main": [
+    "dist/window/wire-web-api-client.js"
+  ],
+  "name": "wire-web-api-client"
+}
