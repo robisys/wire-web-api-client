@@ -44,7 +44,13 @@ yarn add @wireapp/api-client
 
 ## Development
 
-**Test run**
+**Start webserver with live reload**
+
+```bash
+gulp
+```
+
+**Command-line test run**
 
 ```bash
 #!/bin/bash

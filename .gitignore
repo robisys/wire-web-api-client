@@ -1,5 +1,7 @@
 /.idea/vcs.xml
 /.idea/workspace.xml
+/dist/commonjs
+/dist/lib
 /bower_components
 /node_modules
 /npm-debug.log*
