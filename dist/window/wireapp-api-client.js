@@ -1,4 +1,4 @@
-/*! wire-web-api-client v0.0.1 */
+/*! wireapp-api-client v0.0.1 */
 var WireAPIClient =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -227,4 +227,4 @@ module.exports = axios;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=wire-web-api-client.js.map
+//# sourceMappingURL=wireapp-api-client.js.map
