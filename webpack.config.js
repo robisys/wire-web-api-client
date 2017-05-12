@@ -7,13 +7,13 @@ module.exports = {
   entry: {
     filename: `${__dirname}/dist/commonjs/index.js`
   },
+  externals: {
+    'axios': true
+  },
   output: {
     filename: `${projectName}.js`,
     library: 'WireAPIClient',
     path: `${__dirname}/dist/window`
-  },
-  externals: {
-    'axios': true
   },
   plugins: [
     new webpack.BannerPlugin(`${projectName} v${pkg.version}`)
@@ -22,5 +22,8 @@ module.exports = {
     maxAssetSize: 100,
     maxEntrypointSize: 300,
     hints: 'warning'
+  },
+  resolve: {
+    aliasFields: []
   }
 };

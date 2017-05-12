@@ -17,8 +17,8 @@ const webpackConfig = require('./webpack.config.js');
 // Aliases
 gulp.task('b', ['build']);
 gulp.task('c', ['clean']);
-gulp.task('d', ['dist_ts']);
-gulp.task('i', ['install_bower_assets']);
+gulp.task('d', ['dist']);
+gulp.task('i', ['install']);
 gulp.task('w', ['webpack']);
 
 gulp.task('clean', ['clean_commonjs', 'clean_window'], () => {
@@ -27,6 +27,9 @@ gulp.task('clean', ['clean_commonjs', 'clean_window'], () => {
 gulp.task('clean_commonjs', () => gulp.src('dist/commonjs').pipe(gulpClean()));
 
 gulp.task('clean_window', () => gulp.src('dist/window').pipe(gulpClean()));
+
+gulp.task('install', ['install_bower_assets'], () => {
+});
 
 gulp.task('install_bower', () => gulpBower({cmd: 'install'}));
 
@@ -44,10 +47,10 @@ gulp.task('install_bower_assets', ['install_bower'], function() {
 
 // Tasks
 gulp.task('build', ['clean'], function(done) {
-  runSequence('install_bower_assets', 'webpack', done);
+  runSequence('install', 'webpack', done);
 });
 
-gulp.task('dist_ts', function() {
+gulp.task('build_ts', function() {
   return tsProject.src()
     .pipe(tsProject())
     .js.pipe(gulp.dest(tsConfig.compilerOptions.outDir));
@@ -64,7 +67,11 @@ gulp.task('default', ['build'], function() {
   });
 });
 
-gulp.task('webpack', ['dist_ts'], function(callback) {
+gulp.task('dist', ['clean'], function(done) {
+  runSequence('install', 'webpack_all', done);
+});
+
+gulp.task('webpack', ['build_ts'], function(callback) {
   const compiler = webpack(webpackConfig);
 
   compiler.apply(new ProgressPlugin((percentage, message) => {
@@ -78,4 +85,19 @@ gulp.task('webpack', ['dist_ts'], function(callback) {
 
     callback();
   });
+});
+
+gulp.task('webpack_all', ['webpack'], function() {
+  // Read current webpack config
+  const bundleName = webpackConfig.output.filename;
+  const extensionIndex = bundleName.lastIndexOf('.js');
+  const fullBundleName = bundleName.substr(0, extensionIndex).concat('-bundle.js');
+
+  // Overwrite current webpack config
+  webpackConfig.devtool = false;
+  webpackConfig.externals = {};
+  webpackConfig.output.filename = fullBundleName;
+
+  // Rerun webpack
+  gulp.start('webpack');
 });

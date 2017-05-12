@@ -1,5 +1,8 @@
 {
   "author": "Wire",
+  "browser": {
+    "./dist/commonjs/index.js": "./dist/window/wireapp-api-client-bundle.js"
+  },
   "dependencies": {
     "axios": "0.16.1"
   },
@@ -31,7 +34,7 @@
   "scripts": {
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "start": "gulp",
-    "test": "jasmine"
+    "test": "NODE_ENV=test jasmine"
   },
   "version": "0.0.1"
 }

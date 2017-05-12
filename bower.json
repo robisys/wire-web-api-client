@@ -17,7 +17,8 @@
   ],
   "license": "GPL-3.0",
   "main": [
-    "dist/window/wireapp-api-client.js"
+    "dist/window/wireapp-api-client.js",
+    "dist/window/wireapp-api-client-bundle.js"
   ],
   "name": "wireapp-api-client"
 }
