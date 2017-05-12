@@ -21,10 +21,12 @@ gulp.task('d', ['dist']);
 gulp.task('i', ['install']);
 gulp.task('w', ['webpack']);
 
-gulp.task('clean', ['clean_commonjs', 'clean_window'], () => {
+gulp.task('clean', ['clean_commonjs', 'clean_lib', 'clean_window'], () => {
 });
 
 gulp.task('clean_commonjs', () => gulp.src('dist/commonjs').pipe(gulpClean()));
+
+gulp.task('clean_lib', () => gulp.src('dist/lib').pipe(gulpClean()));
 
 gulp.task('clean_window', () => gulp.src('dist/window').pipe(gulpClean()));
 
