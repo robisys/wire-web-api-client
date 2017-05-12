@@ -33,8 +33,12 @@
   },
   "scripts": {
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
+    "lint": "echo \"No linting specified\" && exit 0",
+    "preversion": "yarn lint && yarn dist && yarn test",
+    "version": "gulp dist && git add dist/**/*",
+    "postversion": "git push && git push --tags",
     "start": "gulp",
     "test": "jasmine"
   },
-  "version": "0.0.1"
+  "version": "0.0.0"
 }
