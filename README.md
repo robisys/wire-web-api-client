@@ -20,35 +20,21 @@ Wire for Web's API client.
 
 ## Installation
 
-### Browser
-
-```bash
-bower install wire-web-api-client
-```
-
-### Node.js
-
 ```bash
 yarn add @wireapp/api-client
 ```
 
 ## Usage
 
-### Browser
+**Browser**
 
 - [index.html](./dist/demo.js)
 
-### Node.js
+**Node.js**
 
 - [index.js](./dist/index.js) 
 
 ## Development
-
-**Start webserver with live reload**
-
-```bash
-gulp
-```
 
 **Command-line test run**
 
