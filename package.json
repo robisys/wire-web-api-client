@@ -33,5 +33,5 @@
     "test": "jasmine",
     "watch": "webpack-dev-server --config webpack.config.js --open"
   },
-  "version": "0.0.3"
+  "version": "0.0.4"
 }
