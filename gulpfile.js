@@ -1,8 +1,6 @@
 // Dependencies
 const browserSync = require('browser-sync').create();
 const gulp = require('gulp');
-const gulpBower = require('gulp-bower');
-const gulpBowerAssets = require('gulp-bower-assets');
 const gulpClean = require('gulp-clean');
 const gulpTypeScript = require('gulp-typescript');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
@@ -30,21 +28,7 @@ gulp.task('clean_lib', () => gulp.src('dist/lib').pipe(gulpClean()));
 
 gulp.task('clean_window', () => gulp.src('dist/window').pipe(gulpClean()));
 
-gulp.task('install', ['install_bower_assets'], () => {
-});
-
-gulp.task('install_bower', () => gulpBower({cmd: 'install'}));
-
-gulp.task('install_bower_assets', ['install_bower'], function() {
-  const options = {
-    prefix: function(name, prefix) {
-      return `${prefix}/${name}`;
-    }
-  };
-
-  return gulp.src('bower_assets.json')
-    .pipe(gulpBowerAssets(options))
-    .pipe(gulp.dest('dist/lib'));
+gulp.task('install', () => {
 });
 
 // Tasks
@@ -70,7 +54,7 @@ gulp.task('default', ['build'], function() {
 });
 
 gulp.task('dist', ['clean'], function(done) {
-  runSequence('install', 'webpack_all', done);
+  runSequence('install', 'webpack', done);
 });
 
 gulp.task('webpack', ['build_ts'], function(callback) {
@@ -87,19 +71,4 @@ gulp.task('webpack', ['build_ts'], function(callback) {
 
     callback();
   });
-});
-
-gulp.task('webpack_all', ['webpack'], function() {
-  // Read current webpack config
-  const bundleName = webpackConfig.output.filename;
-  const extensionIndex = bundleName.lastIndexOf('.js');
-  const fullBundleName = bundleName.substr(0, extensionIndex).concat('-bundle.js');
-
-  // Overwrite current webpack config
-  webpackConfig.devtool = false;
-  webpackConfig.externals = {};
-  webpackConfig.output.filename = fullBundleName;
-
-  // Rerun webpack
-  gulp.start('webpack');
 });

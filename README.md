@@ -36,7 +36,7 @@ yarn add @wireapp/api-client
 
 ### Browser
 
-- [index.html](./dist/index.html)
+- [index.html](./dist/demo.js)
 
 ### Node.js
 

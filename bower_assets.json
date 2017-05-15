@@ -1,7 +1,0 @@
-{
-  "dynamic": {
-    "axios@copy": [
-      "axios/dist/axios.js"
-    ]
-  }
-}
