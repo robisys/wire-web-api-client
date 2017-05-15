@@ -1,4 +1,4 @@
-/*! wireapp-api-client v0.0.2 */
+/*! wireapp-api-client v0.0.3 */
 var WireAPIClient =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
