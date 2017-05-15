@@ -27,7 +27,7 @@
     "dist": "tsc",
     "lint": "echo \"No linting specified\" && exit 0",
     "preversion": "yarn lint && yarn dist && yarn test",
-    "version": "yarn dist && git add dist/**/*",
+    "version": "yarn dist && git add dist/commonjs/**/*",
     "postversion": "git push && git push --tags",
     "start": "concurrently \"tsc -w\" \"yarn watch\"",
     "test": "jasmine",
