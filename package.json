@@ -1,8 +1,5 @@
 {
   "author": "Wire",
-  "browser": {
-    "axios": "./dist/lib/dynamic/axios/axios.js"
-  },
   "dependencies": {
     "axios": "0.16.1"
   },
