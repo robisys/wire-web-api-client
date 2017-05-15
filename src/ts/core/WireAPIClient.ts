@@ -15,7 +15,7 @@ export default class WireAPIClient {
     client: undefined
   };
 
-  constructor(public  urls: { rest: string, ws?: string }) {
+  constructor(public urls: { rest: string, ws?: string }) {
     this.CONNNECTION_URL.REST = urls.rest;
     this.CONNNECTION_URL.WebSocket = urls.ws;
 
