@@ -39,17 +39,17 @@ export default class WireAPIClient extends EventEmitter {
     this.user.api = new UserAPI(this.http.client);
   }
 
-  public connectToWebSocket(accessToken: string): Promise<WebSocket> {
-    const url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${accessToken}`;
+  public connectToWebSocket(accessToken: string, clientId: string): Promise<WebSocket> {
+    const url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${accessToken}&client=${clientId}`;
 
     const socket = new WebSocket(url);
     socket.binaryType = 'arraybuffer';
 
-    return new Promise((resolve) => {
-      socket.on('message', function message(data) {
-        this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, data);
-      });
+    socket.on('message', function message(data: ArrayBuffer) {
+      this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, data.byteLength);
+    });
 
+    return new Promise((resolve) => {
       socket.on('open', function open() {
         resolve(socket);
       });
@@ -61,7 +61,7 @@ export default class WireAPIClient extends EventEmitter {
       .then((accessToken: AccessTokenData) => {
         this.http.client.accessToken = accessToken;
         if (shouldConnectToSocket) {
-          this.connectToWebSocket(accessToken.access_token);
+          this.connectToWebSocket(accessToken.access_token, '');
         }
         return accessToken;
       });
