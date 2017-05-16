@@ -1,7 +1,8 @@
-import axios, {AxiosInstance, AxiosPromise} from 'axios';
+import axios, {AxiosInstance, AxiosPromise, AxiosResponse} from 'axios';
 
 import ContentType from '../http/ContentType';
 import HttpClient from '../http/HttpClient';
+import UserData from "./UserData";
 
 export default class UserAPI {
   constructor(private client: HttpClient) {
@@ -16,7 +17,7 @@ export default class UserAPI {
     };
   }
 
-  public getSelf(): AxiosPromise {
+  public getSelf(): Promise<UserData> {
     const url: string = UserAPI.URL.SELF;
 
     const instance: AxiosInstance = axios.create({
@@ -27,6 +28,6 @@ export default class UserAPI {
       }
     });
 
-    return instance.get(url);
+    return instance.get(url).then((response: AxiosResponse) => new UserData(response.data));
   }
 }
