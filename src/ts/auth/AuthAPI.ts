@@ -20,6 +20,16 @@ export default class AuthAPI {
     };
   }
 
+  postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
+    const url = this.client.createUrl(`${AuthAPI.URL.COOKIES}/remove`);
+
+    return axios.post(url, {
+      email: login.email,
+      labels: labels,
+      password: login.password,
+    });
+  }
+
   public postLogin(login: LoginData): Promise<AccessTokenData> {
     const url: string = `${AuthAPI.URL.LOGIN}?persist=${login.persist}`;
 
@@ -43,16 +53,6 @@ export default class AuthAPI {
       } else {
         throw error;
       }
-    });
-  }
-
-  postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
-    const url = this.client.createUrl(`${AuthAPI.URL.COOKIES}/remove`);
-
-    return axios.post(url, {
-      email: login.email,
-      labels: labels,
-      password: login.password,
     });
   }
 }
