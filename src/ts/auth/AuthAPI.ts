@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosInstance, AxiosPromise, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import AccessTokenData from './AccessTokenData';
 import ContentType from '../http/ContentType';
@@ -21,15 +21,18 @@ export default class AuthAPI {
   }
 
   postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
-    const url = this.client.createUrl(`${AuthAPI.URL.COOKIES}/remove`);
+    const config: AxiosRequestConfig = {
+      baseURL: this.client.baseURL,
+      data: {
+        email: login.email,
+        labels: labels,
+        password: login.password,
+      },
+      method: 'post',
+      url: `${AuthAPI.URL.COOKIES}/remove`
+    };
 
-
-
-    return axios.post(url, {
-      email: login.email,
-      labels: labels,
-      password: login.password,
-    });
+    return this.client.sendRequest(config);
   }
 
   public postLogin(login: LoginData): Promise<AccessTokenData> {

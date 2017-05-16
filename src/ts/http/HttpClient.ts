@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
 
 import AccessToken from '../auth/AccessTokenData';
 import ContentType from './ContentType';
@@ -13,11 +13,11 @@ export default class HttpClient {
     return `${this.baseURL}${url}`;
   }
 
-  public sendRequest(config: AxiosRequestConfig) {
+  public sendRequest(config: AxiosRequestConfig): AxiosPromise {
     return axios.request(config);
   }
 
-  public sendJSONRequest(config: AxiosRequestConfig, withAuthorization: boolean = true) {
+  public sendJSONRequest(config: AxiosRequestConfig): AxiosPromise {
     config.headers = config.headers || {};
 
     Object.assign(config.headers, {
