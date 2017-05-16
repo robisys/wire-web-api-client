@@ -22,6 +22,8 @@ export default class UserAPI {
       url: UserAPI.URL.SELF
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => new UserData(response.data));
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return new UserData(response.data);
+    });
   }
 }

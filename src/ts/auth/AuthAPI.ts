@@ -45,6 +45,8 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => new AccessTokenData(response.data));
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return new AccessTokenData(response.data);
+    });
   }
 }
