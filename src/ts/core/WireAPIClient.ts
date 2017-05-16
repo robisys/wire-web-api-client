@@ -1,3 +1,4 @@
+import AccessToken from "../auth/AccessToken";
 import AuthAPI from "../auth/AuthAPI";
 import HttpClient from "../http/HttpClient";
 
@@ -23,7 +24,7 @@ export default class WireAPIClient {
     this.auth.api = new AuthAPI(this.http.client);
   }
 
-  public login(data: LoginData): any {
-    return this.auth.api.login(data);
+  public login(data: LoginData): Promise<AccessToken> {
+    return this.auth.api.postLogin(data);
   }
 }

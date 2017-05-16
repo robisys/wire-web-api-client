@@ -1,4 +1,6 @@
 import axios, {AxiosError, AxiosInstance, AxiosPromise, AxiosResponse} from 'axios';
+
+import AccessToken from './AccessToken';
 import ContentType from '../http/ContentType';
 import HttpClient from '../http/HttpClient';
 import StatusCode from '../http/StatusCode';
@@ -18,7 +20,7 @@ export default class AuthAPI {
     };
   }
 
-  public login(login: LoginData): any {
+  public postLogin(login: LoginData): Promise<AccessToken> {
     const url: string = `${AuthAPI.URL.LOGIN}?persist=${login.persist}`;
 
     const instance: AxiosInstance = axios.create({
@@ -33,18 +35,18 @@ export default class AuthAPI {
       email: login.email,
       password: login.password + '', // Safety net if someone enters only numbers
     }).then(function (response: AxiosResponse) {
-      return response.data;
+      return new AccessToken(response.data);
     }).catch((error: AxiosError) => {
       if (error.response.status === StatusCode.TOO_MANY_REQUESTS && login.email) {
         // Backend blocked our user account from login, so we have to reset our cookies
-        return this.removeCookies(login).then(() => this.login(login));
+        return this.postCookiesRemove(login).then(() => this.postLogin(login));
       } else {
         throw error;
       }
     });
   }
 
-  removeCookies(login: LoginData, labels?: string[]): AxiosPromise {
+  postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const url = this.client.createUrl(`${AuthAPI.URL.COOKIES}/remove`);
 
     return axios.post(url, {
