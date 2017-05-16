@@ -20,14 +20,10 @@ export default class UserAPI {
   public getSelf(): Promise<UserData> {
     const config: AxiosRequestConfig = {
       baseURL: this.client.baseURL,
-      headers: {
-        Authorization: `${this.client.accessToken.token_type} ${this.client.accessToken.access_token}`,
-        'Content-Type': ContentType.APPLICATION_JSON,
-      },
       method: 'get',
       url: UserAPI.URL.SELF
     };
 
-    return this.client.sendRequest(config).then((response: AxiosResponse) => new UserData(response.data));
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => new UserData(response.data));
   }
 }
