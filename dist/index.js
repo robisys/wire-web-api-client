@@ -21,8 +21,12 @@ const client = new WireAPIClient(urls);
 client.login(login)
   .then((result) => {
     console.log('Login successful', result);
+    return client.user.api.getSelf();
+  })
+  .then((result) => {
+    console.log('Got self user', result.data);
   })
   .catch((error) => {
-    console.error(error.message);
+    console.error(error.message, error);
   });
 

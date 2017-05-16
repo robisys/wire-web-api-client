@@ -1,6 +1,6 @@
 import axios, {AxiosError, AxiosInstance, AxiosPromise, AxiosResponse} from 'axios';
 
-import AccessToken from './AccessToken';
+import AccessToken from './AccessTokenData';
 import ContentType from '../http/ContentType';
 import HttpClient from '../http/HttpClient';
 import StatusCode from '../http/StatusCode';
@@ -35,7 +35,8 @@ export default class AuthAPI {
       email: login.email,
       password: login.password + '', // Safety net if someone enters only numbers
     }).then(function (response: AxiosResponse) {
-      return new AccessToken(response.data);
+      const token: AccessToken = new AccessToken(response.data);
+      return token;
     }).catch((error: AxiosError) => {
       if (error.response.status === StatusCode.TOO_MANY_REQUESTS && login.email) {
         // Backend blocked our user account from login, so we have to reset our cookies
