@@ -23,6 +23,8 @@ export default class AuthAPI {
   postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const url = this.client.createUrl(`${AuthAPI.URL.COOKIES}/remove`);
 
+
+
     return axios.post(url, {
       email: login.email,
       labels: labels,

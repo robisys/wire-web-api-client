@@ -1,8 +1,7 @@
-import axios, {AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import ContentType from '../http/ContentType';
 import HttpClient from '../http/HttpClient';
-import UserData from "./UserData";
+import UserData from './UserData';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {
