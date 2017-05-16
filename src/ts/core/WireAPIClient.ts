@@ -9,19 +9,19 @@ export default class WireAPIClient {
     WebSocket: undefined
   };
 
-  public auth: { api: AuthAPI } = {
+  public auth: {api: AuthAPI} = {
     api: undefined
   };
 
-  public http: { client: HttpClient } = {
+  public http: {client: HttpClient} = {
     client: undefined
   };
 
-  public user: { api: UserAPI } = {
+  public user: {api: UserAPI} = {
     api: undefined
   };
 
-  constructor(public urls: { rest: string, ws?: string }) {
+  constructor(public urls: {rest: string, ws?: string}) {
     this.CONNNECTION_URL.REST = urls.rest;
     this.CONNNECTION_URL.WebSocket = urls.ws;
 
