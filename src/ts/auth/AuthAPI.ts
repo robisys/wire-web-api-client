@@ -1,6 +1,5 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import AccessTokenData from './AccessTokenData';
 import HttpClient from '../http/HttpClient';
 
 export default class AuthAPI {
@@ -46,7 +45,7 @@ export default class AuthAPI {
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return new AccessTokenData(response.data);
+      return response.data;
     });
   }
 }

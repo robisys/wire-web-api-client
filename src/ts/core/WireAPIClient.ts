@@ -1,4 +1,3 @@
-import AccessToken from '../auth/AccessTokenData';
 import AuthAPI from '../auth/AuthAPI';
 import HttpClient from '../http/HttpClient';
 import UserAPI from '../user/UserAPI';
@@ -9,19 +8,19 @@ export default class WireAPIClient {
     WebSocket: undefined
   };
 
-  public auth: {api: AuthAPI} = {
+  public auth: { api: AuthAPI } = {
     api: undefined
   };
 
-  public http: {client: HttpClient} = {
+  public http: { client: HttpClient } = {
     client: undefined
   };
 
-  public user: {api: UserAPI} = {
+  public user: { api: UserAPI } = {
     api: undefined
   };
 
-  constructor(public urls: {rest: string, ws?: string}) {
+  constructor(public urls: { rest: string, ws?: string }) {
     this.CONNNECTION_URL.REST = urls.rest;
     this.CONNNECTION_URL.WebSocket = urls.ws;
 
@@ -31,9 +30,9 @@ export default class WireAPIClient {
     this.user.api = new UserAPI(this.http.client);
   }
 
-  public login(data: LoginData): Promise<AccessToken> {
+  public login(data: LoginData): Promise<AccessTokenData> {
     return this.auth.api.postLogin(data)
-      .then((accessToken: AccessToken) => {
+      .then((accessToken: AccessTokenData) => {
         this.http.client.accessToken = accessToken;
         return accessToken;
       });

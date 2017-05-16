@@ -1,7 +1,6 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import HttpClient from '../http/HttpClient';
-import UserData from './UserData';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {
@@ -23,7 +22,7 @@ export default class UserAPI {
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return new UserData(response.data);
+      return response.data;
     });
   }
 }

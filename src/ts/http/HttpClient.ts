@@ -1,10 +1,9 @@
 import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
 
-import AccessToken from '../auth/AccessTokenData';
 import ContentType from './ContentType';
 
 export default class HttpClient {
-  public accessToken: AccessToken;
+  public accessToken: AccessTokenData;
 
   constructor(public baseURL: string) {
   }
