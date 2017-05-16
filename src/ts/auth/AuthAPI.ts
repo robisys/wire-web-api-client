@@ -1,9 +1,7 @@
-import axios, {AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import AccessTokenData from './AccessTokenData';
-import ContentType from '../http/ContentType';
 import HttpClient from '../http/HttpClient';
-import StatusCode from '../http/StatusCode';
 
 export default class AuthAPI {
   constructor(private client: HttpClient) {
@@ -26,7 +24,7 @@ export default class AuthAPI {
       data: {
         email: login.email,
         labels: labels,
-        password: login.password,
+        password: login.password.toString()
       },
       method: 'post',
       url: `${AuthAPI.URL.COOKIES}/remove`
@@ -36,28 +34,19 @@ export default class AuthAPI {
   }
 
   public postLogin(login: LoginData): Promise<AccessTokenData> {
-    const url: string = `${AuthAPI.URL.LOGIN}?persist=${login.persist}`;
-
-    const instance: AxiosInstance = axios.create({
+    const config: AxiosRequestConfig = {
       baseURL: this.client.baseURL,
+      data: {
+        email: login.email,
+        password: login.password.toString()
+      },
       headers: {
-        'Content-Type': ContentType.APPLICATION_JSON,
         withCredentials: true
-      }
-    });
+      },
+      method: 'post',
+      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`
+    };
 
-    return instance.post(url, {
-      email: login.email,
-      password: login.password + '', // Safety net if someone enters only numbers
-    }).then(function (response: AxiosResponse) {
-      return new AccessTokenData(response.data);
-    }).catch((error: AxiosError) => {
-      if (error.response.status === StatusCode.TOO_MANY_REQUESTS && login.email) {
-        // Backend blocked our user account from login, so we have to reset our cookies
-        return this.postCookiesRemove(login).then(() => this.postLogin(login));
-      } else {
-        throw error;
-      }
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => new AccessTokenData(response.data));
   }
 }
