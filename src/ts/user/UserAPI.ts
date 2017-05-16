@@ -18,7 +18,6 @@ export default class UserAPI {
 
   public getSelf(): Promise<UserData> {
     const config: AxiosRequestConfig = {
-      baseURL: this.client.baseURL,
       method: 'get',
       url: UserAPI.URL.SELF
     };

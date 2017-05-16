@@ -20,7 +20,6 @@ export default class AuthAPI {
 
   postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const config: AxiosRequestConfig = {
-      baseURL: this.client.baseURL,
       data: {
         email: login.email,
         labels: labels,
@@ -35,7 +34,6 @@ export default class AuthAPI {
 
   public postLogin(login: LoginData): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
-      baseURL: this.client.baseURL,
       data: {
         email: login.email,
         password: login.password.toString()
