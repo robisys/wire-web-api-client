@@ -21,7 +21,6 @@ export default class HttpClient {
     config.headers = config.headers || {};
 
     Object.assign(config.headers, {
-      baseURL: this.baseURL,
       'Content-Type': ContentType.APPLICATION_JSON
     });
 
