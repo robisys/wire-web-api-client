@@ -13,7 +13,7 @@
     "removeComments": true,
     "rootDir": "src/ts",
     "sourceMap": false,
-    "target": "ES6"
+    "target": "ES5"
   },
   "exclude": [
     "bower_components",
