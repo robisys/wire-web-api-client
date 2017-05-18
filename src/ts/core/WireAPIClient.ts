@@ -48,8 +48,8 @@ export default class WireAPIClient extends EventEmitter {
   }
 
   // TODO: Consider outsourcing this into a WebSocketClient (this.client.websocket) & this.client.http)
-  public subscribe(accessToken: string, clientId?: string): Promise<WebSocket> {
-    let url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${accessToken}`;
+  public subscribe(clientId?: string): Promise<WebSocket> {
+    let url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${this.http.client.accessToken.access_token}`;
     if (clientId) {
       url += `&client=${clientId}`;
     }
@@ -58,7 +58,7 @@ export default class WireAPIClient extends EventEmitter {
     socket.binaryType = 'arraybuffer';
 
     socket.on('message', (data: ArrayBuffer) => {
-      this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, data.byteLength);
+      this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, data);
     });
 
     return new Promise((resolve) => {

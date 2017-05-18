@@ -29,6 +29,7 @@ client.login(login)
   })
   .then((userData) => {
     console.log('Got self user', userData.name);
+    return client.subscribe();
   })
   .catch((error) => {
     console.error(error.message, error);
