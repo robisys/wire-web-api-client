@@ -39,13 +39,25 @@ export default class WireAPIClient extends EventEmitter {
     this.user.api = new UserAPI(this.http.client);
   }
 
-  public connectToWebSocket(accessToken: string, clientId: string): Promise<WebSocket> {
-    const url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${accessToken}&client=${clientId}`;
+  public login(data: LoginData): Promise<AccessTokenData> {
+    return this.auth.api.postLogin(data)
+      .then((accessToken: AccessTokenData) => {
+        this.http.client.accessToken = accessToken;
+        return accessToken;
+      });
+  }
+
+  // TODO: Consider outsourcing this into a WebSocketClient (this.client.websocket) & this.client.http)
+  public subscribe(accessToken: string, clientId?: string): Promise<WebSocket> {
+    let url = `${this.CONNNECTION_URL.WebSocket}/await?access_token=${accessToken}`;
+    if (clientId) {
+      url += `&client=${clientId}`;
+    }
 
     const socket = new WebSocket(url);
     socket.binaryType = 'arraybuffer';
 
-    socket.on('message', function message(data: ArrayBuffer) {
+    socket.on('message', (data: ArrayBuffer) => {
       this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, data.byteLength);
     });
 
@@ -54,16 +66,5 @@ export default class WireAPIClient extends EventEmitter {
         resolve(socket);
       });
     });
-  }
-
-  public login(data: LoginData, shouldConnectToSocket: boolean): Promise<AccessTokenData> {
-    return this.auth.api.postLogin(data)
-      .then((accessToken: AccessTokenData) => {
-        this.http.client.accessToken = accessToken;
-        if (shouldConnectToSocket) {
-          this.connectToWebSocket(accessToken.access_token, '');
-        }
-        return accessToken;
-      });
   }
 }
