@@ -18,6 +18,10 @@ const login = {
 };
 
 const client = new WireAPIClient(urls);
+client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
+  console.log('Received notification via WebSocket', notification);
+});
+
 client.login(login)
   .then((accessTokenData) => {
     console.log('Login successful', accessTokenData);
@@ -25,6 +29,7 @@ client.login(login)
   })
   .then((userData) => {
     console.log('Got self user', userData.name);
+    return client.listen();
   })
   .catch((error) => {
     console.error(error.message, error);
