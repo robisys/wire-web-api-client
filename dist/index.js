@@ -24,11 +24,15 @@ client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
 
 client.login(login)
   .then((accessTokenData) => {
-    console.log('Login successful', accessTokenData);
+    console.log(`Login successful. AccessToken expires in "${accessTokenData.expires_in}"s.`);
     return client.user.api.getSelf();
   })
   .then((userData) => {
-    console.log('Got self user', userData.name);
+    console.log(`Got self user with name "${userData.name}".`);
+    return client.user.api.getUsers({handles: ['webappbot']})
+  })
+  .then((userData) => {
+    console.log(`Found user with name "${userData[0].name}" by handle "${userData[0].handle}".`);
     return client.listen();
   })
   .catch((error) => {

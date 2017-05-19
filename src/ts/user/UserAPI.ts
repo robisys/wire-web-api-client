@@ -25,4 +25,23 @@ export default class UserAPI {
       return response.data;
     });
   }
+
+  public getUsers(parameters: { handles?: string[], ids?: string[] }): Promise<UserData[]> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: UserAPI.URL.USERS
+    };
+
+    if (parameters.handles) {
+      config.url += `?handles=${parameters.handles.join(',')}`;
+    }
+
+    if (parameters.ids) {
+      config.url += `?ids=${parameters.ids.join(',')}`;
+    }
+
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
+  }
 }
