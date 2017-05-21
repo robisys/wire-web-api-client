@@ -5,6 +5,9 @@ const argv = require('optimist')
   .argv;
 
 const WireAPIClient = require('./commonjs/index');
+const http = require('./commonjs/http');
+
+console.log(`Testing "http" module: ${http.StatusCode.OK}`);
 
 const urls = {
   rest: 'https://prod-nginz-https.wire.com',
