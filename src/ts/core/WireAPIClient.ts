@@ -43,6 +43,15 @@ export default class WireAPIClient extends EventEmitter {
       });
   }
 
+  public refreshAccessToken(): Promise<AccessTokenData> {
+    return this.auth.api.postAccess()
+      .then((accessToken: AccessTokenData) => {
+        this.client.http.accessToken = accessToken;
+        this.client.ws.accessToken = this.client.http.accessToken;
+        return accessToken;
+      });
+  }
+
   public listen(clientId: string): Promise<WebSocket> {
     return this.client.ws.connect(clientId)
       .then((socket: WebSocket) => {

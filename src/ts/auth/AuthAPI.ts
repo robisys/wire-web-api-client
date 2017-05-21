@@ -48,4 +48,18 @@ export default class AuthAPI {
       return response.data;
     });
   }
+
+  public postAccess(): Promise<AccessTokenData> {
+    const config: AxiosRequestConfig = {
+      headers: {
+        withCredentials: true
+      },
+      method: 'post',
+      url: `${AuthAPI.URL.ACCESS}`
+    };
+
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
+  }
 }

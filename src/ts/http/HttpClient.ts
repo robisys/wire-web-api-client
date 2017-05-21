@@ -3,7 +3,7 @@ import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
 import ContentType from './ContentType';
 
 export default class HttpClient {
-  public accessToken: AccessTokenData;
+  public accessToken: AccessTokenData = undefined;
 
   constructor(public baseURL: string) {
   }
@@ -24,7 +24,7 @@ export default class HttpClient {
       'Content-Type': ContentType.APPLICATION_JSON
     });
 
-    if (!config.headers.withCredentials) {
+    if (this.accessToken) {
       config.headers.Authorization = `${this.accessToken.token_type} ${this.accessToken.access_token}`;
     }
 
