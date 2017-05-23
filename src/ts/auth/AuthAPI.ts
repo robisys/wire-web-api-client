@@ -37,9 +37,7 @@ export default class AuthAPI {
         email: login.email,
         password: login.password.toString()
       },
-      headers: {
-        withCredentials: true
-      },
+      withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`
     };
@@ -51,9 +49,7 @@ export default class AuthAPI {
 
   public postAccess(): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
-      headers: {
-        withCredentials: true
-      },
+      withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.ACCESS}`
     };
