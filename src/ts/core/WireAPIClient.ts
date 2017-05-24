@@ -4,6 +4,7 @@ import EventEmitter = require('events');
 import AuthAPI from '../auth/AuthAPI';
 import HttpClient from '../http/HttpClient';
 import UserAPI from '../user/UserAPI';
+import TeamAPI from '../team/TeamAPI';
 import WebSocketClient from '../tcp/WebSocketClient';
 
 export default class WireAPIClient extends EventEmitter {
@@ -20,6 +21,10 @@ export default class WireAPIClient extends EventEmitter {
     api: undefined
   };
 
+  public team: { api: TeamAPI } = {
+    api: undefined
+  };
+
   public static TOPIC = {
     WEB_SOCKET_MESSAGE: 'WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE'
   };
@@ -32,6 +37,7 @@ export default class WireAPIClient extends EventEmitter {
 
     this.auth.api = new AuthAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);
+    this.team.api = new TeamAPI(this.client.http);
   }
 
   public login(data: LoginData): Promise<AccessTokenData> {
