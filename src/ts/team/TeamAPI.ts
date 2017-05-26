@@ -28,6 +28,21 @@ export default class TeamAPI {
     });
   }
 
+  public putTeam(team: TeamData): AxiosPromise {
+    const config: AxiosRequestConfig = {
+      data: {
+        name: team.name,
+        icon: team.icon,
+      },
+      method: 'put',
+      url: `${TeamAPI.URL.TEAMS}/${team.id}`
+    };
+
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
+  }
+
   public getTeams(): Promise<TeamChunkData> {
     const config: AxiosRequestConfig = {
       method: 'get',
