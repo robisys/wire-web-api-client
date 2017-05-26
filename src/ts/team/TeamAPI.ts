@@ -9,7 +9,7 @@ export default class TeamAPI {
   static get URL() {
     return {
       TEAMS: '/teams',
-      MEMBERS: '/members',
+      MEMBERS: 'members',
     };
   }
 
