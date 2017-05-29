@@ -13,6 +13,7 @@ export default class AuthAPI {
       COOKIES: '/cookies',
       INVITATIONS: '/invitations',
       LOGIN: '/login',
+      LOGOUT: 'logout',
       REGISTER: '/register'
     };
   }
@@ -40,6 +41,18 @@ export default class AuthAPI {
       withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`
+    };
+
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
+  }
+
+  public postLogout(): AxiosPromise {
+    const config: AxiosRequestConfig = {
+      withCredentials: true,
+      method: 'post',
+      url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
