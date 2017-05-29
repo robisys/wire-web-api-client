@@ -1,11 +1,9 @@
 import * as WebSocket from 'ws';
-import EventEmitter = require('events');
 
-export default class WebSocketClient extends EventEmitter {
+export default class WebSocketClient {
   public accessToken: AccessTokenData;
 
   constructor(public baseURL: string) {
-    super();
   }
 
   public connect(clientId?: string): Promise<WebSocket> {
