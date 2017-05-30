@@ -124,17 +124,10 @@
   <body>
     <div class="login-page">
       <div class="form">
-        <form id="wire-login-form" class="register-form">
-          <input type="text" placeholder="name" />
-          <input type="password" placeholder="password" />
-          <input type="text" placeholder="email address" />
-          <button>create</button>
-          <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form">
-          <input id="wire-login-form-email" type="text" placeholder="email" />
-          <input id="wire-login-form-password" type="password" placeholder="password" />
-          <button id="wire-login-form-submit" class="valid" type="submit">login</button>
+        <form id="wire-login-form">
+          <input autocomplete="email" id="wire-login-form-email" name="email" placeholder="email" type="text" />
+          <input id="wire-login-form-password" name="password" placeholder="password" type="password" />
+          <button class="valid" id="wire-login-form-submit" type="submit">login</button>
           <p class="message">Backend: <a id="wire-login-form-backend" href="#"></a></p>
         </form>
       </div>
