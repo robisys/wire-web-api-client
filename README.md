@@ -42,7 +42,10 @@ yarn add @wireapp/api-client
 #!/bin/bash
 
 EMAIL = "name@email.com";
+HANDLE = "username";
 PASSWORD = "secret";
 
 node dist/index.js --e="$EMAIL" --p="$PASSWORD"
+# or
+node dist/index.js --h="$HANDLE" --p="$PASSWORD"
 ```

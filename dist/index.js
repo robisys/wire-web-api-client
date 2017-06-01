@@ -1,6 +1,7 @@
 const argv = require('optimist')
   .alias('c', 'conversation')
   .alias('e', 'email')
+  .alias('h', 'handle')
   .alias('p', 'password')
   .argv;
 
@@ -16,6 +17,7 @@ const urls = {
 
 const login = {
   email: argv.email,
+  handle: argv.handle,
   password: argv.password,
   persist: false
 };

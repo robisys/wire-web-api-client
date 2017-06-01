@@ -1,7 +1,8 @@
 interface LoginData {
   email: string;
+  handle: string;
   phone: string;
-  password: number | string;
   code: string;
+  password: number | string;
   persist: boolean;
 }
