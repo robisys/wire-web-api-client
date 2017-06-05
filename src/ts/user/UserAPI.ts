@@ -3,33 +3,36 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import HttpClient from '../http/HttpClient';
 
 export default class UserAPI {
-  constructor(private client: HttpClient) {
-  }
+  constructor(private client: HttpClient) {}
 
   static get URL() {
     return {
       CONNECTIONS: '/connections',
       PROPERTIES: '/properties',
       SELF: '/self',
-      USERS: '/users'
+      USERS: '/users',
     };
   }
 
   public getSelf(): Promise<UserData> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: UserAPI.URL.SELF
+      url: UserAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
-  public getUsers(parameters: { handles?: string[], ids?: string[] }): Promise<UserData[]> {
+  public getUsers(
+    parameters: {handles?: string[]; ids?: string[]}
+  ): Promise<UserData[]> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: UserAPI.URL.USERS
+      url: UserAPI.URL.USERS,
     };
 
     if (parameters.handles) {
@@ -40,8 +43,10 @@ export default class UserAPI {
       config.url += `?ids=${parameters.ids.join(',')}`;
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 }

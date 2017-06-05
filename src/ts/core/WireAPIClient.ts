@@ -8,28 +8,28 @@ import TeamAPI from '../team/TeamAPI';
 import WebSocketClient from '../tcp/WebSocketClient';
 
 export default class WireAPIClient extends EventEmitter {
-  public auth: { api: AuthAPI } = {
-    api: undefined
+  public auth: {api: AuthAPI} = {
+    api: undefined,
   };
 
-  public client: { http: HttpClient, ws: WebSocketClient } = {
+  public client: {http: HttpClient; ws: WebSocketClient} = {
     http: undefined,
-    ws: undefined
+    ws: undefined,
   };
 
-  public user: { api: UserAPI } = {
-    api: undefined
+  public user: {api: UserAPI} = {
+    api: undefined,
   };
 
-  public team: { api: TeamAPI } = {
-    api: undefined
+  public team: {api: TeamAPI} = {
+    api: undefined,
   };
 
   public static TOPIC = {
-    WEB_SOCKET_MESSAGE: 'WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE'
+    WEB_SOCKET_MESSAGE: 'WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE',
   };
 
-  constructor(public urls: { rest: string, ws?: string }) {
+  constructor(public urls: {rest: string; ws?: string}) {
     super();
 
     this.client.http = new HttpClient(urls.rest);
@@ -41,7 +41,8 @@ export default class WireAPIClient extends EventEmitter {
   }
 
   public login(data: LoginData): Promise<AccessTokenData> {
-    return this.auth.api.postLogin(data)
+    return this.auth.api
+      .postLogin(data)
       .then((accessToken: AccessTokenData) => {
         this.client.http.accessToken = accessToken;
         this.client.ws.accessToken = this.client.http.accessToken;
@@ -50,22 +51,20 @@ export default class WireAPIClient extends EventEmitter {
   }
 
   public refreshAccessToken(): Promise<AccessTokenData> {
-    return this.auth.api.postAccess()
-      .then((accessToken: AccessTokenData) => {
-        this.client.http.accessToken = accessToken;
-        this.client.ws.accessToken = this.client.http.accessToken;
-        return accessToken;
-      });
+    return this.auth.api.postAccess().then((accessToken: AccessTokenData) => {
+      this.client.http.accessToken = accessToken;
+      this.client.ws.accessToken = this.client.http.accessToken;
+      return accessToken;
+    });
   }
 
   public listen(clientId: string): Promise<WebSocket> {
-    return this.client.ws.connect(clientId)
-      .then((socket: WebSocket) => {
-        socket.on('message', (data: ArrayBuffer) => {
-          const notification = JSON.parse(Buffer.from(data).toString('utf8'));
-          this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
-        });
-        return socket;
+    return this.client.ws.connect(clientId).then((socket: WebSocket) => {
+      socket.on('message', (data: ArrayBuffer) => {
+        const notification = JSON.parse(Buffer.from(data).toString('utf8'));
+        this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
       });
+      return socket;
+    });
   }
 }

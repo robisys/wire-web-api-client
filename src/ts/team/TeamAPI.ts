@@ -3,8 +3,7 @@ import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 import HttpClient from '../http/HttpClient';
 
 export default class TeamAPI {
-  constructor(private client: HttpClient) {
-  }
+  constructor(private client: HttpClient) {}
 
   static get URL() {
     return {
@@ -20,12 +19,14 @@ export default class TeamAPI {
         icon: team.icon,
       },
       method: 'post',
-      url: `${TeamAPI.URL.TEAMS}`
+      url: `${TeamAPI.URL.TEAMS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.headers['location'];
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.headers['location'];
+      });
   }
 
   public putTeam(team: TeamData): AxiosPromise {
@@ -35,67 +36,79 @@ export default class TeamAPI {
         icon: team.icon,
       },
       method: 'put',
-      url: `${TeamAPI.URL.TEAMS}/${team.id}`
+      url: `${TeamAPI.URL.TEAMS}/${team.id}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public getTeams(): Promise<TeamChunkData> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}`
+      url: `${TeamAPI.URL.TEAMS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public getTeam(teamId: string): Promise<TeamData> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}`
+      url: `${TeamAPI.URL.TEAMS}/${teamId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public deleteTeam(teamId: string): AxiosPromise {
     const config: AxiosRequestConfig = {
       method: 'delete',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}`
+      url: `${TeamAPI.URL.TEAMS}/${teamId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public getMembers(teamId: string): Promise<MemberData[]> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public deleteMember(teamId: string, userId: string): AxiosPromise {
     const config: AxiosRequestConfig = {
       method: 'delete',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}/${userId}`
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}/${userId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public postMembers(teamId: string, member: MemberData): AxiosPromise {
@@ -104,11 +117,13 @@ export default class TeamAPI {
         member: member,
       },
       method: 'post',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 }

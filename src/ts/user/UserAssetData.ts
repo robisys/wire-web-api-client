@@ -1,2 +1,1 @@
-interface UserAssetData {
-}
+interface UserAssetData {}

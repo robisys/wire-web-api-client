@@ -3,11 +3,11 @@ import * as WebSocket from 'ws';
 export default class WebSocketClient {
   public accessToken: AccessTokenData;
 
-  constructor(public baseURL: string) {
-  }
+  constructor(public baseURL: string) {}
 
   public connect(clientId?: string): Promise<WebSocket> {
-    let url = `${this.baseURL}/await?access_token=${this.accessToken.access_token}`;
+    let url = `${this.baseURL}/await?access_token=${this.accessToken
+      .access_token}`;
     if (clientId) {
       url += `&client=${clientId}`;
     }
@@ -15,7 +15,7 @@ export default class WebSocketClient {
     const socket = new WebSocket(url);
     socket.binaryType = 'arraybuffer';
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       socket.on('open', function open() {
         resolve(socket);
       });

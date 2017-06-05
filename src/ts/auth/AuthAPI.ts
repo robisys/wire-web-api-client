@@ -3,8 +3,7 @@ import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 import HttpClient from '../http/HttpClient';
 
 export default class AuthAPI {
-  constructor(private client: HttpClient) {
-  }
+  constructor(private client: HttpClient) {}
 
   static get URL() {
     return {
@@ -14,7 +13,7 @@ export default class AuthAPI {
       INVITATIONS: '/invitations',
       LOGIN: '/login',
       LOGOUT: 'logout',
-      REGISTER: '/register'
+      REGISTER: '/register',
     };
   }
 
@@ -25,7 +24,7 @@ export default class AuthAPI {
         password: login.password.toString(),
       },
       method: 'post',
-      url: `${AuthAPI.URL.COOKIES}/remove`
+      url: `${AuthAPI.URL.COOKIES}/remove`,
     };
 
     return this.client.sendRequest(config);
@@ -37,35 +36,41 @@ export default class AuthAPI {
       data: login,
       withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`
+      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public postLogout(): AxiosPromise {
     const config: AxiosRequestConfig = {
       withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`
+      url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 
   public postAccess(): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
       withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.ACCESS}`
+      url: `${AuthAPI.URL.ACCESS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   }
 }

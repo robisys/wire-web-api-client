@@ -5,8 +5,7 @@ import ContentType from './ContentType';
 export default class HttpClient {
   public accessToken: AccessTokenData = undefined;
 
-  constructor(public baseURL: string) {
-  }
+  constructor(public baseURL: string) {}
 
   public createUrl(url: string) {
     return `${this.baseURL}${url}`;
@@ -21,11 +20,12 @@ export default class HttpClient {
     config.headers = config.headers || {};
 
     Object.assign(config.headers, {
-      'Content-Type': ContentType.APPLICATION_JSON
+      'Content-Type': ContentType.APPLICATION_JSON,
     });
 
     if (this.accessToken) {
-      config.headers.Authorization = `${this.accessToken.token_type} ${this.accessToken.access_token}`;
+      config.headers.Authorization = `${this.accessToken.token_type} ${this
+        .accessToken.access_token}`;
     }
 
     return this.sendRequest(config);

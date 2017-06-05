@@ -3,5 +3,5 @@ import StatusCode from './StatusCode';
 
 module.exports = {
   ContentType: ContentType,
-  StatusCode: StatusCode
+  StatusCode: StatusCode,
 };
