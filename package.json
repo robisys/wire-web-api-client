@@ -42,7 +42,7 @@
     "postversion": "git push && git push --tags",
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --trailing-comma='all' --no-bracket-spacing --write 'src/**/*.ts'",
-    "preversion": "yarn lint && yarn dist && yarn test",
+    "preversion": "yarn dist && yarn test",
     "start": "yarn clean && concurrently \"tsc -w\" \"yarn watch\"",
     "test": "jasmine",
     "version": "yarn dist",
