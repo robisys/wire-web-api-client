@@ -126,4 +126,20 @@ export default class TeamAPI {
         return response.data;
       });
   }
+
+  public putMembers(teamId: string, member: MemberData): AxiosPromise {
+    const config: AxiosRequestConfig = {
+      data: {
+        member: member,
+      },
+      method: 'put',
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
+    };
+
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
+  }
 }
