@@ -27,7 +27,10 @@
   "description": "Wire API Client to send and receive data.",
   "license": "GPL-3.0",
   "lint-staged": {
-    "*.ts": ["yarn prettier", "git add"]
+    "*.ts": [
+      "yarn prettier",
+      "git add"
+    ]
   },
   "main": "dist/commonjs/index.js",
   "name": "@wireapp/api-client",
@@ -42,11 +45,11 @@
     "postversion": "git push && git push --tags",
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --trailing-comma='all' --no-bracket-spacing --write 'src/**/*.ts'",
-    "preversion": "yarn lint && yarn dist && yarn test",
+    "preversion": "yarn dist && yarn test",
     "start": "yarn clean && concurrently \"tsc -w\" \"yarn watch\"",
     "test": "jasmine",
     "version": "yarn dist",
     "watch": "webpack-dev-server --config webpack.config.js --open"
   },
-  "version": "0.0.15"
+  "version": "0.0.16"
 }
