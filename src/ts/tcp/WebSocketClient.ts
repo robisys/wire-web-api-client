@@ -15,10 +15,10 @@ export default class WebSocketClient {
     const socket = new WebSocket(url);
     socket.binaryType = 'arraybuffer';
 
-    return new Promise(resolve => {
-      socket.on('open', function open() {
+    return new Promise((resolve) => {
+      socket.onopen = () => {
         resolve(socket);
-      });
+      };
     });
   }
 }
