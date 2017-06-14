@@ -24,11 +24,17 @@ window.onload = function() {
     };
 
     const client = new WireAPIClient(urls);
+
+    client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
+      console.log('Received notification via WebSocket', notification);
+    });
+
     client.login(login)
       .then((result) => {
         console.log('Login successful', result);
         submitButton.className = 'valid';
         submitButton.firstChild.data = "😊";
+        client.listen();
       })
       .catch((error) => {
         console.error('Login failed', error.message);
