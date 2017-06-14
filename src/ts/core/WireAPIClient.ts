@@ -59,12 +59,15 @@ export default class WireAPIClient extends EventEmitter {
   }
 
   public listen(clientId: string): Promise<WebSocket> {
-    return this.client.ws.connect(clientId).then((socket: WebSocket) => {
-      socket.on('message', (data: ArrayBuffer) => {
-        const notification = JSON.parse(Buffer.from(data).toString('utf8'));
-        this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
+    return this.client.ws.connect(clientId)
+      .then((socket: WebSocket) => {
+
+        socket.onmessage = (event: { data: any; type: string; target: WebSocket }) => {
+          const notification = JSON.parse(Buffer.from(event.data).toString('utf8'));
+          this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
+        };
+
+        return socket;
       });
-      return socket;
-    });
   }
 }
