@@ -7,8 +7,8 @@ export default class WebSocketClient {
   constructor(public baseURL: string) {}
 
   public connect(clientId?: string): Promise<WebSocket> {
-    let url = `${this.baseURL}/await?access_token=${this.accessToken
-      .access_token}`;
+    let url = `${this.baseURL}/await?access_token=${this.accessToken.access_token}`;
+
     if (clientId) {
       url += `&client=${clientId}`;
     }
