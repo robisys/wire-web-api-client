@@ -39,7 +39,7 @@ client.login(login)
   })
   .then((userData) => {
     console.log(`Found user with name "${userData[0].name}" by handle "${userData[0].handle}".`);
-    return client.listen();
+    return client.connect();
   })
   .catch((error) => {
     console.error(error.message, error);
