@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "7"
+  - "8"
 
 before_script:
   - "yarn dist"
@@ -10,7 +10,6 @@ before_script:
 cache:
   yarn: true
   directories:
-    - "bower_components"
     - "node_modules"
 
 notifications:
