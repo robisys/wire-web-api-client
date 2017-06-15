@@ -17,7 +17,7 @@ export default class AuthAPI {
     };
   }
 
-  postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
+  public postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         labels: labels,
