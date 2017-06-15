@@ -36,19 +36,21 @@ yarn add @wireapp/api-client
 
 ## Development
 
-**Command-line test run**
+**Bash**
 
 ```bash
 #!/bin/bash
 
 EMAIL = "name@email.com";
 HANDLE = "username";
-PASSWORD = "secret";
+PASSWORD = "password";
 
 node dist/index.js --e="$EMAIL" --p="$PASSWORD"
 # or
 node dist/index.js --h="$HANDLE" --p="$PASSWORD"
 ```
+
+**Node**
 
 ```bash
 npm run dist
