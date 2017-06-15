@@ -2,8 +2,8 @@
   "compilerOptions": {
     "declaration": false,
     "lib": [
-      "ES6",
-      "DOM"
+      "DOM",
+      "ES6"
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
