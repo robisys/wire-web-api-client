@@ -23,6 +23,7 @@ const login = {
 };
 
 const client = new WireAPIClient(urls);
+
 client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
   console.log('Received notification via WebSocket', notification);
 });

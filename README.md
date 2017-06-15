@@ -49,3 +49,8 @@ node dist/index.js --e="$EMAIL" --p="$PASSWORD"
 # or
 node dist/index.js --h="$HANDLE" --p="$PASSWORD"
 ```
+
+```bash
+npm run dist
+node dist/index.js --e="name@email.com" --p="password"
+```
