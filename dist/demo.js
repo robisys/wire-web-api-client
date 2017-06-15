@@ -34,7 +34,7 @@ window.onload = function() {
         console.log('Login successful', result);
         submitButton.className = 'valid';
         submitButton.firstChild.data = "😊";
-        client.listen();
+        return client.connect();
       })
       .catch((error) => {
         console.error('Login failed', error.message);

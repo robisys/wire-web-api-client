@@ -2,6 +2,7 @@ import * as WebSocket from 'ws';
 
 export default class WebSocketClient {
   public accessToken: AccessTokenData;
+  private socket: WebSocket;
 
   constructor(public baseURL: string) {}
 
@@ -12,13 +13,22 @@ export default class WebSocketClient {
       url += `&client=${clientId}`;
     }
 
-    const socket = new WebSocket(url);
-    socket.binaryType = 'arraybuffer';
+    this.socket = new WebSocket(url);
+    this.socket.binaryType = 'arraybuffer';
 
     return new Promise((resolve) => {
-      socket.onopen = () => {
-        resolve(socket);
+      this.socket.onopen = () => {
+        resolve(this.socket);
       };
     });
+  }
+
+  public disconnect() {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = undefined;
+    } else {
+      throw new Error('Attempt for closing non-existent WebSocket.');
+    }
   }
 }
