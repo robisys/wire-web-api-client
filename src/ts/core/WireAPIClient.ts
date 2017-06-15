@@ -40,6 +40,10 @@ export default class WireAPIClient extends EventEmitter {
     this.team.api = new TeamAPI(this.client.http);
   }
 
+  public init(): Promise<AccessTokenData> {
+    return this.refreshAccessToken();
+  }
+
   public login(data: LoginData): Promise<AccessTokenData> {
     return this.auth.api
       .postLogin(data)
@@ -51,11 +55,12 @@ export default class WireAPIClient extends EventEmitter {
   }
 
   public refreshAccessToken(): Promise<AccessTokenData> {
-    return this.auth.api.postAccess().then((accessToken: AccessTokenData) => {
-      this.client.http.accessToken = accessToken;
-      this.client.ws.accessToken = this.client.http.accessToken;
-      return accessToken;
-    });
+    return this.auth.api.postAccess()
+      .then((accessToken: AccessTokenData) => {
+        this.client.http.accessToken = accessToken;
+        this.client.ws.accessToken = this.client.http.accessToken;
+        return accessToken;
+      });
   }
 
   public connect(clientId: string): Promise<void> {
