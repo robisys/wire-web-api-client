@@ -17,7 +17,6 @@
     "target": "ES5"
   },
   "exclude": [
-    "bower_components",
     "dist/commonjs",
     "node_modules"
   ]
