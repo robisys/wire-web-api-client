@@ -1,7 +1,7 @@
 {
   "author": "Wire",
   "browser": {
-    "ws": "./ws-fallback.js"
+    "ws": "./browser/ws-fallback.js"
   },
   "dependencies": {
     "axios": "0.16.1",
