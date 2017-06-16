@@ -13,6 +13,7 @@ window.onload = function() {
 
   submitButton.onclick = function(event) {
     event.preventDefault();
+    console.log('Login button has been clicked.');
 
     const email = document.getElementById('wire-login-form-email').value;
     const password = document.getElementById('wire-login-form-password').value;
@@ -29,7 +30,14 @@ window.onload = function() {
       console.log('Received notification via WebSocket', notification);
     });
 
-    client.login(login)
+    return Promise.resolve()
+      .then(() => {
+        // Trying to login (works only if there is already a valid cookie stored in the browser)
+        return client.init();
+      })
+      .catch((error) => {
+        return client.login(login);
+      })
       .then((result) => {
         console.log('Login successful', result);
         submitButton.className = 'valid';
