@@ -42,11 +42,10 @@
     "clean": "rimraf dist/commonjs",
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "dist": "yarn clean && tsc",
-    "postinstall": "yarn dist",
     "postversion": "git push && git push --tags",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --write \"src/**/*.ts\"",
     "preversion": "yarn dist && yarn test",
-    "start": "yarn clean && concurrently \"tsc -w\" \"yarn watch\"",
+    "start": "yarn dist && concurrently \"tsc -w\" \"yarn watch\"",
     "test": "jasmine",
     "version": "yarn dist",
     "watch": "webpack-dev-server --config webpack.config.js --open"
