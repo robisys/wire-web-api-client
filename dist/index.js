@@ -29,12 +29,8 @@ client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
 });
 
 client.login(login)
-  .then((accessTokenData) => {
-    console.log(`Login successful. AccessToken expires in "${accessTokenData.expires_in}"s.`);
-    return client.user.api.getSelf();
-  })
-  .then((userData) => {
-    console.log(`Got self user with name "${userData.name}".`);
+  .then((context) => {
+    console.log(`Got self user with ID "${context.userID}".`);
     return client.user.api.getUsers({handles: ['webappbot']})
   })
   .then((userData) => {

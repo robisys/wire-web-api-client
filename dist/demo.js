@@ -38,8 +38,8 @@ window.onload = function() {
       .catch((error) => {
         return client.login(login);
       })
-      .then((result) => {
-        console.log('Login successful', result);
+      .then((context) => {
+        console.log('Login successful', context);
         submitButton.className = 'valid';
         submitButton.firstChild.data = "😊";
         return client.connect();

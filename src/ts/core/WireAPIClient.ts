@@ -6,6 +6,7 @@ import HttpClient from '../http/HttpClient';
 import UserAPI from '../user/UserAPI';
 import TeamAPI from '../team/TeamAPI';
 import WebSocketClient from '../tcp/WebSocketClient';
+import Context from "./Context";
 
 export default class WireAPIClient extends EventEmitter {
   public auth: {api: AuthAPI} = {
@@ -16,6 +17,8 @@ export default class WireAPIClient extends EventEmitter {
     http: undefined,
     ws: undefined,
   };
+
+  public contexts: Map<string, Context> = new Map<string, Context>();
 
   public user: {api: UserAPI} = {
     api: undefined,
@@ -40,18 +43,22 @@ export default class WireAPIClient extends EventEmitter {
     this.team.api = new TeamAPI(this.client.http);
   }
 
-  public init(): Promise<AccessTokenData> {
-    return this.refreshAccessToken();
+  public init(): Promise<Context> {
+    return this.refreshAccessToken()
+      .then(() => this.user.api.getSelf())
+      .then((userData: UserData) => this.createContext(userData));
   }
 
-  public login(data: LoginData): Promise<AccessTokenData> {
+  public login(data: LoginData): Promise<Context> {
     return this.auth.api
       .postLogin(data)
       .then((accessToken: AccessTokenData) => {
         this.client.http.accessToken = accessToken;
         this.client.ws.accessToken = this.client.http.accessToken;
-        return accessToken;
-      });
+
+        return this.user.api.getSelf();
+      })
+      .then((userData: UserData) => this.createContext(userData));
   }
 
   public refreshAccessToken(): Promise<AccessTokenData> {
@@ -71,6 +78,18 @@ export default class WireAPIClient extends EventEmitter {
           this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };
       });
+  }
+
+  private createContext(userData: UserData): Context {
+    const userID = userData.id;
+    if (this.contexts.get(userID)) {
+      throw new Error(`Context for user '${userID}' already exists.`);
+    }
+
+    const context = new Context(userData.id);
+    this.contexts.set(userID, context);
+
+    return context;
   }
 
   public disconnect(): void {
