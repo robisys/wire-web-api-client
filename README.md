@@ -18,6 +18,13 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 Wire for Web's API client.
 
+## Development
+
+```bash
+yarn install
+yarn start
+```
+
 ## Installation
 
 ```bash
@@ -32,7 +39,7 @@ yarn add @wireapp/api-client
 
 **Node.js**
 
-- [index.js](./dist/index.js) 
+- [index.js](./dist/index.js)
 
 ## Development
 
