@@ -32,7 +32,7 @@
       "git add"
     ]
   },
-  "main": "dist/commonjs/index.js",
+  "main": "./dist/commonjs/index.js",
   "name": "@wireapp/api-client",
   "repository": {
     "type": "git",
@@ -51,5 +51,6 @@
     "version": "yarn dist",
     "watch": "webpack-dev-server --config webpack.config.js --open"
   },
+  "types": "./dist/commonjs/index.d.ts",
   "version": "0.0.21"
 }
