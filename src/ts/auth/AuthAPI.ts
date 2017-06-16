@@ -1,3 +1,5 @@
+///<reference path="LoginData.ts"/>
+///<reference path="AccessTokenData.ts"/>
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import HttpClient from '../http/HttpClient';
