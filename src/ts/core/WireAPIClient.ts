@@ -1,12 +1,12 @@
 import * as WebSocket from 'ws';
 import EventEmitter = require('events');
 
-import Context from './Context';
-import HttpClient from '../http/HttpClient';
-import TeamAPI from '../team/TeamAPI';
-import WebSocketClient from '../tcp/WebSocketClient';
 import {AccessTokenData, AuthAPI, LoginData} from '../auth';
+import {Context} from '../core';
+import {HttpClient} from '../http';
+import {TeamAPI} from '../team';
 import {UserAPI, UserData} from  '../user';
+import {WebSocketClient} from '../tcp';
 
 export default class WireAPIClient extends EventEmitter {
   public auth: {api: AuthAPI} = {

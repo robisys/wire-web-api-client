@@ -1,10 +1,7 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import HttpClient from '../http/HttpClient';
-import MemberData from './MemberData';
-import NewTeamData from './NewTeamData';
-import TeamChunkData from './TeamChunkData';
-import TeamData from './TeamData';
+import * as team from '../team';
+import {HttpClient} from '../http';
 
 export default class TeamAPI {
   constructor(private client: HttpClient) {}
@@ -16,7 +13,7 @@ export default class TeamAPI {
     };
   }
 
-  public postTeam(team: NewTeamData): AxiosPromise {
+  public postTeam(team: team.NewTeamData): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         name: team.name,
@@ -33,7 +30,7 @@ export default class TeamAPI {
       });
   }
 
-  public putTeam(team: TeamData): AxiosPromise {
+  public putTeam(team: team.TeamData): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         name: team.name,
@@ -50,7 +47,7 @@ export default class TeamAPI {
       });
   }
 
-  public getTeams(): Promise<TeamChunkData> {
+  public getTeams(): Promise<team.TeamChunkData> {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${TeamAPI.URL.TEAMS}`,
@@ -63,7 +60,7 @@ export default class TeamAPI {
       });
   }
 
-  public getTeam(teamId: string): Promise<TeamData> {
+  public getTeam(teamId: string): Promise<team.TeamData> {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${TeamAPI.URL.TEAMS}/${teamId}`,
@@ -89,7 +86,7 @@ export default class TeamAPI {
       });
   }
 
-  public getMembers(teamId: string): Promise<MemberData[]> {
+  public getMembers(teamId: string): Promise<team.MemberData[]> {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
@@ -115,7 +112,7 @@ export default class TeamAPI {
       });
   }
 
-  public postMembers(teamId: string, member: MemberData): AxiosPromise {
+  public postMembers(teamId: string, member: team.MemberData): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         member: member,
@@ -131,7 +128,7 @@ export default class TeamAPI {
       });
   }
 
-  public putMembers(teamId: string, member: MemberData): AxiosPromise {
+  public putMembers(teamId: string, member: team.MemberData): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         member: member,

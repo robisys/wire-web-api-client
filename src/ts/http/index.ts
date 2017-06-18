@@ -1,7 +1,9 @@
 import ContentType from './ContentType';
+import HttpClient from './HttpClient';
 import StatusCode from './StatusCode';
 
-module.exports = {
-  ContentType: ContentType,
-  StatusCode: StatusCode,
+export {
+  ContentType,
+  HttpClient,
+  StatusCode,
 };

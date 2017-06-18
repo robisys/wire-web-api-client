@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "declaration": true,
     "lib": [
       "DOM",
@@ -11,6 +12,11 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "outDir": "dist/commonjs",
+    "paths": {
+      "*": [
+        "./src/ts/*"
+      ]
+    },
     "removeComments": true,
     "rootDir": "src/ts",
     "sourceMap": false,

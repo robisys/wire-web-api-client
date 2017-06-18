@@ -1,6 +1,6 @@
 import * as WebSocket from 'ws';
 
-import AccessTokenData from '../auth/AccessTokenData';
+import {AccessTokenData} from '../auth';
 
 export default class WebSocketClient {
   public accessToken: AccessTokenData;
