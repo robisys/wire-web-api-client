@@ -1,4 +1,4 @@
-/// <reference path="AccessTokenData.ts"/>
+import AccessTokenData from './AccessTokenData';
 import HttpClient from '../http/HttpClient';
 import LoginData from './LoginData';
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';

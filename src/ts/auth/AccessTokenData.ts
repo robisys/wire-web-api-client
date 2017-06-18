@@ -3,3 +3,5 @@ interface AccessTokenData {
   expires_in: number;
   token_type: string;
 }
+
+export default AccessTokenData;

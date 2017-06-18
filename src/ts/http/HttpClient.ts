@@ -1,5 +1,6 @@
 import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
 
+import AccessTokenData from '../auth/AccessTokenData';
 import ContentType from './ContentType';
 
 export default class HttpClient {
