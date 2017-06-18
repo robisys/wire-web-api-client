@@ -1,4 +1,3 @@
-/// <reference path="UserData.ts"/>
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import HttpClient from '../http/HttpClient';

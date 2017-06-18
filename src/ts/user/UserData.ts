@@ -1,4 +1,5 @@
-/// <reference path="UserAssetData.ts"/>
+import UserAssetData from './UserAssetData';
+
 interface UserData {
   accent_id?: number;
   assets: UserAssetData[];
