@@ -4,12 +4,12 @@
     "ws": "./browser/ws-fallback.js"
   },
   "dependencies": {
+    "@types/node": "7.0.18",
+    "@types/ws": "0.0.41",
     "axios": "0.16.1",
     "ws": "2.3.1"
   },
   "devDependencies": {
-    "@types/node": "7.0.18",
-    "@types/ws": "0.0.41",
     "concurrently": "3.4.0",
     "husky": "0.13.4",
     "istanbul": "0.4.5",
