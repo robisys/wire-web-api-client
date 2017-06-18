@@ -1,10 +1,10 @@
-/// <reference path="MemberData.ts"/>
 /// <reference path="NewTeamData.ts"/>
 /// <reference path="TeamChunkData.ts"/>
 /// <reference path="TeamData.ts"/>
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import HttpClient from '../http/HttpClient';
+import MemberData from './MemberData';
 
 export default class TeamAPI {
   constructor(private client: HttpClient) {}
