@@ -2,7 +2,7 @@
 /.idea/vcs.xml
 /.idea/workspace.xml
 /bower_components
-/dist/commonjs/**/*.js
+/dist/commonjs
 /dist/demo-bundle.js
 /node_modules
 /npm-debug.log*
