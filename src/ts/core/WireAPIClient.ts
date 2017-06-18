@@ -7,9 +7,8 @@ import Context from './Context';
 import HttpClient from '../http/HttpClient';
 import LoginData from '../auth/LoginData';
 import TeamAPI from '../team/TeamAPI';
-import UserAPI from '../user/UserAPI';
-import UserData from '../user/UserData';
 import WebSocketClient from '../tcp/WebSocketClient';
+import {UserAPI, UserData} from  '../user';
 
 export default class WireAPIClient extends EventEmitter {
   public auth: {api: AuthAPI} = {
