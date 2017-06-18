@@ -1,3 +1,4 @@
+/// <reference path="UserData.d.ts" />
 import HttpClient from '../http/HttpClient';
 export default class UserAPI {
     private client;

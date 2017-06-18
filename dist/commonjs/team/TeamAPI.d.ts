@@ -1,3 +1,7 @@
+/// <reference path="MemberData.d.ts" />
+/// <reference path="NewTeamData.d.ts" />
+/// <reference path="TeamChunkData.d.ts" />
+/// <reference path="TeamData.d.ts" />
 import { AxiosPromise } from 'axios';
 import HttpClient from '../http/HttpClient';
 export default class TeamAPI {

@@ -1,3 +1,4 @@
+/// <reference path="UserAssetData.d.ts" />
 interface UserData {
     accent_id?: number;
     assets: UserAssetData[];
