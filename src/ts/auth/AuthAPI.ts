@@ -1,6 +1,8 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
+import AccessTokenData from './AccessTokenData';
 import HttpClient from '../http/HttpClient';
+import LoginData from './LoginData';
 
 export default class AuthAPI {
   constructor(private client: HttpClient) {}

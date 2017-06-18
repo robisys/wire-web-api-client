@@ -1,3 +1,5 @@
+import UserAssetData from './UserAssetData';
+
 interface UserData {
   accent_id?: number;
   assets: UserAssetData[];
@@ -9,3 +11,5 @@ interface UserData {
   name: string;
   phone?: string;
 }
+
+export default UserData;
