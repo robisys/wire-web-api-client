@@ -4,3 +4,5 @@ interface TeamData {
   icon: string;
   creator: string;
 }
+
+export default TeamData;
