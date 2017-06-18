@@ -1,7 +1,7 @@
 /// <reference path="AccessTokenData.d.ts" />
-/// <reference path="LoginData.d.ts" />
-import { AxiosPromise } from 'axios';
 import HttpClient from '../http/HttpClient';
+import LoginData from './LoginData';
+import { AxiosPromise } from 'axios';
 export default class AuthAPI {
     private client;
     constructor(client: HttpClient);

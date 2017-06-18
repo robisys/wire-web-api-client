@@ -1,11 +1,12 @@
 /// <reference types="node" />
 import EventEmitter = require('events');
 import AuthAPI from '../auth/AuthAPI';
+import Context from './Context';
 import HttpClient from '../http/HttpClient';
-import UserAPI from '../user/UserAPI';
+import LoginData from '../auth/LoginData';
 import TeamAPI from '../team/TeamAPI';
+import UserAPI from '../user/UserAPI';
 import WebSocketClient from '../tcp/WebSocketClient';
-import Context from "./Context";
 export default class WireAPIClient extends EventEmitter {
     urls: {
         rest: string;
