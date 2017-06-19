@@ -43,7 +43,7 @@ yarn add @wireapp/api-client
 
 - [index.js](./dist/index.js)
 
-## Development
+## Execution
 
 **Bash**
 
