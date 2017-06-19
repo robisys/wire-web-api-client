@@ -4,7 +4,7 @@
     "ws": "./browser/ws-fallback.js"
   },
   "dependencies": {
-    "@types/node": "7.0.31",
+    "@types/node": "7.0.32",
     "@types/ws": "3.0.0",
     "axios": "0.16.2",
     "ws": "3.0.0"
