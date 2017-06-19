@@ -4,24 +4,24 @@
     "ws": "./browser/ws-fallback.js"
   },
   "dependencies": {
-    "@types/node": "7.0.18",
-    "@types/ws": "0.0.41",
-    "axios": "0.16.1",
-    "ws": "2.3.1"
+    "@types/node": "7.0.31",
+    "@types/ws": "3.0.0",
+    "axios": "0.16.2",
+    "ws": "3.0.0"
   },
   "devDependencies": {
     "concurrently": "3.4.0",
     "husky": "0.13.4",
     "istanbul": "0.4.5",
     "jasmine": "2.6.0",
-    "lint-staged": "3.6.0",
+    "lint-staged": "4.0.0",
     "optimist": "0.6.1",
-    "prettier": "1.4.2",
+    "prettier": "1.4.4",
     "rimraf": "2.6.1",
-    "sinon": "1.17.6",
+    "sinon": "2.3.4",
     "sinon-har-server": "0.3.0",
-    "typescript": "2.3.2",
-    "webpack": "2.5.1",
+    "typescript": "2.3.4",
+    "webpack": "2.6.1",
     "webpack-dev-server": "2.4.5"
   },
   "description": "Wire API Client to send and receive data.",
