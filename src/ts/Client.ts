@@ -1,15 +1,15 @@
 import * as WebSocket from 'ws';
 import EventEmitter = require('events');
 
-import {AccessTokenData, AuthAPI, LoginData} from '../auth';
-import {Context} from '../core';
-import {HttpClient} from '../http';
-import {TeamAPI} from '../team';
-import {UserAPI, UserData} from  '../user';
-import {bufferToString} from '../util/buffer'
-import {WebSocketClient} from '../tcp';
+import {AccessTokenData, AuthAPI, Context, LoginData} from './auth';
+import {Backend} from './env';
+import {bufferToString} from './util/buffer'
+import {HttpClient} from './http';
+import {TeamAPI} from './team';
+import {UserAPI, UserData} from  './user';
+import {WebSocketClient} from './tcp';
 
-export default class WireAPIClient extends EventEmitter {
+class Client extends EventEmitter {
   public auth: {api: AuthAPI} = {
     api: undefined,
   };
@@ -30,10 +30,10 @@ export default class WireAPIClient extends EventEmitter {
   };
 
   public static TOPIC = {
-    WEB_SOCKET_MESSAGE: 'WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE',
+    WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
   };
 
-  constructor(public urls: {rest: string; ws?: string}) {
+  constructor(public urls: { rest: string; ws?: string } = Backend.PRODUCTION) {
     super();
 
     this.client.http = new HttpClient(urls.rest);
@@ -76,7 +76,7 @@ export default class WireAPIClient extends EventEmitter {
       .then((socket: WebSocket) => {
         socket.onmessage = (event: { data: any; type: string; target: WebSocket }) => {
           const notification = JSON.parse(bufferToString(event.data));
-          this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
+          this.emit(Client.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };
       });
   }
@@ -97,3 +97,5 @@ export default class WireAPIClient extends EventEmitter {
     this.client.ws.disconnect();
   }
 }
+
+export = Client;

@@ -1,4 +1,4 @@
-import WireAPIClient from "./commonjs";
+import Client from "./commonjs/Client";
 
 window.onload = function() {
   const urls = {
@@ -24,9 +24,9 @@ window.onload = function() {
       persist: false
     };
 
-    const client = new WireAPIClient(urls);
+    const client = new Client(urls);
 
-    client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
+    client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
       console.log('Received notification via WebSocket', notification);
     });
 

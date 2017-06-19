@@ -5,15 +5,10 @@ const argv = require('optimist')
   .alias('p', 'password')
   .argv;
 
-const WireAPIClient = require('./commonjs/index');
+const Client = require('./commonjs/Client');
 const http = require('./commonjs/http');
 
 console.log(`Testing "http" module: ${http.StatusCode.OK}`);
-
-const urls = {
-  rest: 'https://prod-nginz-https.wire.com',
-  ws: 'wss://prod-nginz-ssl.wire.com'
-};
 
 const login = {
   email: argv.email,
@@ -22,9 +17,9 @@ const login = {
   persist: false
 };
 
-const client = new WireAPIClient(urls);
+const client = new Client();
 
-client.on(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
+client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
   console.log('Received notification via WebSocket', notification);
 });
 
