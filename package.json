@@ -1,10 +1,12 @@
 {
   "author": "Wire",
   "browser": {
-    "ws": "./browser/ws-fallback.js"
+    "ws": "./browser/ws-fallback.js",
+    "./dist/commonjs/util/buffer": "./browser/buffer.js"
   },
   "dependencies": {
     "@types/node": "8.0.0",
+    "@types/text-encoding": "0.0.30",
     "@types/ws": "3.0.0",
     "axios": "0.16.2",
     "ws": "3.0.0"

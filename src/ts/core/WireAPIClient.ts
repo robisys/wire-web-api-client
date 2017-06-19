@@ -6,6 +6,7 @@ import {Context} from '../core';
 import {HttpClient} from '../http';
 import {TeamAPI} from '../team';
 import {UserAPI, UserData} from  '../user';
+import {bufferToString} from '../util/buffer'
 import {WebSocketClient} from '../tcp';
 
 export default class WireAPIClient extends EventEmitter {
@@ -74,7 +75,7 @@ export default class WireAPIClient extends EventEmitter {
     return this.client.ws.connect(clientId)
       .then((socket: WebSocket) => {
         socket.onmessage = (event: { data: any; type: string; target: WebSocket }) => {
-          const notification = JSON.parse(Buffer.from(event.data).toString('utf8'));
+          const notification = JSON.parse(bufferToString(event.data));
           this.emit(WireAPIClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };
       });
