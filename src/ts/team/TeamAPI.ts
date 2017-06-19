@@ -1,10 +1,7 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import HttpClient from '../http/HttpClient';
-import MemberData from './MemberData';
-import NewTeamData from './NewTeamData';
-import TeamChunkData from './TeamChunkData';
-import TeamData from './TeamData';
+import {MemberData, NewTeamData, TeamChunkData, TeamData} from '../team';
+import {HttpClient} from '../http';
 
 export default class TeamAPI {
   constructor(private client: HttpClient) {}
