@@ -1,6 +1,6 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import * as auth from '../auth';
+import {AccessTokenData, LoginData} from '../auth';
 import {HttpClient} from '../http';
 
 export default class AuthAPI {
@@ -18,7 +18,7 @@ export default class AuthAPI {
     };
   }
 
-  public postCookiesRemove(login: auth.LoginData, labels?: string[]): AxiosPromise {
+  public postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
         labels: labels,
@@ -31,7 +31,7 @@ export default class AuthAPI {
     return this.client.sendRequest(config);
   }
 
-  public postLogin(login: auth.LoginData): Promise<auth.AccessTokenData> {
+  public postLogin(login: LoginData): Promise<AccessTokenData> {
     login.password = login.password.toString();
     const config: AxiosRequestConfig = {
       data: login,
@@ -61,7 +61,7 @@ export default class AuthAPI {
       });
   }
 
-  public postAccess(): Promise<auth.AccessTokenData> {
+  public postAccess(): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
       withCredentials: true,
       method: 'post',
