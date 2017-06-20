@@ -46,7 +46,7 @@
     "dist": "yarn clean && tsc",
     "postversion": "git push && git push --tags",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --write \"src/**/*.ts\"",
-    "preversion": "yarn dist && yarn test",
+    "preversion": "yarn && yarn dist && yarn test",
     "start": "yarn dist && concurrently \"tsc -w\" \"yarn watch\"",
     "test": "jasmine",
     "version": "yarn dist",
