@@ -2,6 +2,8 @@ import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {AccessTokenData, LoginData} from '../auth';
 import {HttpClient} from '../http';
+import UserData from "../user/UserData";
+import RegisterData from "./RegisterData";
 
 export default class AuthAPI {
   constructor(private client: HttpClient) {}
@@ -66,6 +68,20 @@ export default class AuthAPI {
       withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.ACCESS}`,
+    };
+
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
+  }
+
+  public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {
+    const config: AxiosRequestConfig = {
+      withCredentials: true,
+      method: 'post',
+      url: `${AuthAPI.URL.REGISTER}?challenge_cookie=${challengeCookie}`,
     };
 
     return this.client
