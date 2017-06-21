@@ -53,5 +53,5 @@
     "watch": "webpack-dev-server --config webpack.config.js --open"
   },
   "types": "./dist/commonjs/Client.d.ts",
-  "version": "0.0.28"
+  "version": "0.0.29"
 }
