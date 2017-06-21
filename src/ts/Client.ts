@@ -64,6 +64,16 @@ class Client extends EventEmitter {
       .then((userData: UserData) => this.createContext(userData));
   }
 
+  public logout(): Promise<void> {
+    return this.auth.api
+      .postLogout()
+      .then(() => this.disconnect())
+      .then(() => {
+        this.client.http.accessToken = undefined;
+        this.client.ws.accessToken = undefined;
+      })
+  }
+
   public refreshAccessToken(): Promise<AccessTokenData> {
     return this.auth.api.postAccess()
       .then((accessToken: AccessTokenData) => {
