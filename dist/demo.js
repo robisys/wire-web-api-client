@@ -1,15 +1,11 @@
 import Client from "./commonjs/Client";
 
 window.onload = function() {
-  const urls = {
-    rest: 'https://prod-nginz-https.wire.com',
-    ws: 'wss://prod-nginz-ssl.wire.com'
-  };
-
+  const BACKEND = Client.BACKEND.STAGING;
   const submitButton = document.getElementById('wire-login-form-submit');
   const backendInfo = document.getElementById('wire-login-form-backend');
-  backendInfo.textContent = urls.rest;
-  backendInfo.setAttribute('href', '?env=prod');
+  backendInfo.textContent = BACKEND.rest;
+  backendInfo.setAttribute('href', '?env=' + BACKEND.name);
 
   submitButton.onclick = function(event) {
     event.preventDefault();
@@ -24,7 +20,7 @@ window.onload = function() {
       persist: false
     };
 
-    const client = new Client(urls);
+    const client = new Client(BACKEND);
 
     client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
       console.log('Received notification via WebSocket', notification);

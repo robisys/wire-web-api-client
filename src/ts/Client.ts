@@ -33,7 +33,9 @@ class Client extends EventEmitter {
     WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
   };
 
-  constructor(public urls: { rest: string; ws?: string } = Backend.PRODUCTION) {
+  public static BACKEND = Backend;
+
+  constructor(public urls: {rest: string; ws?: string, name?: string} = Client.BACKEND.PRODUCTION) {
     super();
 
     this.client.http = new HttpClient(urls.rest);
