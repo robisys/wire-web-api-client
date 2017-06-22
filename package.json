@@ -16,6 +16,11 @@
     "husky": "0.13.4",
     "istanbul": "0.4.5",
     "jasmine": "2.6.0",
+    "karma": "1.7.0",
+    "karma-chrome-launcher": "2.1.1",
+    "karma-jasmine": "1.1.0",
+    "karma-jasmine-diff-reporter": "1.0.0",
+    "karma-sourcemap-loader": "0.3.7",
     "lint-staged": "4.0.0",
     "optimist": "0.6.1",
     "prettier": "1.4.4",
@@ -41,16 +46,18 @@
     "url": "git+https://github.com/wireapp/wire-web-api-client.git"
   },
   "scripts": {
-    "clean": "rimraf dist/commonjs",
+    "clean": "rimraf dist/commonjs && rimraf dist/demo-bundle.js",
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "dist": "yarn clean && tsc",
     "postversion": "git push && git push --tags",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --write \"src/**/*.ts\"",
     "preversion": "yarn && yarn dist && yarn test",
     "start": "yarn dist && concurrently \"tsc -w\" \"yarn watch\"",
-    "test": "jasmine",
     "version": "yarn dist",
-    "watch": "webpack-dev-server --config webpack.config.js --open"
+    "watch": "webpack-dev-server --config webpack.config.js --open",
+    "test": "yarn clean && yarn dist && yarn test:node && yarn test:browser",
+    "test:node": "jasmine",
+    "test:browser": "webpack && karma start karma.conf.js"
   },
   "types": "./dist/commonjs/Client.d.ts",
   "version": "0.0.29"

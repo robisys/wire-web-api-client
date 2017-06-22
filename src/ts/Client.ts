@@ -3,11 +3,11 @@ import EventEmitter = require('events');
 
 import {AccessTokenData, AuthAPI, Context, LoginData} from './auth';
 import {Backend} from './env';
-import {bufferToString} from './util/buffer'
 import {HttpClient} from './http';
 import {TeamAPI} from './team';
 import {UserAPI, UserData} from  './user';
 import {WebSocketClient} from './tcp';
+const buffer = require('./util/buffer');
 
 class Client extends EventEmitter {
   public auth: {api: AuthAPI} = {
@@ -87,7 +87,7 @@ class Client extends EventEmitter {
     return this.client.ws.connect(clientId)
       .then((socket: WebSocket) => {
         socket.onmessage = (event: { data: any; type: string; target: WebSocket }) => {
-          const notification = JSON.parse(bufferToString(event.data));
+          const notification = JSON.parse(buffer.bufferToString(event.data));
           this.emit(Client.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };
       });

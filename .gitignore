@@ -4,5 +4,8 @@
 /bower_components
 /dist/commonjs
 /dist/demo-bundle.js
+/dist/demo-bundle.js.map
+/dist/test.js
+/dist/test.js.map
 /node_modules
 /npm-debug.log*
