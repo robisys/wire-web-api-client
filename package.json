@@ -20,7 +20,7 @@
     "optimist": "0.6.1",
     "prettier": "1.4.4",
     "rimraf": "2.6.1",
-    "sinon": "2.3.4",
+    "sinon": "2.3.5",
     "sinon-har-server": "0.3.0",
     "typescript": "2.3.4",
     "webpack": "2.6.1",
