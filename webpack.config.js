@@ -1,7 +1,8 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   devtool: 'cheap-module-source-map',
   devServer: {
-    contentBase: `${__dirname}/dist`,
     stats: {
       chunks: false,
     }
@@ -15,5 +16,15 @@ module.exports = {
     path: `${__dirname}/dist`,
     filename: `[name].js`,
     publicPath: '/',
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      cache: true,
+      excludeChunks: ['test'],
+      filename: 'index.html',
+      hash: true,
+      template: `${__dirname}/src/index.ejs`,
+      title: 'Demo',
+    }),
+  ]
 };
