@@ -7,11 +7,13 @@ module.exports = {
     }
   },
   entry: {
-    'demo-bundle': `${__dirname}/dist/commonjs/Client.js`,
+    demo: `${__dirname}/dist/demo.js`,
+    client: `${__dirname}/dist/commonjs/Client.js`,
     test: `${__dirname}/src/test/index.js`,
   },
   output: {
-    filename: `dist/[name].js`,
+    path: `${__dirname}/dist`,
+    filename: `[name].js`,
     publicPath: '/',
   }
 };
