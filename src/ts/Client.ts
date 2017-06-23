@@ -10,22 +10,22 @@ import {WebSocketClient} from './tcp';
 const buffer = require('./util/buffer');
 
 class Client extends EventEmitter {
-  public auth: {api: AuthAPI} = {
+  public auth: { api: AuthAPI } = {
     api: undefined,
   };
 
-  public client: {http: HttpClient; ws: WebSocketClient} = {
+  public client: { http: HttpClient; ws: WebSocketClient } = {
     http: undefined,
     ws: undefined,
   };
 
-  public contexts: Map<string, Context> = new Map<string, Context>();
+  public context: Context = undefined;
 
-  public user: {api: UserAPI} = {
+  public user: { api: UserAPI } = {
     api: undefined,
   };
 
-  public team: {api: TeamAPI} = {
+  public team: { api: TeamAPI } = {
     api: undefined,
   };
 
@@ -35,7 +35,7 @@ class Client extends EventEmitter {
 
   public static BACKEND = Backend;
 
-  constructor(public urls: {rest: string; ws?: string, name?: string} = Client.BACKEND.PRODUCTION) {
+  constructor(public urls: { rest: string; ws?: string, name?: string } = Client.BACKEND.PRODUCTION) {
     super();
 
     this.client.http = new HttpClient(urls.rest);
@@ -71,6 +71,7 @@ class Client extends EventEmitter {
       .then(() => {
         this.client.http.accessToken = undefined;
         this.client.ws.accessToken = undefined;
+        this.context = undefined;
       })
   }
 
@@ -94,15 +95,12 @@ class Client extends EventEmitter {
   }
 
   private createContext(userData: UserData): Context {
-    const userID = userData.id;
-    if (this.contexts.get(userID)) {
-      throw new Error(`Context for user '${userID}' already exists.`);
+    if (this.context) {
+      throw new Error(`There is already a context with user ID '${this.context.userID}'.`);
     }
 
-    const context = new Context(userData.id);
-    this.contexts.set(userID, context);
-
-    return context;
+    this.context = new Context(userData.id);
+    return this.context;
   }
 
   public disconnect(): void {
