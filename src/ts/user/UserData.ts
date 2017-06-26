@@ -10,6 +10,7 @@ interface UserData {
   locale: string;
   name: string;
   phone?: string;
+  team?: string;
 }
 
 export default UserData;
