@@ -84,10 +84,10 @@ class Client extends EventEmitter {
       });
   }
 
-  public connect(clientId: string): Promise<void> {
-    return this.client.ws.connect(clientId)
+  public connect(): Promise<void> {
+    return this.client.ws.connect(this.context.clientID)
       .then((socket: WebSocket) => {
-        socket.onmessage = (event: { data: any; type: string; target: WebSocket }) => {
+        socket.onmessage = (event: {data: WebSocket.Data; type: string; target: WebSocket}) => {
           const notification = JSON.parse(buffer.bufferToString(event.data));
           this.emit(Client.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };

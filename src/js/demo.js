@@ -67,7 +67,7 @@ window.onload = function() {
     };
   }
 
-  const BACKEND_ENV = Client.BACKEND.STAGING;
+  const BACKEND_ENV = Client.BACKEND.PRODUCTION;
   const LOGIN_BUTTON = document.getElementById('wire-login-form-submit');
   const LOGOUT_BUTTON = document.getElementById('wire-logout-form-submit');
 
