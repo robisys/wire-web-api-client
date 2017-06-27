@@ -5,7 +5,7 @@
     "./dist/commonjs/util/buffer": "./browser/buffer.js"
   },
   "dependencies": {
-    "@types/node": "8.0.3",
+    "@types/node": "8.0.4",
     "@types/text-encoding": "0.0.31",
     "@types/ws": "3.0.0",
     "axios": "0.16.2",
