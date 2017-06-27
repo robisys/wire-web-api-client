@@ -15,10 +15,7 @@ export default class TeamAPI {
 
   public postTeam(team: NewTeamData): AxiosPromise {
     const config: AxiosRequestConfig = {
-      data: {
-        name: team.name,
-        icon: team.icon,
-      },
+      data: team,
       method: 'post',
       url: `${TeamAPI.URL.TEAMS}`,
     };
