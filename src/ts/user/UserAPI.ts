@@ -2,6 +2,7 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
 import {UserData} from '../user';
+import {SearchableData} from '../user';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {}
@@ -11,6 +12,7 @@ export default class UserAPI {
       CONNECTIONS: '/connections',
       PROPERTIES: '/properties',
       SELF: '/self',
+      SEARCHABLE: 'searchable',
       USERS: '/users',
     };
   }
@@ -19,6 +21,33 @@ export default class UserAPI {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: UserAPI.URL.SELF,
+    };
+
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
+  }
+
+  public putSearchable(data: SearchableData): Promise<void> {
+    const config: AxiosRequestConfig = {
+      data,
+      method: 'put',
+      url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
+    };
+
+    return this.client
+      .sendJSONRequest(config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
+  }
+
+  public getSearchable(): Promise<SearchableData> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
     };
 
     return this.client
