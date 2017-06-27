@@ -8,7 +8,7 @@ module.exports = {
     }
   },
   entry: {
-    demo: `${__dirname}/src/js/demo.js`,
+    demo: `${__dirname}/docs/demo.js`,
     client: `${__dirname}/dist/commonjs/Client.js`,
     test: `${__dirname}/src/test/index.js`,
   },

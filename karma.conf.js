@@ -40,7 +40,6 @@ module.exports = function(config) {
       },
     },
     files: [
-      `${dist}demo-bundle.js`,
       `${dist}test.js`
     ],
     frameworks: ['jasmine'],

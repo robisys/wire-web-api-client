@@ -37,11 +37,11 @@ yarn add @wireapp/api-client
 
 **Browser**
 
-- [index.html](./src/js/demo.js)
+- [index.html](docs/demo.js)
 
 **Node.js**
 
-- [index.js](./src/js/index.js)
+- [index.js](docs/index.js)
 
 ## Execution
 
@@ -54,14 +54,14 @@ EMAIL="name@email.com"
 HANDLE="username"
 PASSWORD="password"
 
-node src/js/index.js --e="$EMAIL" --p="$PASSWORD"
+node docs/index.js --e="$EMAIL" --p="$PASSWORD"
 # or
-node src/js/index.js --h="$HANDLE" --p="$PASSWORD"
+node docs/index.js --h="$HANDLE" --p="$PASSWORD"
 ```
 
 **Node**
 
 ```bash
 npm run dist
-node src/js/index.js --e="name@email.com" --p="password"
+node docs/index.js --e="name@email.com" --p="password"
 ```

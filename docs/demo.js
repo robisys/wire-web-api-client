@@ -1,4 +1,4 @@
-import Client from "../../dist/commonjs/Client";
+import Client from "../dist/commonjs/Client";
 
 
 window.onload = function() {
