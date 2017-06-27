@@ -8,7 +8,7 @@ module.exports = {
     }
   },
   entry: {
-    demo: `${__dirname}/dist/demo.js`,
+    demo: `${__dirname}/src/js/demo.js`,
     client: `${__dirname}/dist/commonjs/Client.js`,
     test: `${__dirname}/src/test/index.js`,
   },
@@ -23,7 +23,7 @@ module.exports = {
       excludeChunks: ['test'],
       filename: 'index.html',
       hash: true,
-      template: `${__dirname}/src/index.ejs`,
+      template: `${__dirname}/src/template/index.ejs`,
       title: 'Demo',
     }),
   ]

@@ -5,8 +5,8 @@ const argv = require('optimist')
   .alias('p', 'password')
   .argv;
 
-const Client = require('./commonjs/Client');
-const http = require('./commonjs/http');
+const Client = require('../../dist/commonjs/Client');
+const http = require('../../dist/commonjs/http');
 
 console.log(`Testing "http" module: ${http.StatusCode.OK}`);
 
