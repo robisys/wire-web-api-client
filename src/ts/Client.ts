@@ -1,6 +1,6 @@
 import EventEmitter = require('events');
 
-import {AccessTokenData, AuthAPI, Context, LoginData} from './auth';
+import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {Backend} from './env';
 import {HttpClient} from './http';
 import {TeamAPI} from './team';
@@ -50,14 +50,21 @@ class Client extends EventEmitter {
       .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
 
-  public login(data: LoginData): Promise<Context> {
+  public login(loginData: LoginData): Promise<Context> {
     return this.auth.api
-      .postLogin(data)
+      .postLogin(loginData)
       .then((accessToken: AccessTokenData) => {
         this.client.http.accessToken = accessToken;
         this.client.ws.accessToken = this.client.http.accessToken;
         return this.createContext(accessToken.user);
       });
+  }
+
+  public register(registerData: RegisterData): Promise<AccessTokenData> {
+    return this.auth.api
+      .postRegister(registerData)
+      .then((userData: UserData) => this.createContext(userData.id))
+      .then(() => this.refreshAccessToken());
   }
 
   public logout(): Promise<void> {
