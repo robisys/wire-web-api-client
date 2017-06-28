@@ -1,4 +1,3 @@
-import * as WebSocket from 'ws';
 import EventEmitter = require('events');
 
 import {AccessTokenData, AuthAPI, Context, LoginData} from './auth';
@@ -48,8 +47,7 @@ class Client extends EventEmitter {
 
   public init(): Promise<Context> {
     return this.refreshAccessToken()
-      .then(() => this.user.api.getSelf())
-      .then((userData: UserData) => this.createContext(userData));
+      .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
 
   public login(data: LoginData): Promise<Context> {
@@ -58,10 +56,8 @@ class Client extends EventEmitter {
       .then((accessToken: AccessTokenData) => {
         this.client.http.accessToken = accessToken;
         this.client.ws.accessToken = this.client.http.accessToken;
-
-        return this.user.api.getSelf();
-      })
-      .then((userData: UserData) => this.createContext(userData));
+        return this.createContext(accessToken.user);
+      });
   }
 
   public logout(): Promise<void> {
@@ -84,22 +80,24 @@ class Client extends EventEmitter {
       });
   }
 
-  public connect(): Promise<void> {
+  public connect(): Promise<WebSocket> {
     return this.client.ws.connect(this.context.clientID)
       .then((socket: WebSocket) => {
-        socket.onmessage = (event: {data: WebSocket.Data; type: string; target: WebSocket}) => {
+        socket.onmessage = (event: MessageEvent) => {
           const notification = JSON.parse(buffer.bufferToString(event.data));
           this.emit(Client.TOPIC.WEB_SOCKET_MESSAGE, notification);
         };
+
+        return socket;
       });
   }
 
-  private createContext(userData: UserData): Context {
+  private createContext(userID: string): Context {
     if (this.context) {
-      throw new Error(`There is already a context with user ID '${this.context.userID}'.`);
+      throw new Error(`There is already a context with user ID '${userID}'.`);
     }
 
-    this.context = new Context(userData.id);
+    this.context = new Context(userID);
     return this.context;
   }
 

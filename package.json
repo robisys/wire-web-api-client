@@ -1,15 +1,15 @@
 {
   "author": "Wire",
   "browser": {
-    "ws": "./browser/ws-fallback.js",
+    "html5-websocket": "./browser/ws-fallback.js",
     "./dist/commonjs/util/buffer": "./browser/buffer.js"
   },
   "dependencies": {
     "@types/node": "8.0.4",
     "@types/text-encoding": "0.0.31",
-    "@types/ws": "3.0.0",
     "axios": "0.16.2",
-    "ws": "3.0.0"
+    "html5-websocket": "1.0.0",
+    "reconnecting-websocket": "3.0.5"
   },
   "devDependencies": {
     "concurrently": "3.5.0",

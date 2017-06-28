@@ -1,4 +1,5 @@
-import * as WebSocket from 'ws';
+const Html5WebSocket = require('html5-websocket');
+const ReconnectingWebsocket = require('reconnecting-websocket');
 
 import {AccessTokenData} from '../auth';
 
@@ -15,7 +16,16 @@ export default class WebSocketClient {
       url += `&client=${clientId}`;
     }
 
-    this.socket = new WebSocket(url);
+    const reconnectingOptions = {
+      connectionTimeout: 4000,
+      constructor: (typeof window !== 'undefined') ? WebSocket : Html5WebSocket,
+      debug: false,
+      maxReconnectionDelay: 2000,
+      maxRetries: Infinity,
+      minReconnectionDelay: 1000,
+      reconnectionDelayGrowFactor: 1.0,
+    };
+    this.socket = new ReconnectingWebsocket(url, undefined, reconnectingOptions);
     this.socket.binaryType = 'arraybuffer';
 
     return new Promise((resolve) => {
