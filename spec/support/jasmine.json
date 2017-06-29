@@ -7,5 +7,5 @@
   "spec_files": [
     "**/*[sS]pec.js"
   ],
-  "stopSpecOnExpectationFailure": false
+  "stopSpecOnExpectationFailure": true
 }

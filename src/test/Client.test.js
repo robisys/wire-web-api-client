@@ -2,7 +2,7 @@ import Client from "../../dist/commonjs/Client";
 import Context from "../../dist/commonjs/auth/Context";
 
 describe('Client', () => {
-  describe('connect', () => {
+  describe('"connect"', () => {
     it('processes WebSocket messages when executed in a web browser.', (done) => {
       const apiClient = new Client(Client.BACKEND.STAGING);
       const accessTokenData = {
