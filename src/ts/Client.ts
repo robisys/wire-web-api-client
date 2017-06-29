@@ -51,7 +51,6 @@ class Client extends EventEmitter {
   }
 
   public login(loginData: LoginData): Promise<Context> {
-    console.log('hello');
     return Promise.resolve()
       .then(() => this.context && this.logout())
       .then(() => this.auth.api.postLogin(loginData))
