@@ -1,11 +1,11 @@
 import EventEmitter = require('events');
 
-import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
-import {Backend} from './env';
-import {HttpClient} from './http';
-import {TeamAPI} from './team';
-import {UserAPI, UserData} from  './user';
-import {WebSocketClient} from './tcp';
+import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from "./auth";
+import {Backend} from "./env";
+import {HttpClient} from "./http";
+import {TeamAPI} from "./team";
+import {UserAPI, UserData} from "./user";
+import {WebSocketClient} from "./tcp";
 const buffer = require('./util/buffer');
 
 class Client extends EventEmitter {
@@ -51,8 +51,10 @@ class Client extends EventEmitter {
   }
 
   public login(loginData: LoginData): Promise<Context> {
-    return this.auth.api
-      .postLogin(loginData)
+    console.log('hello');
+    return Promise.resolve()
+      .then(() => this.context && this.logout())
+      .then(() => this.auth.api.postLogin(loginData))
       .then((accessToken: AccessTokenData) => {
         this.client.http.accessToken = accessToken;
         this.client.ws.accessToken = this.client.http.accessToken;
@@ -61,8 +63,9 @@ class Client extends EventEmitter {
   }
 
   public register(registerData: RegisterData): Promise<AccessTokenData> {
-    return this.auth.api
-      .postRegister(registerData)
+    return Promise.resolve()
+      .then(() => this.context && this.logout())
+      .then(() => this.auth.api.postRegister(registerData))
       .then((userData: UserData) => this.createContext(userData.id))
       .then(() => this.refreshAccessToken());
   }
