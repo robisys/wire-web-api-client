@@ -2,13 +2,7 @@
 /.idea/vcs.xml
 /.idea/workspace.xml
 /bower_components
-/dist/commonjs
-/dist/client.js
-/dist/client.js.map
-/dist/index.html
-/dist/demo.js
-/dist/demo.js.map
-/dist/test.js
-/dist/test.js.map
+/dist
+!/dist/demo.js
 /node_modules
 /npm-debug.log*
