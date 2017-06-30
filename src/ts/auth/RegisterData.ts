@@ -1,4 +1,5 @@
 import UserAssetData from "../user/UserAssetData";
+import TeamData from "../team/TeamData";
 
 interface RegisterData {
   accent_id?: number;
@@ -11,6 +12,7 @@ interface RegisterData {
   phone?: string;
   phone_code?: string;
   assets?: UserAssetData[];
+  team?: TeamData;
 }
 
 export default RegisterData;
