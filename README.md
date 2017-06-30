@@ -37,11 +37,11 @@ yarn add @wireapp/api-client
 
 **Browser**
 
-- [index.html](docs/demo.js)
+- [index.html](index.html)
 
 **Node.js**
 
-- [index.js](docs/index.js)
+- [index.js](index.js)
 
 ## Execution
 
