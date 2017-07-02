@@ -9,7 +9,7 @@
     "@types/text-encoding": "0.0.31",
     "axios": "0.16.2",
     "html5-websocket": "1.0.0",
-    "reconnecting-websocket": "3.0.5"
+    "reconnecting-websocket": "3.0.7"
   },
   "devDependencies": {
     "browser-sync": "2.18.12",
