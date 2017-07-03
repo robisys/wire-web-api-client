@@ -2,8 +2,8 @@ import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {AccessTokenData, LoginData} from '../auth';
 import {HttpClient} from '../http';
-import UserData from "../user/UserData";
-import RegisterData from "./RegisterData";
+import UserData from '../user/UserData';
+import RegisterData from './RegisterData';
 
 export default class AuthAPI {
   constructor(private client: HttpClient) {}
@@ -42,11 +42,9 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public postLogout(): AxiosPromise {
@@ -56,11 +54,9 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public postAccess(): Promise<AccessTokenData> {
@@ -70,11 +66,9 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.ACCESS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {
@@ -85,10 +79,8 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.REGISTER}?challenge_cookie=${challengeCookie}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 }

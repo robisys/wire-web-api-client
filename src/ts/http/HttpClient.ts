@@ -25,8 +25,7 @@ export default class HttpClient {
     });
 
     if (this.accessToken) {
-      config.headers.Authorization = `${this.accessToken.token_type} ${this
-        .accessToken.access_token}`;
+      config.headers.Authorization = `${this.accessToken.token_type} ${this.accessToken.access_token}`;
     }
 
     return this.sendRequest(config);

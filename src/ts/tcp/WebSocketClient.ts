@@ -18,7 +18,7 @@ export default class WebSocketClient {
 
     const reconnectingOptions = {
       connectionTimeout: 4000,
-      constructor: (typeof window !== 'undefined') ? WebSocket : Html5WebSocket,
+      constructor: typeof window !== 'undefined' ? WebSocket : Html5WebSocket,
       debug: false,
       maxReconnectionDelay: 2000,
       maxRetries: Infinity,
@@ -28,7 +28,7 @@ export default class WebSocketClient {
     this.socket = new ReconnectingWebsocket(url, undefined, reconnectingOptions);
     this.socket.binaryType = 'arraybuffer';
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.socket.onopen = () => {
         resolve(this.socket);
       };

@@ -1,5 +1,5 @@
 interface SearchableData {
-  searchable: boolean
+  searchable: boolean;
 }
 
 export default SearchableData;

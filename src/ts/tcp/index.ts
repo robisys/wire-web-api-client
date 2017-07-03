@@ -1,5 +1,3 @@
 import WebSocketClient from './WebSocketClient';
 
-export {
-  WebSocketClient
-};
+export {WebSocketClient};

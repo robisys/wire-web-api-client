@@ -1,5 +1,3 @@
 import Backend from './Backend';
 
-export {
-  Backend
-}
+export {Backend};

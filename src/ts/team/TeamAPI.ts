@@ -20,11 +20,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.headers['location'];
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.headers['location'];
+    });
   }
 
   public putTeam(team: TeamData): AxiosPromise {
@@ -37,11 +35,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${team.id}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public getTeams(): Promise<TeamChunkData> {
@@ -50,11 +46,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public getTeam(teamId: string): Promise<TeamData> {
@@ -63,11 +57,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public deleteTeam(teamId: string): AxiosPromise {
@@ -76,11 +68,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public getMembers(teamId: string): Promise<MemberData[]> {
@@ -89,11 +79,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public deleteMember(teamId: string, userId: string): AxiosPromise {
@@ -102,11 +90,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}/${userId}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public postMembers(teamId: string, member: MemberData): AxiosPromise {
@@ -118,11 +104,9 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 
   public putMembers(teamId: string, member: MemberData): AxiosPromise {
@@ -134,10 +118,8 @@ export default class TeamAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.MEMBERS}`,
     };
 
-    return this.client
-      .sendJSONRequest(config)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 }

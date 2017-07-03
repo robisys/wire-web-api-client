@@ -5,11 +5,4 @@ import TeamAPI from './TeamAPI';
 import TeamChunkData from './TeamChunkData';
 import TeamData from './TeamData';
 
-export {
-  MemberData,
-  NewTeamData,
-  PermissionsData,
-  TeamAPI,
-  TeamChunkData,
-  TeamData
-};
+export {MemberData, NewTeamData, PermissionsData, TeamAPI, TeamChunkData, TeamData};

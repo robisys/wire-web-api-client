@@ -1,5 +1,5 @@
-import UserAssetData from "../user/UserAssetData";
-import TeamData from "../team/TeamData";
+import UserAssetData from '../user/UserAssetData';
+import TeamData from '../team/TeamData';
 
 interface RegisterData {
   accent_id?: number;
