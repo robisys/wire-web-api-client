@@ -14,8 +14,7 @@ describe('Client', () => {
       const dataBuffer = new TextEncoder('utf-8').encode('{}').buffer;
       const message = new MessageEvent('message', {data: dataBuffer});
       apiClient.context = new Context('userID', undefined);
-      apiClient.client.http.accessToken = accessTokenData;
-      apiClient.client.ws.accessToken = accessTokenData;
+      apiClient.accessTokenStore.accessToken = accessTokenData;
       const promise = apiClient.connect();
       apiClient.client.ws.socket.onopen(message);
       promise.then((socket) => {

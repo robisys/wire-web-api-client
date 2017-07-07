@@ -71,9 +71,16 @@ window.onload = function() {
   const LOGOUT_BUTTON = document.getElementById('wire-logout-form-submit');
 
   const client = new Client(BACKEND_ENV);
-  client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
+
+  client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, (notification) => {
     console.log('Received notification via WebSocket', notification);
   });
+
+  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', (accessToken) => {
+    console.log('Acquired AccessToken', accessToken);
+  });
+
+  window.wire = Object.assign({}, {client: client});
 
   initBackendLabel();
   initLoginButton(client);

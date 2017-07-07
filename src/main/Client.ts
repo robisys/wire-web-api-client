@@ -1,11 +1,12 @@
+import AccessTokenStore from './auth/AccessTokenStore';
 import EventEmitter = require('events');
-
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {Backend} from './env';
 import {HttpClient} from './http';
 import {TeamAPI} from './team';
-import {UserAPI, UserData} from './user';
+import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
+
 const buffer = require('./util/buffer');
 
 class Client extends EventEmitter {
@@ -34,54 +35,47 @@ class Client extends EventEmitter {
 
   public static BACKEND = Backend;
 
+  private accessTokenStore: AccessTokenStore;
+
   constructor(public urls: {rest: string; ws?: string; name?: string} = Client.BACKEND.PRODUCTION) {
     super();
 
-    this.client.http = new HttpClient(urls.rest);
-    this.client.ws = new WebSocketClient(urls.ws);
+    this.accessTokenStore = new AccessTokenStore();
+
+    this.client.http = new HttpClient(urls.rest, this.accessTokenStore);
+    this.client.ws = new WebSocketClient(urls.ws, this.accessTokenStore);
 
     this.auth.api = new AuthAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);
     this.team.api = new TeamAPI(this.client.http);
   }
 
-  public init(): Promise<Context> {
-    return this.refreshAccessToken().then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
+  public init(existingAccessToken?: AccessTokenData): Promise<Context> {
+    return this.accessTokenStore
+      .init(this.auth.api, existingAccessToken)
+      .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
 
   public login(loginData: LoginData): Promise<Context> {
     return Promise.resolve()
       .then(() => this.context && this.logout())
       .then(() => this.auth.api.postLogin(loginData))
-      .then((accessToken: AccessTokenData) => {
-        this.client.http.accessToken = accessToken;
-        this.client.ws.accessToken = this.client.http.accessToken;
-        return this.createContext(accessToken.user);
-      });
+      .then((accessToken: AccessTokenData) => this.init(accessToken));
   }
 
-  public register(registerData: RegisterData): Promise<AccessTokenData> {
+  public register(registerData: RegisterData): Promise<Context> {
     return Promise.resolve()
       .then(() => this.context && this.logout())
       .then(() => this.auth.api.postRegister(registerData))
-      .then((userData: UserData) => this.createContext(userData.id))
-      .then(() => this.refreshAccessToken());
+      .then(() => this.init());
   }
 
   public logout(): Promise<void> {
-    return this.auth.api.postLogout().then(() => this.disconnect()).then(() => {
-      this.client.http.accessToken = undefined;
-      this.client.ws.accessToken = undefined;
-      this.context = undefined;
-    });
-  }
-
-  public refreshAccessToken(): Promise<AccessTokenData> {
-    return this.auth.api.postAccess().then((accessToken: AccessTokenData) => {
-      this.client.http.accessToken = accessToken;
-      this.client.ws.accessToken = this.client.http.accessToken;
-      return accessToken;
-    });
+    return this.auth.api
+      .postLogout()
+      .then(() => this.disconnect())
+      .then(() => this.accessTokenStore.reset())
+      .then(() => (this.context = undefined));
   }
 
   public connect(): Promise<WebSocket> {

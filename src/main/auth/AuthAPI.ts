@@ -59,12 +59,18 @@ export default class AuthAPI {
     });
   }
 
-  public postAccess(): Promise<AccessTokenData> {
+  public postAccess(expiredAccessToken?: AccessTokenData): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
       withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.ACCESS}`,
     };
+
+    if (expiredAccessToken) {
+      config.headers = {
+        Authorization: `${expiredAccessToken.token_type} ${decodeURIComponent(expiredAccessToken.access_token)}`,
+      };
+    }
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
       return response.data;

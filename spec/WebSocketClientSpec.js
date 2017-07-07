@@ -1,5 +1,6 @@
 const WebSocketClient = require('../dist/commonjs/tcp/WebSocketClient').default;
 const WebSocketServer = require('ws').Server;
+const {AccessTokenStore} = require('../dist/commonjs/auth');
 
 const WEB_SOCKET_PORT = 8087;
 let server = undefined;
@@ -16,13 +17,6 @@ function stopServer() {
 }
 
 describe('WebSocketClient', () => {
-  describe('"constructor"', () => {
-    it('constructs a WebSocket client.', () => {
-      const client = new WebSocketClient('baseURL');
-      expect(client).toBeDefined();
-    });
-  });
-
   describe('"connect"', () => {
     beforeEach(function() {
       startServer();
@@ -48,8 +42,10 @@ describe('WebSocketClient', () => {
         token_type: 'Bearer',
         user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4'
       };
+      const accessTokenStore = new AccessTokenStore();
+      accessTokenStore.accessToken = accessTokenData;
       const baseURL = 'http://localhost:8087';
-      const client = new WebSocketClient(baseURL);
+      const client = new WebSocketClient(baseURL, accessTokenStore);
       client.accessToken = accessTokenData;
       client.connect().then((socket) => {
         expect(socket).toBeDefined();
@@ -70,8 +66,10 @@ describe('WebSocketClient', () => {
         token_type: 'Bearer',
         user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4'
       };
+      const accessTokenStore = new AccessTokenStore();
+      accessTokenStore.accessToken = accessTokenData;
       const baseURL = 'http://localhost:8087';
-      const client = new WebSocketClient(baseURL);
+      const client = new WebSocketClient(baseURL, accessTokenStore);
       client.accessToken = accessTokenData;
 
       client.connect().then((socket) => {

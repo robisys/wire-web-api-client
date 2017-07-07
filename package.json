@@ -7,6 +7,7 @@
   "dependencies": {
     "@types/node": "8.0.8",
     "@types/text-encoding": "0.0.31",
+    "@wireapp/store-engine": "0.0.15",
     "axios": "0.16.2",
     "html5-websocket": "1.0.0",
     "reconnecting-websocket": "3.0.7"
@@ -23,6 +24,7 @@
     "karma-jasmine-diff-reporter": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
     "lint-staged": "4.0.1",
+    "moxios": "0.4.0",
     "optimist": "0.6.1",
     "prettier": "1.5.2",
     "rimraf": "2.6.1",
@@ -54,7 +56,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=120 --write \"src/**/*.ts\"",
     "preversion": "yarn && yarn dist && yarn test",
-    "start": "browser-sync start --config \"bs-config.js\"",
+    "start": "yarn dist && concurrently \"tsc -w\" \"webpack -w\" \"browser-sync start -c bs-config.js\"",
     "version": "yarn dist",
     "watch": "webpack-dev-server --config webpack.config.js --open",
     "test": "yarn clear && yarn dist && yarn test:node && yarn test:browser",

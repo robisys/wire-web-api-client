@@ -1,16 +1,15 @@
+import {AccessTokenStore} from '../auth';
+
 const Html5WebSocket = require('html5-websocket');
 const ReconnectingWebsocket = require('reconnecting-websocket');
 
-import {AccessTokenData} from '../auth';
-
 export default class WebSocketClient {
-  public accessToken: AccessTokenData;
   private socket: WebSocket;
 
-  constructor(public baseURL: string) {}
+  constructor(private baseURL: string, private accessTokenStore: AccessTokenStore) {}
 
   public connect(clientId?: string): Promise<WebSocket> {
-    let url = `${this.baseURL}/await?access_token=${this.accessToken.access_token}`;
+    let url = `${this.baseURL}/await?access_token=${this.accessTokenStore.accessToken.access_token}`;
 
     if (clientId) {
       url += `&client=${clientId}`;
@@ -35,12 +34,10 @@ export default class WebSocketClient {
     });
   }
 
-  public disconnect() {
+  public disconnect(): void {
     if (this.socket) {
       this.socket.close();
       this.socket = undefined;
-    } else {
-      throw new Error('Attempt for closing non-existent WebSocket.');
     }
   }
 }

@@ -1,12 +1,15 @@
 import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
-
-import {AccessTokenData} from '../auth';
+import {AccessTokenStore} from '../auth';
 import {ContentType} from '../http';
 
 export default class HttpClient {
-  public accessToken: AccessTokenData = undefined;
+  private accessTokenStore: AccessTokenStore;
+  private baseURL: string;
 
-  constructor(public baseURL: string) {}
+  constructor(baseURL: string, accessTokenStore: AccessTokenStore) {
+    this.accessTokenStore = accessTokenStore;
+    this.baseURL = baseURL;
+  }
 
   public createUrl(url: string) {
     return `${this.baseURL}${url}`;
@@ -24,8 +27,9 @@ export default class HttpClient {
       'Content-Type': ContentType.APPLICATION_JSON,
     });
 
-    if (this.accessToken) {
-      config.headers.Authorization = `${this.accessToken.token_type} ${this.accessToken.access_token}`;
+    if (this.accessTokenStore.accessToken) {
+      config.headers.Authorization = `${this.accessTokenStore.accessToken.token_type} ${this.accessTokenStore
+        .accessToken.access_token}`;
     }
 
     return this.sendRequest(config);
