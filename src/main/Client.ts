@@ -50,17 +50,18 @@ class Client extends EventEmitter {
     this.team.api = new TeamAPI(this.client.http);
   }
 
-  public init(existingAccessToken?: AccessTokenData): Promise<Context> {
+  public init(): Promise<Context> {
     return this.accessTokenStore
-      .init(this.auth.api, existingAccessToken)
-      .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
+      .init(this.auth.api)
+      .then((existingAccessToken: AccessTokenData) => this.createContext(existingAccessToken.user));
   }
 
   public login(loginData: LoginData): Promise<Context> {
     return Promise.resolve()
       .then(() => this.context && this.logout())
       .then(() => this.auth.api.postLogin(loginData))
-      .then((accessToken: AccessTokenData) => this.init(accessToken));
+      .then((accessToken: AccessTokenData) => this.accessTokenStore.updateToken(accessToken))
+      .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
 
   public register(registerData: RegisterData): Promise<Context> {

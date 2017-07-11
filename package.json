@@ -7,7 +7,7 @@
   "dependencies": {
     "@types/node": "8.0.10",
     "@types/text-encoding": "0.0.31",
-    "@wireapp/store-engine": "0.0.15",
+    "@wireapp/store-engine": "0.0.16",
     "axios": "0.16.2",
     "html5-websocket": "1.0.0",
     "reconnecting-websocket": "3.0.7"

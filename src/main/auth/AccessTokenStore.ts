@@ -2,7 +2,7 @@ import AccessTokenData from './AccessTokenData';
 import AuthAPI from './AuthAPI';
 import EventEmitter = require('events');
 import {CRUDEngine, InMemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
-import {ExpiredBundle, TransientStore} from '@wireapp/store-engine/dist/commonjs/store';
+import {ExpiredBundle, TransientBundle, TransientStore} from '@wireapp/store-engine/dist/commonjs/store';
 
 export default class AccessTokenStore extends EventEmitter {
   private ACCESS_TOKEN_DATABASE: string = 'in-memory-database';
@@ -36,7 +36,7 @@ export default class AccessTokenStore extends EventEmitter {
     });
   }
 
-  private updateToken(accessToken: AccessTokenData): Promise<AccessTokenData> {
+  public updateToken(accessToken: AccessTokenData): Promise<AccessTokenData> {
     const ttlInMillis = Math.max(accessToken.expires_in * 1000 - 1000, 10000);
     return this.tokenStore.set(this.ACCESS_TOKEN_KEY, accessToken, ttlInMillis).then(() => {
       this.accessToken = accessToken;
@@ -45,19 +45,20 @@ export default class AccessTokenStore extends EventEmitter {
     });
   }
 
-  public init(authAPI: AuthAPI, initialAccessToken?: AccessTokenData): Promise<AccessTokenData> {
+  public init(authAPI: AuthAPI): Promise<AccessTokenData> {
     this.authAPI = authAPI;
 
     return this.tokenStore
       .init(this.ACCESS_TOKEN_TABLE)
-      .then(() => {
-        if (initialAccessToken) {
-          return initialAccessToken;
-        } else {
-          return this.refreshAccessToken();
+      .then(() => this.tokenStore.get(this.ACCESS_TOKEN_KEY))
+      .then((bundle: TransientBundle) => {
+        if (bundle) {
+          return bundle.payload;
         }
+
+        return this.refreshAccessToken();
       })
-      .then((accessToken: AccessTokenData) => this.updateToken(accessToken));
+      .then((accessToken: AccessTokenData) => (this.accessToken = accessToken));
   }
 
   public reset(): Promise<string> {
