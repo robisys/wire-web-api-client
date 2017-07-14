@@ -1022,20 +1022,19 @@ var AccessTokenStore = (function (_super) {
             return accessToken;
         });
     };
-    AccessTokenStore.prototype.init = function (authAPI, initialAccessToken) {
+    AccessTokenStore.prototype.init = function (authAPI) {
         var _this = this;
         this.authAPI = authAPI;
         return this.tokenStore
             .init(this.ACCESS_TOKEN_TABLE)
-            .then(function () {
-            if (initialAccessToken) {
-                return initialAccessToken;
+            .then(function () { return _this.tokenStore.get(_this.ACCESS_TOKEN_KEY); })
+            .then(function (bundle) {
+            if (bundle) {
+                return bundle.payload;
             }
-            else {
-                return _this.refreshAccessToken();
-            }
+            return _this.refreshAccessToken();
         })
-            .then(function (accessToken) { return _this.updateToken(accessToken); });
+            .then(function (accessToken) { return (_this.accessToken = accessToken); });
     };
     AccessTokenStore.prototype.reset = function () {
         this.accessToken = undefined;
@@ -1463,18 +1462,19 @@ var Client = (function (_super) {
         _this.team.api = new team_1.TeamAPI(_this.client.http);
         return _this;
     }
-    Client.prototype.init = function (existingAccessToken) {
+    Client.prototype.init = function () {
         var _this = this;
         return this.accessTokenStore
-            .init(this.auth.api, existingAccessToken)
-            .then(function (accessToken) { return _this.createContext(accessToken.user); });
+            .init(this.auth.api)
+            .then(function (existingAccessToken) { return _this.createContext(existingAccessToken.user); });
     };
     Client.prototype.login = function (loginData) {
         var _this = this;
         return Promise.resolve()
             .then(function () { return _this.context && _this.logout(); })
             .then(function () { return _this.auth.api.postLogin(loginData); })
-            .then(function (accessToken) { return _this.init(accessToken); });
+            .then(function (accessToken) { return _this.accessTokenStore.updateToken(accessToken); })
+            .then(function (accessToken) { return _this.createContext(accessToken.user); });
     };
     Client.prototype.register = function (registerData) {
         var _this = this;
@@ -6707,6 +6707,12 @@ var TransientStore = (function (_super) {
     TransientStore.prototype.constructPrimaryKey = function (cacheKey) {
         return cacheKey.replace(this.engine.storeName + "@" + this.tableName + "@", '');
     };
+    TransientStore.prototype.createTransientBundle = function (record, ttl) {
+        return {
+            expires: Date.now() + ttl,
+            payload: record,
+        };
+    };
     TransientStore.prototype.get = function (primaryKey) {
         var _this = this;
         return this.getFromCache(primaryKey)
@@ -6723,10 +6729,7 @@ var TransientStore = (function (_super) {
     };
     TransientStore.prototype.set = function (primaryKey, record, ttl) {
         var _this = this;
-        var bundle = {
-            expires: Date.now() + ttl,
-            payload: record,
-        };
+        var bundle = this.createTransientBundle(record, ttl);
         return new Promise(function (resolve, reject) {
             _this.getFromCache(primaryKey)
                 .then(function (cachedBundle) {
@@ -8157,6 +8160,7 @@ var WebSocketClient = (function () {
     }
     WebSocketClient.prototype.connect = function (clientId) {
         var _this = this;
+        var PING_INTERVAL = 30000;
         var url = this.baseURL + "/await?access_token=" + this.accessTokenStore.accessToken.access_token;
         if (clientId) {
             url += "&client=" + clientId;
@@ -8165,15 +8169,21 @@ var WebSocketClient = (function () {
             connectionTimeout: 4000,
             constructor: typeof window !== 'undefined' ? WebSocket : Html5WebSocket,
             debug: false,
-            maxReconnectionDelay: 2000,
+            maxReconnectionDelay: 30000,
             maxRetries: Infinity,
-            minReconnectionDelay: 1000,
-            reconnectionDelayGrowFactor: 1.0,
+            minReconnectionDelay: 4000,
+            reconnectionDelayGrowFactor: 1.3,
         };
         this.socket = new ReconnectingWebsocket(url, undefined, reconnectingOptions);
         this.socket.binaryType = 'arraybuffer';
         return new Promise(function (resolve) {
             _this.socket.onopen = function () {
+                var pinger = setInterval(function () {
+                    _this.socket.send('Wire is so much nicer with Internet!');
+                }, PING_INTERVAL);
+                _this.socket.onclose = function () {
+                    clearInterval(pinger);
+                };
                 resolve(_this.socket);
             };
         });
