@@ -46,7 +46,7 @@ describe('WebSocketClient', () => {
       accessTokenStore.accessToken = accessTokenData;
       const baseURL = 'http://localhost:8087';
       const client = new WebSocketClient(baseURL, accessTokenStore);
-      client.accessToken = accessTokenData;
+
       client.connect().then((socket) => {
         expect(socket).toBeDefined();
 
@@ -70,7 +70,6 @@ describe('WebSocketClient', () => {
       accessTokenStore.accessToken = accessTokenData;
       const baseURL = 'http://localhost:8087';
       const client = new WebSocketClient(baseURL, accessTokenStore);
-      client.accessToken = accessTokenData;
 
       client.connect().then((socket) => {
         // "open" listener which will be triggered on WebSocket reconnect
@@ -81,6 +80,6 @@ describe('WebSocketClient', () => {
 
         server.close();
       }).catch(done.fail);
-    });
+    }, 10000);
   });
 });

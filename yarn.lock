@@ -2,23 +2,23 @@
 # yarn lockfile v1
 
 
-"@types/node@8.0.7":
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.7.tgz#fb0ad04b5b6f6eabe0372a32a8f1fbba5c130cae"
+"@types/node@8.0.11":
+  version "8.0.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.11.tgz#3cf80de7185292c6dab156ece696dffed0cc3502"
 
-"@types/node@8.0.8":
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.8.tgz#0dc4ca2c6f6fc69baee16c5e928c4a627f517ada"
+"@types/node@8.0.9":
+  version "8.0.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.9.tgz#19f44c3b6cb8a70d261d366f73650e3e3891ab2d"
 
 "@types/text-encoding@0.0.31":
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@types/text-encoding/-/text-encoding-0.0.31.tgz#b120815cda47b8f24100ecdc6564836c523316bc"
 
-"@wireapp/store-engine@0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@wireapp/store-engine/-/store-engine-0.0.15.tgz#c2c26b4c13c269eccfd330e219e16c2fd3ee16f9"
+"@wireapp/store-engine@0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@wireapp/store-engine/-/store-engine-0.0.16.tgz#634b67e2eba26d1a83a837e7ac6f763cc88f47ac"
   dependencies:
-    "@types/node" "8.0.7"
+    "@types/node" "8.0.9"
     dexie "1.5.1"
 
 abbrev@1, abbrev@1.0.x:
@@ -652,11 +652,11 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.6.0, commander@^2.2.0:
+commander@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
 
-commander@^2.9.0:
+commander@^2.2.0, commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -2204,6 +2204,7 @@ karma-jasmine-diff-reporter@1.1.0:
   dependencies:
     chalk "^1.1.0"
     diff "^1.4.0"
+    karma ">=0.9"
 
 karma-jasmine@1.1.0:
   version "1.1.0"
@@ -3446,9 +3447,9 @@ sinon-har-server@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/sinon-har-server/-/sinon-har-server-0.3.0.tgz#d767b51a2f6f34856ecd9867ff98f97bacfbde6b"
 
-sinon@2.3.6:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.3.6.tgz#95378e7e0f976a9712e9b4591ff5b39e73dc3dde"
+sinon@2.3.7:
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.3.7.tgz#1451614a2eaab05bb4d876c1335cd40132ec5127"
   dependencies:
     diff "^3.1.0"
     formatio "1.2.0"
@@ -4039,9 +4040,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.1.0.tgz#ac0675e500db835f9ab2369d29ba096f51ad0731"
+webpack@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.2.0.tgz#8b0cae0e1a9fd76bfbf0eab61a8c2ada848c312f"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
