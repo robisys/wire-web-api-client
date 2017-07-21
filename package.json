@@ -13,7 +13,7 @@
     "reconnecting-websocket": "3.0.7"
   },
   "devDependencies": {
-    "browser-sync": "2.18.12",
+    "browser-sync": "2.18.13",
     "concurrently": "3.5.0",
     "husky": "0.14.3",
     "istanbul": "0.4.5",
