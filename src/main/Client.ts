@@ -53,7 +53,8 @@ class Client extends EventEmitter {
   public init(): Promise<Context> {
     return this.accessTokenStore
       .init(this.auth.api)
-      .then((existingAccessToken: AccessTokenData) => this.createContext(existingAccessToken.user));
+      .then((accessToken: AccessTokenData) => this.accessTokenStore.updateToken(accessToken))
+      .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
 
   public login(loginData: LoginData): Promise<Context> {

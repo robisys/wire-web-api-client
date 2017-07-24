@@ -32,17 +32,20 @@ export default class AccessTokenStore extends EventEmitter {
     this.tokenStore = new TransientStore(engine);
     this.tokenStore.on(TransientStore.TOPIC.EXPIRED, (expiredBundle: ExpiredBundle) => {
       const expiredAccessToken: AccessTokenData = expiredBundle.payload;
-      this.refreshAccessToken(expiredAccessToken);
+      this.refreshAccessToken(expiredAccessToken).then((accessToken: AccessTokenData) => this.updateToken(accessToken));
     });
   }
 
   public updateToken(accessToken: AccessTokenData): Promise<AccessTokenData> {
-    const ttlInMillis = Math.max(accessToken.expires_in * 1000 - 1000, 10000);
-    return this.tokenStore.set(this.ACCESS_TOKEN_KEY, accessToken, ttlInMillis).then(() => {
-      this.accessToken = accessToken;
-      this.emit(AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH, this.accessToken);
-      return accessToken;
-    });
+    const ttlInMillis = Math.max(accessToken.expires_in * 1000 - 20000, 10000);
+    if (this.accessToken !== accessToken) {
+      return this.tokenStore.set(this.ACCESS_TOKEN_KEY, accessToken, ttlInMillis).then(() => {
+        this.accessToken = accessToken;
+        this.emit(AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH, this.accessToken);
+        return accessToken;
+      });
+    }
+    return Promise.resolve(this.accessToken);
   }
 
   public init(authAPI: AuthAPI): Promise<AccessTokenData> {
@@ -55,7 +58,6 @@ export default class AccessTokenStore extends EventEmitter {
         if (bundle) {
           return bundle.payload;
         }
-
         return this.refreshAccessToken();
       })
       .then((accessToken: AccessTokenData) => (this.accessToken = accessToken));
