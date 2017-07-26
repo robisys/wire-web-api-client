@@ -1,5 +1,6 @@
 import AccessTokenStore from './auth/AccessTokenStore';
 import EventEmitter = require('events');
+import {AssetAPI} from './asset';
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {Backend} from './env';
 import {HttpClient} from './http';
@@ -10,6 +11,10 @@ import {WebSocketClient} from './tcp';
 const buffer = require('./util/buffer');
 
 class Client extends EventEmitter {
+  public asset: {api: AssetAPI} = {
+    api: undefined,
+  };
+
   public auth: {api: AuthAPI} = {
     api: undefined,
   };
@@ -45,6 +50,7 @@ class Client extends EventEmitter {
     this.client.http = new HttpClient(urls.rest, this.accessTokenStore);
     this.client.ws = new WebSocketClient(urls.ws, this.accessTokenStore);
 
+    this.asset.api = new AssetAPI(this.client.http);
     this.auth.api = new AuthAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);
     this.team.api = new TeamAPI(this.client.http);

@@ -15,23 +15,33 @@ export default class HttpClient {
     return `${this.baseURL}${url}`;
   }
 
-  public sendRequest(config: AxiosRequestConfig): AxiosPromise {
+  public sendRequest(config: AxiosRequestConfig, tokenAsParam: boolean = false): AxiosPromise {
     config.baseURL = this.baseURL;
+
+    if (this.accessTokenStore.accessToken) {
+      const {token_type, access_token} = this.accessTokenStore.accessToken;
+
+      if (tokenAsParam) {
+        config.params = {
+          ...config.params,
+          access_token,
+        };
+      } else {
+        config.headers = {
+          ...config.headers,
+          Authorization: `${token_type} ${access_token}`,
+        };
+      }
+    }
+
     return axios.request(config);
   }
 
   public sendJSONRequest(config: AxiosRequestConfig): AxiosPromise {
-    config.headers = config.headers || {};
-
-    Object.assign(config.headers, {
+    config.headers = {
+      ...config.headers,
       'Content-Type': ContentType.APPLICATION_JSON,
-    });
-
-    if (this.accessTokenStore.accessToken) {
-      config.headers.Authorization = `${this.accessTokenStore.accessToken.token_type} ${this.accessTokenStore
-        .accessToken.access_token}`;
-    }
-
+    };
     return this.sendRequest(config);
   }
 }

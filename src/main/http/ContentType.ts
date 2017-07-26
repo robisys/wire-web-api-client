@@ -1,5 +1,3 @@
 export default class ContentType {
-  public static get APPLICATION_JSON(): string {
-    return 'application/json;charset=UTF-8';
-  }
+  public static readonly APPLICATION_JSON: string = 'application/json;charset=UTF-8';
 }

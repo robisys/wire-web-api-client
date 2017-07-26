@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 61);
+/******/ 	return __webpack_require__(__webpack_require__.s = 67);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,8 +70,8 @@
 "use strict";
 
 
-var bind = __webpack_require__(8);
-var isBuffer = __webpack_require__(34);
+var bind = __webpack_require__(10);
+var isBuffer = __webpack_require__(41);
 
 /*global toString:true*/
 
@@ -879,7 +879,7 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(36);
+var normalizeHeaderName = __webpack_require__(43);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -895,10 +895,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(11);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(11);
   }
   return adapter;
 }
@@ -977,6 +977,29 @@ module.exports = defaults;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var SparkMD5 = __webpack_require__(32);
+exports.bufferToString = function (buffer) {
+    return new TextDecoder('utf-8').decode(new Uint8Array(buffer));
+};
+exports.base64MD5FromBuffer = function (buffer) {
+    return window.btoa(SparkMD5.ArrayBuffer.hash(buffer, true));
+};
+exports.concatToBuffer = function () {
+    var items = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        items[_i] = arguments[_i];
+    }
+    return new Blob(items);
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -989,8 +1012,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventEmitter = __webpack_require__(1);
-var engine_1 = __webpack_require__(15);
-var store_1 = __webpack_require__(22);
+var engine_1 = __webpack_require__(17);
+var store_1 = __webpack_require__(24);
 var AccessTokenStore = (function (_super) {
     __extends(AccessTokenStore, _super);
     function AccessTokenStore() {
@@ -1010,17 +1033,20 @@ var AccessTokenStore = (function (_super) {
         this.tokenStore = new store_1.TransientStore(engine);
         this.tokenStore.on(store_1.TransientStore.TOPIC.EXPIRED, function (expiredBundle) {
             var expiredAccessToken = expiredBundle.payload;
-            _this.refreshAccessToken(expiredAccessToken);
+            _this.refreshAccessToken(expiredAccessToken).then(function (accessToken) { return _this.updateToken(accessToken); });
         });
     };
     AccessTokenStore.prototype.updateToken = function (accessToken) {
         var _this = this;
-        var ttlInMillis = Math.max(accessToken.expires_in * 1000 - 1000, 10000);
-        return this.tokenStore.set(this.ACCESS_TOKEN_KEY, accessToken, ttlInMillis).then(function () {
-            _this.accessToken = accessToken;
-            _this.emit(AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH, _this.accessToken);
-            return accessToken;
-        });
+        var ttlInMillis = Math.max(accessToken.expires_in * 1000 - 20000, 10000);
+        if (this.accessToken !== accessToken) {
+            return this.tokenStore.set(this.ACCESS_TOKEN_KEY, accessToken, ttlInMillis).then(function () {
+                _this.accessToken = accessToken;
+                _this.emit(AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH, _this.accessToken);
+                return accessToken;
+            });
+        }
+        return Promise.resolve(this.accessToken);
     };
     AccessTokenStore.prototype.init = function (authAPI) {
         var _this = this;
@@ -1049,7 +1075,7 @@ exports.default = AccessTokenStore;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1076,7 +1102,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1109,22 +1135,38 @@ exports.default = RecordAlreadyExistsError;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ContentType_1 = __webpack_require__(30);
+var AssetRetentionPolicy;
+(function (AssetRetentionPolicy) {
+    AssetRetentionPolicy["ETERNAL"] = "eternal";
+    AssetRetentionPolicy["PERSISTENT"] = "persistent";
+    AssetRetentionPolicy["VOLATILE"] = "volatile";
+})(AssetRetentionPolicy || (AssetRetentionPolicy = {}));
+exports.default = AssetRetentionPolicy;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ContentType_1 = __webpack_require__(37);
 exports.ContentType = ContentType_1.default;
-var HttpClient_1 = __webpack_require__(31);
+var HttpClient_1 = __webpack_require__(38);
 exports.HttpClient = HttpClient_1.default;
-var StatusCode_1 = __webpack_require__(51);
+var StatusCode_1 = __webpack_require__(58);
 exports.StatusCode = StatusCode_1.default;
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1142,19 +1184,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(37);
-var buildURL = __webpack_require__(39);
-var parseHeaders = __webpack_require__(40);
-var isURLSameOrigin = __webpack_require__(41);
-var createError = __webpack_require__(10);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(42);
+var settle = __webpack_require__(44);
+var buildURL = __webpack_require__(46);
+var parseHeaders = __webpack_require__(47);
+var isURLSameOrigin = __webpack_require__(48);
+var createError = __webpack_require__(12);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(49);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1251,7 +1293,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(43);
+      var cookies = __webpack_require__(50);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1330,13 +1372,13 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(38);
+var enhanceError = __webpack_require__(45);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1355,7 +1397,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1367,7 +1409,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1393,7 +1435,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1410,7 +1452,7 @@ exports.default = Context;
 
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1425,21 +1467,25 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var AccessTokenStore_1 = __webpack_require__(4);
+var AccessTokenStore_1 = __webpack_require__(5);
 var EventEmitter = __webpack_require__(1);
-var auth_1 = __webpack_require__(26);
-var env_1 = __webpack_require__(28);
-var http_1 = __webpack_require__(7);
-var team_1 = __webpack_require__(52);
-var user_1 = __webpack_require__(54);
-var tcp_1 = __webpack_require__(56);
-var buffer = __webpack_require__(60);
+var asset_1 = __webpack_require__(28);
+var auth_1 = __webpack_require__(33);
+var env_1 = __webpack_require__(35);
+var http_1 = __webpack_require__(9);
+var team_1 = __webpack_require__(59);
+var user_1 = __webpack_require__(61);
+var tcp_1 = __webpack_require__(63);
+var buffer = __webpack_require__(4);
 var Client = (function (_super) {
     __extends(Client, _super);
     function Client(urls) {
         if (urls === void 0) { urls = Client.BACKEND.PRODUCTION; }
         var _this = _super.call(this) || this;
         _this.urls = urls;
+        _this.asset = {
+            api: undefined,
+        };
         _this.auth = {
             api: undefined,
         };
@@ -1457,6 +1503,7 @@ var Client = (function (_super) {
         _this.accessTokenStore = new AccessTokenStore_1.default();
         _this.client.http = new http_1.HttpClient(urls.rest, _this.accessTokenStore);
         _this.client.ws = new tcp_1.WebSocketClient(urls.ws, _this.accessTokenStore);
+        _this.asset.api = new asset_1.AssetAPI(_this.client.http);
         _this.auth.api = new auth_1.AuthAPI(_this.client.http);
         _this.user.api = new user_1.UserAPI(_this.client.http);
         _this.team.api = new team_1.TeamAPI(_this.client.http);
@@ -1466,7 +1513,8 @@ var Client = (function (_super) {
         var _this = this;
         return this.accessTokenStore
             .init(this.auth.api)
-            .then(function (existingAccessToken) { return _this.createContext(existingAccessToken.user); });
+            .then(function (accessToken) { return _this.accessTokenStore.updateToken(accessToken); })
+            .then(function (accessToken) { return _this.createContext(accessToken.user); });
     };
     Client.prototype.login = function (loginData) {
         var _this = this;
@@ -1521,28 +1569,28 @@ module.exports = Client;
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var IndexedDBEngine_1 = __webpack_require__(16);
+var IndexedDBEngine_1 = __webpack_require__(18);
 exports.IndexedDBEngine = IndexedDBEngine_1.default;
-var InMemoryEngine_1 = __webpack_require__(20);
+var InMemoryEngine_1 = __webpack_require__(22);
 exports.InMemoryEngine = InMemoryEngine_1.default;
-var LocalStorageEngine_1 = __webpack_require__(21);
+var LocalStorageEngine_1 = __webpack_require__(23);
 exports.LocalStorageEngine = LocalStorageEngine_1.default;
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dexie_1 = __webpack_require__(17);
+var dexie_1 = __webpack_require__(19);
 var IndexedDBEngine = (function () {
     function IndexedDBEngine(storeName) {
         this.storeName = storeName;
@@ -1579,7 +1627,7 @@ exports.default = IndexedDBEngine;
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {(function (global, factory) {
@@ -6187,10 +6235,10 @@ return Dexie;
 })));
 //# sourceMappingURL=dexie.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(18).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(20).setImmediate))
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -6243,13 +6291,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(19);
+__webpack_require__(21);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -6439,10 +6487,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(2)))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6517,7 +6565,7 @@ exports.default = InMemoryEngine;
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6598,24 +6646,24 @@ exports.default = LocalStorageEngine;
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ExpiredBundle_1 = __webpack_require__(23);
+var ExpiredBundle_1 = __webpack_require__(25);
 exports.ExpiredBundle = ExpiredBundle_1.default;
-var RecordAlreadyExistsError_1 = __webpack_require__(6);
+var RecordAlreadyExistsError_1 = __webpack_require__(7);
 exports.RecordAlreadyExistsError = RecordAlreadyExistsError_1.default;
-var TransientBundle_1 = __webpack_require__(24);
+var TransientBundle_1 = __webpack_require__(26);
 exports.TransientBundle = TransientBundle_1.default;
-var TransientStore_1 = __webpack_require__(25);
+var TransientStore_1 = __webpack_require__(27);
 exports.TransientStore = TransientStore_1.default;
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6630,7 +6678,7 @@ exports.default = ExpiredBundle;
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6645,7 +6693,7 @@ exports.default = TransientBundle;
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6661,7 +6709,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var RecordAlreadyExistsError_1 = __webpack_require__(6);
+var RecordAlreadyExistsError_1 = __webpack_require__(7);
 var events_1 = __webpack_require__(1);
 var TransientStore = (function (_super) {
     __extends(TransientStore, _super);
@@ -6816,22 +6864,896 @@ exports.default = TransientStore;
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var AccessTokenStore_1 = __webpack_require__(4);
+var AssetAPI_1 = __webpack_require__(29);
+exports.AssetAPI = AssetAPI_1.default;
+var AssetRetentionPolicy_1 = __webpack_require__(8);
+exports.AssetRetentionPolicy = AssetRetentionPolicy_1.default;
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AssetUtil_1 = __webpack_require__(30);
+var random_1 = __webpack_require__(31);
+var AssetRetentionPolicy_1 = __webpack_require__(8);
+var buffer_1 = __webpack_require__(4);
+var AssetAPI = (function () {
+    function AssetAPI(client) {
+        this.client = client;
+    }
+    AssetAPI.prototype.getAsset = function (key, token) {
+        if (!AssetUtil_1.isValidKey(key)) {
+            throw TypeError('Expected key to only contain alphanumeric values and dashes.');
+        }
+        if (token && !AssetUtil_1.isValidToken(token)) {
+            throw TypeError('Expected token to be base64 encoded string.');
+        }
+        return this.client
+            .sendRequest({
+            method: 'get',
+            url: AssetAPI.ASSET_URL + "/" + key,
+            responseType: 'arraybuffer',
+            params: {
+                asset_token: token,
+            },
+        }, true)
+            .then(function (response) {
+            return response.data;
+        });
+    };
+    AssetAPI.prototype.postAsset = function (asset, options) {
+        var BOUNDARY = "Frontier" + random_1.unsafeAlphanumeric();
+        var metadata = JSON.stringify(Object.assign({
+            public: true,
+            retention: AssetRetentionPolicy_1.default.PERSISTENT,
+        }, options));
+        var body = '';
+        body += "--" + BOUNDARY + "\r\n";
+        body += 'Content-Type: application/json;charset=utf-8\r\n';
+        body += "Content-length: " + metadata.length + "\r\n";
+        body += '\r\n';
+        body += metadata + "\r\n";
+        body += "--" + BOUNDARY + "\r\n";
+        body += 'Content-Type: application/octet-stream\r\n';
+        body += "Content-length: " + asset.length + "\r\n";
+        body += "Content-MD5: " + buffer_1.base64MD5FromBuffer(asset.buffer) + "\r\n";
+        body += '\r\n';
+        var footer = "\r\n--" + BOUNDARY + "--\r\n";
+        return this.client
+            .sendRequest({
+            method: 'post',
+            url: AssetAPI.ASSET_URL,
+            headers: {
+                'Content-Type': "multipart/mixed; boundary=" + BOUNDARY,
+            },
+            data: buffer_1.concatToBuffer(body, asset, footer),
+        })
+            .then(function (response) {
+            return response.data;
+        });
+    };
+    AssetAPI.ASSET_URL = '/assets/v3';
+    return AssetAPI;
+}());
+exports.default = AssetAPI;
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isValidKey = function (key) {
+    return /^[A-Za-z0-9-]+$/.test(key);
+};
+exports.isValidToken = function (token) {
+    return /^[A-Za-z0-9+/=\-]+$/.test(token);
+};
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.unsafeAlphanumeric = function (length) {
+    if (length === void 0) { length = 32; }
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var range = Array.from(Array(length).keys());
+    return range.reduce(function (acc, index) {
+        return acc + chars[Math.floor(Math.random() * chars.length)];
+    }, '');
+};
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (factory) {
+    if (true) {
+        // Node/CommonJS
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(factory);
+    } else {
+        // Browser globals (with support for web workers)
+        var glob;
+
+        try {
+            glob = window;
+        } catch (e) {
+            glob = self;
+        }
+
+        glob.SparkMD5 = factory();
+    }
+}(function (undefined) {
+
+    'use strict';
+
+    /*
+     * Fastest md5 implementation around (JKM md5).
+     * Credits: Joseph Myers
+     *
+     * @see http://www.myersdaily.org/joseph/javascript/md5-text.html
+     * @see http://jsperf.com/md5-shootout/7
+     */
+
+    /* this function is much faster,
+      so if possible we use it. Some IEs
+      are the only ones I know of that
+      need the idiotic second function,
+      generated by an if clause.  */
+    var add32 = function (a, b) {
+        return (a + b) & 0xFFFFFFFF;
+    },
+        hex_chr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
+
+    function cmn(q, a, b, x, s, t) {
+        a = add32(add32(a, q), add32(x, t));
+        return add32((a << s) | (a >>> (32 - s)), b);
+    }
+
+    function md5cycle(x, k) {
+        var a = x[0],
+            b = x[1],
+            c = x[2],
+            d = x[3];
+
+        a += (b & c | ~b & d) + k[0] - 680876936 | 0;
+        a  = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[1] - 389564586 | 0;
+        d  = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[2] + 606105819 | 0;
+        c  = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[3] - 1044525330 | 0;
+        b  = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[4] - 176418897 | 0;
+        a  = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[5] + 1200080426 | 0;
+        d  = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[6] - 1473231341 | 0;
+        c  = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[7] - 45705983 | 0;
+        b  = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[8] + 1770035416 | 0;
+        a  = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[9] - 1958414417 | 0;
+        d  = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[10] - 42063 | 0;
+        c  = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[11] - 1990404162 | 0;
+        b  = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[12] + 1804603682 | 0;
+        a  = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[13] - 40341101 | 0;
+        d  = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[14] - 1502002290 | 0;
+        c  = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[15] + 1236535329 | 0;
+        b  = (b << 22 | b >>> 10) + c | 0;
+
+        a += (b & d | c & ~d) + k[1] - 165796510 | 0;
+        a  = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[6] - 1069501632 | 0;
+        d  = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[11] + 643717713 | 0;
+        c  = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[0] - 373897302 | 0;
+        b  = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[5] - 701558691 | 0;
+        a  = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[10] + 38016083 | 0;
+        d  = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[15] - 660478335 | 0;
+        c  = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[4] - 405537848 | 0;
+        b  = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[9] + 568446438 | 0;
+        a  = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[14] - 1019803690 | 0;
+        d  = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[3] - 187363961 | 0;
+        c  = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[8] + 1163531501 | 0;
+        b  = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[13] - 1444681467 | 0;
+        a  = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[2] - 51403784 | 0;
+        d  = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[7] + 1735328473 | 0;
+        c  = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[12] - 1926607734 | 0;
+        b  = (b << 20 | b >>> 12) + c | 0;
+
+        a += (b ^ c ^ d) + k[5] - 378558 | 0;
+        a  = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[8] - 2022574463 | 0;
+        d  = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[11] + 1839030562 | 0;
+        c  = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[14] - 35309556 | 0;
+        b  = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[1] - 1530992060 | 0;
+        a  = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[4] + 1272893353 | 0;
+        d  = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[7] - 155497632 | 0;
+        c  = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[10] - 1094730640 | 0;
+        b  = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[13] + 681279174 | 0;
+        a  = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[0] - 358537222 | 0;
+        d  = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[3] - 722521979 | 0;
+        c  = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[6] + 76029189 | 0;
+        b  = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[9] - 640364487 | 0;
+        a  = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[12] - 421815835 | 0;
+        d  = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[15] + 530742520 | 0;
+        c  = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[2] - 995338651 | 0;
+        b  = (b << 23 | b >>> 9) + c | 0;
+
+        a += (c ^ (b | ~d)) + k[0] - 198630844 | 0;
+        a  = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[7] + 1126891415 | 0;
+        d  = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[14] - 1416354905 | 0;
+        c  = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[5] - 57434055 | 0;
+        b  = (b << 21 |b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[12] + 1700485571 | 0;
+        a  = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[3] - 1894986606 | 0;
+        d  = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[10] - 1051523 | 0;
+        c  = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[1] - 2054922799 | 0;
+        b  = (b << 21 |b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[8] + 1873313359 | 0;
+        a  = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[15] - 30611744 | 0;
+        d  = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[6] - 1560198380 | 0;
+        c  = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[13] + 1309151649 | 0;
+        b  = (b << 21 |b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[4] - 145523070 | 0;
+        a  = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[11] - 1120210379 | 0;
+        d  = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[2] + 718787259 | 0;
+        c  = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[9] - 343485551 | 0;
+        b  = (b << 21 | b >>> 11) + c | 0;
+
+        x[0] = a + x[0] | 0;
+        x[1] = b + x[1] | 0;
+        x[2] = c + x[2] | 0;
+        x[3] = d + x[3] | 0;
+    }
+
+    function md5blk(s) {
+        var md5blks = [],
+            i; /* Andy King said do it this way. */
+
+        for (i = 0; i < 64; i += 4) {
+            md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
+        }
+        return md5blks;
+    }
+
+    function md5blk_array(a) {
+        var md5blks = [],
+            i; /* Andy King said do it this way. */
+
+        for (i = 0; i < 64; i += 4) {
+            md5blks[i >> 2] = a[i] + (a[i + 1] << 8) + (a[i + 2] << 16) + (a[i + 3] << 24);
+        }
+        return md5blks;
+    }
+
+    function md51(s) {
+        var n = s.length,
+            state = [1732584193, -271733879, -1732584194, 271733878],
+            i,
+            length,
+            tail,
+            tmp,
+            lo,
+            hi;
+
+        for (i = 64; i <= n; i += 64) {
+            md5cycle(state, md5blk(s.substring(i - 64, i)));
+        }
+        s = s.substring(i - 64);
+        length = s.length;
+        tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (i = 0; i < length; i += 1) {
+            tail[i >> 2] |= s.charCodeAt(i) << ((i % 4) << 3);
+        }
+        tail[i >> 2] |= 0x80 << ((i % 4) << 3);
+        if (i > 55) {
+            md5cycle(state, tail);
+            for (i = 0; i < 16; i += 1) {
+                tail[i] = 0;
+            }
+        }
+
+        // Beware that the final length might not fit in 32 bits so we take care of that
+        tmp = n * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+
+        tail[14] = lo;
+        tail[15] = hi;
+
+        md5cycle(state, tail);
+        return state;
+    }
+
+    function md51_array(a) {
+        var n = a.length,
+            state = [1732584193, -271733879, -1732584194, 271733878],
+            i,
+            length,
+            tail,
+            tmp,
+            lo,
+            hi;
+
+        for (i = 64; i <= n; i += 64) {
+            md5cycle(state, md5blk_array(a.subarray(i - 64, i)));
+        }
+
+        // Not sure if it is a bug, however IE10 will always produce a sub array of length 1
+        // containing the last element of the parent array if the sub array specified starts
+        // beyond the length of the parent array - weird.
+        // https://connect.microsoft.com/IE/feedback/details/771452/typed-array-subarray-issue
+        a = (i - 64) < n ? a.subarray(i - 64) : new Uint8Array(0);
+
+        length = a.length;
+        tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (i = 0; i < length; i += 1) {
+            tail[i >> 2] |= a[i] << ((i % 4) << 3);
+        }
+
+        tail[i >> 2] |= 0x80 << ((i % 4) << 3);
+        if (i > 55) {
+            md5cycle(state, tail);
+            for (i = 0; i < 16; i += 1) {
+                tail[i] = 0;
+            }
+        }
+
+        // Beware that the final length might not fit in 32 bits so we take care of that
+        tmp = n * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+
+        tail[14] = lo;
+        tail[15] = hi;
+
+        md5cycle(state, tail);
+
+        return state;
+    }
+
+    function rhex(n) {
+        var s = '',
+            j;
+        for (j = 0; j < 4; j += 1) {
+            s += hex_chr[(n >> (j * 8 + 4)) & 0x0F] + hex_chr[(n >> (j * 8)) & 0x0F];
+        }
+        return s;
+    }
+
+    function hex(x) {
+        var i;
+        for (i = 0; i < x.length; i += 1) {
+            x[i] = rhex(x[i]);
+        }
+        return x.join('');
+    }
+
+    // In some cases the fast add32 function cannot be used..
+    if (hex(md51('hello')) !== '5d41402abc4b2a76b9719d911017c592') {
+        add32 = function (x, y) {
+            var lsw = (x & 0xFFFF) + (y & 0xFFFF),
+                msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+            return (msw << 16) | (lsw & 0xFFFF);
+        };
+    }
+
+    // ---------------------------------------------------
+
+    /**
+     * ArrayBuffer slice polyfill.
+     *
+     * @see https://github.com/ttaubert/node-arraybuffer-slice
+     */
+
+    if (typeof ArrayBuffer !== 'undefined' && !ArrayBuffer.prototype.slice) {
+        (function () {
+            function clamp(val, length) {
+                val = (val | 0) || 0;
+
+                if (val < 0) {
+                    return Math.max(val + length, 0);
+                }
+
+                return Math.min(val, length);
+            }
+
+            ArrayBuffer.prototype.slice = function (from, to) {
+                var length = this.byteLength,
+                    begin = clamp(from, length),
+                    end = length,
+                    num,
+                    target,
+                    targetArray,
+                    sourceArray;
+
+                if (to !== undefined) {
+                    end = clamp(to, length);
+                }
+
+                if (begin > end) {
+                    return new ArrayBuffer(0);
+                }
+
+                num = end - begin;
+                target = new ArrayBuffer(num);
+                targetArray = new Uint8Array(target);
+
+                sourceArray = new Uint8Array(this, begin, num);
+                targetArray.set(sourceArray);
+
+                return target;
+            };
+        })();
+    }
+
+    // ---------------------------------------------------
+
+    /**
+     * Helpers.
+     */
+
+    function toUtf8(str) {
+        if (/[\u0080-\uFFFF]/.test(str)) {
+            str = unescape(encodeURIComponent(str));
+        }
+
+        return str;
+    }
+
+    function utf8Str2ArrayBuffer(str, returnUInt8Array) {
+        var length = str.length,
+           buff = new ArrayBuffer(length),
+           arr = new Uint8Array(buff),
+           i;
+
+        for (i = 0; i < length; i += 1) {
+            arr[i] = str.charCodeAt(i);
+        }
+
+        return returnUInt8Array ? arr : buff;
+    }
+
+    function arrayBuffer2Utf8Str(buff) {
+        return String.fromCharCode.apply(null, new Uint8Array(buff));
+    }
+
+    function concatenateArrayBuffers(first, second, returnUInt8Array) {
+        var result = new Uint8Array(first.byteLength + second.byteLength);
+
+        result.set(new Uint8Array(first));
+        result.set(new Uint8Array(second), first.byteLength);
+
+        return returnUInt8Array ? result : result.buffer;
+    }
+
+    function hexToBinaryString(hex) {
+        var bytes = [],
+            length = hex.length,
+            x;
+
+        for (x = 0; x < length - 1; x += 2) {
+            bytes.push(parseInt(hex.substr(x, 2), 16));
+        }
+
+        return String.fromCharCode.apply(String, bytes);
+    }
+
+    // ---------------------------------------------------
+
+    /**
+     * SparkMD5 OOP implementation.
+     *
+     * Use this class to perform an incremental md5, otherwise use the
+     * static methods instead.
+     */
+
+    function SparkMD5() {
+        // call reset to init the instance
+        this.reset();
+    }
+
+    /**
+     * Appends a string.
+     * A conversion will be applied if an utf8 string is detected.
+     *
+     * @param {String} str The string to be appended
+     *
+     * @return {SparkMD5} The instance itself
+     */
+    SparkMD5.prototype.append = function (str) {
+        // Converts the string to utf8 bytes if necessary
+        // Then append as binary
+        this.appendBinary(toUtf8(str));
+
+        return this;
+    };
+
+    /**
+     * Appends a binary string.
+     *
+     * @param {String} contents The binary string to be appended
+     *
+     * @return {SparkMD5} The instance itself
+     */
+    SparkMD5.prototype.appendBinary = function (contents) {
+        this._buff += contents;
+        this._length += contents.length;
+
+        var length = this._buff.length,
+            i;
+
+        for (i = 64; i <= length; i += 64) {
+            md5cycle(this._hash, md5blk(this._buff.substring(i - 64, i)));
+        }
+
+        this._buff = this._buff.substring(i - 64);
+
+        return this;
+    };
+
+    /**
+     * Finishes the incremental computation, reseting the internal state and
+     * returning the result.
+     *
+     * @param {Boolean} raw True to get the raw string, false to get the hex string
+     *
+     * @return {String} The result
+     */
+    SparkMD5.prototype.end = function (raw) {
+        var buff = this._buff,
+            length = buff.length,
+            i,
+            tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ret;
+
+        for (i = 0; i < length; i += 1) {
+            tail[i >> 2] |= buff.charCodeAt(i) << ((i % 4) << 3);
+        }
+
+        this._finish(tail, length);
+        ret = hex(this._hash);
+
+        if (raw) {
+            ret = hexToBinaryString(ret);
+        }
+
+        this.reset();
+
+        return ret;
+    };
+
+    /**
+     * Resets the internal state of the computation.
+     *
+     * @return {SparkMD5} The instance itself
+     */
+    SparkMD5.prototype.reset = function () {
+        this._buff = '';
+        this._length = 0;
+        this._hash = [1732584193, -271733879, -1732584194, 271733878];
+
+        return this;
+    };
+
+    /**
+     * Gets the internal state of the computation.
+     *
+     * @return {Object} The state
+     */
+    SparkMD5.prototype.getState = function () {
+        return {
+            buff: this._buff,
+            length: this._length,
+            hash: this._hash
+        };
+    };
+
+    /**
+     * Gets the internal state of the computation.
+     *
+     * @param {Object} state The state
+     *
+     * @return {SparkMD5} The instance itself
+     */
+    SparkMD5.prototype.setState = function (state) {
+        this._buff = state.buff;
+        this._length = state.length;
+        this._hash = state.hash;
+
+        return this;
+    };
+
+    /**
+     * Releases memory used by the incremental buffer and other additional
+     * resources. If you plan to use the instance again, use reset instead.
+     */
+    SparkMD5.prototype.destroy = function () {
+        delete this._hash;
+        delete this._buff;
+        delete this._length;
+    };
+
+    /**
+     * Finish the final calculation based on the tail.
+     *
+     * @param {Array}  tail   The tail (will be modified)
+     * @param {Number} length The length of the remaining buffer
+     */
+    SparkMD5.prototype._finish = function (tail, length) {
+        var i = length,
+            tmp,
+            lo,
+            hi;
+
+        tail[i >> 2] |= 0x80 << ((i % 4) << 3);
+        if (i > 55) {
+            md5cycle(this._hash, tail);
+            for (i = 0; i < 16; i += 1) {
+                tail[i] = 0;
+            }
+        }
+
+        // Do the final computation based on the tail and length
+        // Beware that the final length may not fit in 32 bits so we take care of that
+        tmp = this._length * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+
+        tail[14] = lo;
+        tail[15] = hi;
+        md5cycle(this._hash, tail);
+    };
+
+    /**
+     * Performs the md5 hash on a string.
+     * A conversion will be applied if utf8 string is detected.
+     *
+     * @param {String}  str The string
+     * @param {Boolean} raw True to get the raw string, false to get the hex string
+     *
+     * @return {String} The result
+     */
+    SparkMD5.hash = function (str, raw) {
+        // Converts the string to utf8 bytes if necessary
+        // Then compute it using the binary function
+        return SparkMD5.hashBinary(toUtf8(str), raw);
+    };
+
+    /**
+     * Performs the md5 hash on a binary string.
+     *
+     * @param {String}  content The binary string
+     * @param {Boolean} raw     True to get the raw string, false to get the hex string
+     *
+     * @return {String} The result
+     */
+    SparkMD5.hashBinary = function (content, raw) {
+        var hash = md51(content),
+            ret = hex(hash);
+
+        return raw ? hexToBinaryString(ret) : ret;
+    };
+
+    // ---------------------------------------------------
+
+    /**
+     * SparkMD5 OOP implementation for array buffers.
+     *
+     * Use this class to perform an incremental md5 ONLY for array buffers.
+     */
+    SparkMD5.ArrayBuffer = function () {
+        // call reset to init the instance
+        this.reset();
+    };
+
+    /**
+     * Appends an array buffer.
+     *
+     * @param {ArrayBuffer} arr The array to be appended
+     *
+     * @return {SparkMD5.ArrayBuffer} The instance itself
+     */
+    SparkMD5.ArrayBuffer.prototype.append = function (arr) {
+        var buff = concatenateArrayBuffers(this._buff.buffer, arr, true),
+            length = buff.length,
+            i;
+
+        this._length += arr.byteLength;
+
+        for (i = 64; i <= length; i += 64) {
+            md5cycle(this._hash, md5blk_array(buff.subarray(i - 64, i)));
+        }
+
+        this._buff = (i - 64) < length ? new Uint8Array(buff.buffer.slice(i - 64)) : new Uint8Array(0);
+
+        return this;
+    };
+
+    /**
+     * Finishes the incremental computation, reseting the internal state and
+     * returning the result.
+     *
+     * @param {Boolean} raw True to get the raw string, false to get the hex string
+     *
+     * @return {String} The result
+     */
+    SparkMD5.ArrayBuffer.prototype.end = function (raw) {
+        var buff = this._buff,
+            length = buff.length,
+            tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            i,
+            ret;
+
+        for (i = 0; i < length; i += 1) {
+            tail[i >> 2] |= buff[i] << ((i % 4) << 3);
+        }
+
+        this._finish(tail, length);
+        ret = hex(this._hash);
+
+        if (raw) {
+            ret = hexToBinaryString(ret);
+        }
+
+        this.reset();
+
+        return ret;
+    };
+
+    /**
+     * Resets the internal state of the computation.
+     *
+     * @return {SparkMD5.ArrayBuffer} The instance itself
+     */
+    SparkMD5.ArrayBuffer.prototype.reset = function () {
+        this._buff = new Uint8Array(0);
+        this._length = 0;
+        this._hash = [1732584193, -271733879, -1732584194, 271733878];
+
+        return this;
+    };
+
+    /**
+     * Gets the internal state of the computation.
+     *
+     * @return {Object} The state
+     */
+    SparkMD5.ArrayBuffer.prototype.getState = function () {
+        var state = SparkMD5.prototype.getState.call(this);
+
+        // Convert buffer to a string
+        state.buff = arrayBuffer2Utf8Str(state.buff);
+
+        return state;
+    };
+
+    /**
+     * Gets the internal state of the computation.
+     *
+     * @param {Object} state The state
+     *
+     * @return {SparkMD5.ArrayBuffer} The instance itself
+     */
+    SparkMD5.ArrayBuffer.prototype.setState = function (state) {
+        // Convert string to buffer
+        state.buff = utf8Str2ArrayBuffer(state.buff, true);
+
+        return SparkMD5.prototype.setState.call(this, state);
+    };
+
+    SparkMD5.ArrayBuffer.prototype.destroy = SparkMD5.prototype.destroy;
+
+    SparkMD5.ArrayBuffer.prototype._finish = SparkMD5.prototype._finish;
+
+    /**
+     * Performs the md5 hash on an array buffer.
+     *
+     * @param {ArrayBuffer} arr The array buffer
+     * @param {Boolean}     raw True to get the raw string, false to get the hex one
+     *
+     * @return {String} The result
+     */
+    SparkMD5.ArrayBuffer.hash = function (arr, raw) {
+        var hash = md51_array(new Uint8Array(arr)),
+            ret = hex(hash);
+
+        return raw ? hexToBinaryString(ret) : ret;
+    };
+
+    return SparkMD5;
+}));
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AccessTokenStore_1 = __webpack_require__(5);
 exports.AccessTokenStore = AccessTokenStore_1.default;
-var AuthAPI_1 = __webpack_require__(27);
+var AuthAPI_1 = __webpack_require__(34);
 exports.AuthAPI = AuthAPI_1.default;
-var Context_1 = __webpack_require__(13);
+var Context_1 = __webpack_require__(15);
 exports.Context = Context_1.default;
 
 
 /***/ }),
-/* 27 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6922,18 +7844,18 @@ exports.default = AuthAPI;
 
 
 /***/ }),
-/* 28 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Backend_1 = __webpack_require__(29);
+var Backend_1 = __webpack_require__(36);
 exports.Backend = Backend_1.default;
 
 
 /***/ }),
-/* 29 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6958,7 +7880,7 @@ exports.default = Backend;
 
 
 /***/ }),
-/* 30 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6967,27 +7889,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ContentType = (function () {
     function ContentType() {
     }
-    Object.defineProperty(ContentType, "APPLICATION_JSON", {
-        get: function () {
-            return 'application/json;charset=UTF-8';
-        },
-        enumerable: true,
-        configurable: true
-    });
+    ContentType.APPLICATION_JSON = 'application/json;charset=UTF-8';
     return ContentType;
 }());
 exports.default = ContentType;
 
 
 /***/ }),
-/* 31 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(32);
-var http_1 = __webpack_require__(7);
+var axios_1 = __webpack_require__(39);
+var http_1 = __webpack_require__(9);
 var HttpClient = (function () {
     function HttpClient(baseURL, accessTokenStore) {
         this.accessTokenStore = accessTokenStore;
@@ -6996,19 +7920,22 @@ var HttpClient = (function () {
     HttpClient.prototype.createUrl = function (url) {
         return "" + this.baseURL + url;
     };
-    HttpClient.prototype.sendRequest = function (config) {
+    HttpClient.prototype.sendRequest = function (config, tokenAsParam) {
+        if (tokenAsParam === void 0) { tokenAsParam = false; }
         config.baseURL = this.baseURL;
+        if (this.accessTokenStore.accessToken) {
+            var _a = this.accessTokenStore.accessToken, token_type = _a.token_type, access_token = _a.access_token;
+            if (tokenAsParam) {
+                config.params = __assign({}, config.params, { access_token: access_token });
+            }
+            else {
+                config.headers = __assign({}, config.headers, { Authorization: token_type + " " + access_token });
+            }
+        }
         return axios_1.default.request(config);
     };
     HttpClient.prototype.sendJSONRequest = function (config) {
-        config.headers = config.headers || {};
-        Object.assign(config.headers, {
-            'Content-Type': http_1.ContentType.APPLICATION_JSON,
-        });
-        if (this.accessTokenStore.accessToken) {
-            config.headers.Authorization = this.accessTokenStore.accessToken.token_type + " " + this.accessTokenStore
-                .accessToken.access_token;
-        }
+        config.headers = __assign({}, config.headers, { 'Content-Type': http_1.ContentType.APPLICATION_JSON });
         return this.sendRequest(config);
     };
     return HttpClient;
@@ -7017,21 +7944,21 @@ exports.default = HttpClient;
 
 
 /***/ }),
-/* 32 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(33);
+module.exports = __webpack_require__(40);
 
 /***/ }),
-/* 33 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(8);
-var Axios = __webpack_require__(35);
+var bind = __webpack_require__(10);
+var Axios = __webpack_require__(42);
 var defaults = __webpack_require__(3);
 
 /**
@@ -7065,15 +7992,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(49);
-axios.isCancel = __webpack_require__(11);
+axios.Cancel = __webpack_require__(14);
+axios.CancelToken = __webpack_require__(56);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(50);
+axios.spread = __webpack_require__(57);
 
 module.exports = axios;
 
@@ -7082,7 +8009,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 34 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7109,7 +8036,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 35 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7117,10 +8044,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(44);
-var dispatchRequest = __webpack_require__(45);
-var isAbsoluteURL = __webpack_require__(47);
-var combineURLs = __webpack_require__(48);
+var InterceptorManager = __webpack_require__(51);
+var dispatchRequest = __webpack_require__(52);
+var isAbsoluteURL = __webpack_require__(54);
+var combineURLs = __webpack_require__(55);
 
 /**
  * Create a new instance of Axios
@@ -7202,7 +8129,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 36 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7221,13 +8148,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 37 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -7254,7 +8181,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 38 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7282,7 +8209,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 39 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7357,7 +8284,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 40 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7401,7 +8328,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 41 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7476,7 +8403,7 @@ module.exports = (
 
 
 /***/ }),
-/* 42 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7519,7 +8446,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 43 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7579,7 +8506,7 @@ module.exports = (
 
 
 /***/ }),
-/* 44 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7638,15 +8565,15 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 45 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(46);
-var isCancel = __webpack_require__(11);
+var transformData = __webpack_require__(53);
+var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(3);
 
 /**
@@ -7724,7 +8651,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 46 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7751,7 +8678,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 47 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7772,7 +8699,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 48 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7793,13 +8720,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 49 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(14);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -7857,7 +8784,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 50 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7891,7 +8818,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 51 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7922,18 +8849,18 @@ exports.default = StatusCode;
 
 
 /***/ }),
-/* 52 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(53);
+var TeamAPI_1 = __webpack_require__(60);
 exports.TeamAPI = TeamAPI_1.default;
 
 
 /***/ }),
-/* 53 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8051,18 +8978,18 @@ exports.default = TeamAPI;
 
 
 /***/ }),
-/* 54 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var UserAPI_1 = __webpack_require__(55);
+var UserAPI_1 = __webpack_require__(62);
 exports.UserAPI = UserAPI_1.default;
 
 
 /***/ }),
-/* 55 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8134,25 +9061,25 @@ exports.default = UserAPI;
 
 
 /***/ }),
-/* 56 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var WebSocketClient_1 = __webpack_require__(57);
+var WebSocketClient_1 = __webpack_require__(64);
 exports.WebSocketClient = WebSocketClient_1.default;
 
 
 /***/ }),
-/* 57 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Html5WebSocket = __webpack_require__(58);
-var ReconnectingWebsocket = __webpack_require__(59);
+var Html5WebSocket = __webpack_require__(65);
+var ReconnectingWebsocket = __webpack_require__(66);
 var WebSocketClient = (function () {
     function WebSocketClient(baseURL, accessTokenStore) {
         this.baseURL = baseURL;
@@ -8200,14 +9127,14 @@ exports.default = WebSocketClient;
 
 
 /***/ }),
-/* 58 */
+/* 65 */
 /***/ (function(module, exports) {
 
 module.exports = WebSocket;
 
 
 /***/ }),
-/* 59 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8423,22 +9350,12 @@ module.exports = ReconnectingWebsocket;
 
 
 /***/ }),
-/* 60 */
-/***/ (function(module, exports) {
-
-module.exports.bufferToString = function (buffer) {
-  var utf8Decoder = new TextDecoder('utf-8');
-  return utf8Decoder.decode(new Uint8Array(buffer));
-}
-
-
-/***/ }),
-/* 61 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__);
 
 

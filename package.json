@@ -1,16 +1,18 @@
 {
   "author": "Wire",
   "browser": {
-    "html5-websocket": "./browser/ws-fallback.js",
-    "./dist/commonjs/util/buffer": "./browser/buffer.js"
+    "html5-websocket": "./dist/commonjs/shims/websocket.js",
+    "./dist/commonjs/util/buffer": "./dist/commonjs/shims/buffer.js"
   },
   "dependencies": {
     "@types/node": "8.0.16",
+    "@types/spark-md5": "3.0.0",
     "@types/text-encoding": "0.0.31",
     "@wireapp/store-engine": "0.0.16",
     "axios": "0.16.2",
     "html5-websocket": "1.0.0",
-    "reconnecting-websocket": "3.0.7"
+    "reconnecting-websocket": "3.0.7",
+    "spark-md5": "3.0.0"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",
