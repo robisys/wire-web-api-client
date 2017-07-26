@@ -8,13 +8,9 @@ const {AuthAPI} = require('../dist/commonjs/auth');
 describe('Client', () => {
   const baseURL = Client.BACKEND.PRODUCTION.rest;
 
-  beforeEach(() => {
-    moxios.install();
-  });
+  beforeEach(() => moxios.install());
 
-  afterEach(() => {
-    moxios.uninstall();
-  });
+  afterEach(() => moxios.uninstall());
 
   describe('"constructor"', () => {
     it('constructs a client with production backend by default', () => {
@@ -35,16 +31,22 @@ describe('Client', () => {
         token_type: 'Bearer',
         user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4'
       };
-      const transientBundle = client.accessTokenStore.tokenStore.createTransientBundle(accessTokenData, accessTokenData.expires_in);
 
-      client.accessTokenStore.tokenStore.engine.create(TABLE, PRIMARY_KEY, transientBundle).then((primaryKey) => {
-        expect(primaryKey).toBe(PRIMARY_KEY);
-        return client.init();
-      }).then((context) => {
-        expect(context.userID).toBe(accessTokenData.user);
-        expect(client.accessTokenStore.accessToken).toBe(accessTokenData);
-        done();
-      });
+      // Prefill "TransientStore" with data
+      const expirationInMillis = accessTokenData.expires_in * 1000;
+      const transientBundle = client.accessTokenStore.tokenStore.createTransientBundle(accessTokenData, expirationInMillis);
+
+      client.accessTokenStore.tokenStore.engine.create(TABLE, PRIMARY_KEY, transientBundle)
+        .then((primaryKey) => {
+          expect(primaryKey).toBe(PRIMARY_KEY);
+          return client.init();
+        })
+        .then((context) => {
+          expect(context.userID).toBe(accessTokenData.user);
+          expect(client.accessTokenStore.accessToken).toBe(accessTokenData);
+          done();
+        })
+        .catch(done.fail);
     });
   });
 

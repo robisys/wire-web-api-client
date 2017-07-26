@@ -10,6 +10,9 @@ module.exports = {
     client: `${__dirname}/dist/commonjs/Client.js`,
     test: `${__dirname}/src/test/index.js`,
   },
+  externals: {
+    'fs-extra': '{}',
+  },
   output: {
     path: `${__dirname}/dist`,
     filename: `[name].js`,

@@ -2,32 +2,33 @@ const WebSocketClient = require('../dist/commonjs/tcp/WebSocketClient').default;
 const WebSocketServer = require('ws').Server;
 const {AccessTokenStore} = require('../dist/commonjs/auth');
 
-const WEB_SOCKET_PORT = 8087;
+const WEBSOCKET_PORT = 8087;
+const WEBSOCKET_URL = `ws://localhost:${WEBSOCKET_PORT}`;
 let server = undefined;
 
-function startServer() {
-  server = new WebSocketServer({port: WEB_SOCKET_PORT});
-}
-
-function stopServer() {
-  if (server) {
-    server.close();
-    server = undefined;
-  }
+function startEchoServer() {
+  server = new WebSocketServer({port: WEBSOCKET_PORT});
+  server.on('connection', (ws) => {
+    ws.on('message', (message) => server.clients.forEach((client) => client.send(`Echo: ${message}`)));
+  });
+  server.on('error', (error) => console.log(`Echo WebSocket server error: "${error.message}"`));
 }
 
 describe('WebSocketClient', () => {
   describe('"connect"', () => {
-    beforeEach(function() {
-      startServer();
-    });
+    beforeEach(() => startEchoServer());
 
-    afterEach(function() {
-      stopServer();
+    afterEach((done) => {
+      if (server) {
+        server.close(() => {
+          server = undefined;
+          done();
+        });
+      }
     });
 
     it('connects to a WebSocket.', (done) => {
-      server.on('connection', (ws, request) => {
+      server.on('connection', (ws) => {
         ws.on('message', message => {
           server.clients.forEach(client => {
             client.send(message);
@@ -44,14 +45,13 @@ describe('WebSocketClient', () => {
       };
       const accessTokenStore = new AccessTokenStore();
       accessTokenStore.accessToken = accessTokenData;
-      const baseURL = 'http://localhost:8087';
-      const client = new WebSocketClient(baseURL, accessTokenStore);
+      const client = new WebSocketClient(WEBSOCKET_URL, accessTokenStore);
 
       client.connect().then((socket) => {
         expect(socket).toBeDefined();
 
         socket.onmessage = (event) => {
-          expect(event.data).toBe(message);
+          expect(event.data).toBe(`Echo: ${message}`);
           done();
         };
 
@@ -68,18 +68,16 @@ describe('WebSocketClient', () => {
       };
       const accessTokenStore = new AccessTokenStore();
       accessTokenStore.accessToken = accessTokenData;
-      const baseURL = 'http://localhost:8087';
-      const client = new WebSocketClient(baseURL, accessTokenStore);
+      const client = new WebSocketClient(WEBSOCKET_URL, accessTokenStore);
 
-      client.connect().then((socket) => {
-        // "open" listener which will be triggered on WebSocket reconnect
-        socket.addEventListener('open', done);
-
-        // Restarting the server
-        socket.addEventListener('close', startServer);
-
-        server.close();
-      }).catch(done.fail);
+      client.connect()
+        .then((client) => {
+          // "open" listener which will be triggered on WebSocket reconnect which is expected after a WebSocket server restart
+          client.addEventListener('open', done);
+          // Restart WebSocket server
+          server.close(() => startEchoServer());
+        })
+        .catch(done.fail);
     }, 10000);
   });
 });
