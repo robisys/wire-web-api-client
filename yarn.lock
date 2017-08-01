@@ -6,10 +6,6 @@
   version "8.0.15"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.15.tgz#8f23f8a4642ced357704d048010876fc0c7f179a"
 
-"@types/node@8.0.16":
-  version "8.0.16"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.16.tgz#5aa51abd72621a0ce53fb86bccd76825ee1b4ca9"
-
 "@types/node@8.0.17":
   version "8.0.17"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.17.tgz#677bc8c118cfb76013febb62ede1f31d2c7222a1"
@@ -230,6 +226,10 @@ assert@^1.1.1:
   resolved "https://registry.yarnpkg.com/assert/-/assert-1.4.1.tgz#99912d591836b5a6f5b345c0f07eefc08fc65d91"
   dependencies:
     util "0.10.3"
+
+assertion-error@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.0.2.tgz#13ca515d86206da0bac66e834dd397d87581094c"
 
 async-each-series@0.1.1:
   version "0.1.1"
@@ -568,6 +568,14 @@ center-align@^0.1.1:
   dependencies:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
+
+"chai@>=1.9.2 <4.0.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/chai/-/chai-3.5.0.tgz#4d02637b067fe958bdbfdd3a40ec56fef7373247"
+  dependencies:
+    assertion-error "^1.0.1"
+    deep-eql "^0.1.3"
+    type-detect "^1.0.0"
 
 chalk@0.5.1:
   version "0.5.1"
@@ -938,7 +946,13 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-deep-equal@^1.0.1:
+deep-eql@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-0.1.3.tgz#ef558acab8de25206cd713906d74e56930eb69f2"
+  dependencies:
+    type-detect "0.1.1"
+
+deep-equal@^1.0.0, deep-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
@@ -2124,17 +2138,17 @@ istanbul@0.4.5:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-jasmine-core@~2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.6.1.tgz#66a61cddb699958e3613edef346c996f6311fc3b"
+jasmine-core@~2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.7.0.tgz#50ff8c4f92d8ef5c0b2c1b846dd263ed85152091"
 
-jasmine@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/jasmine/-/jasmine-2.6.0.tgz#6b22e70883e8e589d456346153b4d206ddbe217f"
+jasmine@2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/jasmine/-/jasmine-2.7.0.tgz#5cf0bb4e594b4600bb4235560366212ac5aea1b2"
   dependencies:
     exit "^0.1.2"
     glob "^7.0.6"
-    jasmine-core "~2.6.0"
+    jasmine-core "~2.7.0"
 
 jodid25519@^1.0.0:
   version "1.0.2"
@@ -2171,7 +2185,7 @@ json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -2406,7 +2420,7 @@ lodash@^3.10.1, lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.14.0, lodash@^4.17.2, lodash@^4.5.0, lodash@^4.5.1:
+lodash@^4.14.0, lodash@^4.17.2, lodash@^4.5.0, lodash@^4.5.1, lodash@~4.17.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -2585,15 +2599,11 @@ mkdirp@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.0.tgz#1bbf5ab1ba827af23575143490426455f481fe1e"
 
-mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0:
+mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-moxios@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/moxios/-/moxios-0.4.0.tgz#fc0da2c65477d725ca6b9679d58370ed0c52f53b"
 
 ms@0.7.1:
   version "0.7.1"
@@ -2637,6 +2647,20 @@ native-promise-only@^0.8.1:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+nock@9.0.14:
+  version "9.0.14"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-9.0.14.tgz#2211550253173ce298bcd89fca825e83813ca72b"
+  dependencies:
+    chai ">=1.9.2 <4.0.0"
+    debug "^2.2.0"
+    deep-equal "^1.0.0"
+    json-stringify-safe "^5.0.1"
+    lodash "~4.17.2"
+    mkdirp "^0.5.0"
+    propagate "0.4.0"
+    qs "^6.0.2"
+    semver "^5.3.0"
 
 node-forge@0.6.33:
   version "0.6.33"
@@ -3067,6 +3091,10 @@ process@^0.11.0:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
+propagate@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/propagate/-/propagate-0.4.0.tgz#f3fcca0a6fe06736a7ba572966069617c130b481"
+
 proxy-addr@~1.1.3:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-1.1.4.tgz#27e545f6960a44a627d9b44467e35c1b6b4ce2f3"
@@ -3115,6 +3143,10 @@ qs@6.2.1:
 qs@6.4.0, "qs@>= 0.4.0", qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+
+qs@^6.0.2:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
@@ -3498,9 +3530,9 @@ sinon-har-server@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/sinon-har-server/-/sinon-har-server-0.3.0.tgz#d767b51a2f6f34856ecd9867ff98f97bacfbde6b"
 
-sinon@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.4.0.tgz#398de1bd15c9c6d671b5ed708c8a121a213ae8b7"
+sinon@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.4.1.tgz#021fd64b54cb77d9d2fb0d43cdedfae7629c3a36"
   dependencies:
     diff "^3.1.0"
     formatio "1.2.0"
@@ -3920,6 +3952,14 @@ type-check@~0.3.2:
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
   dependencies:
     prelude-ls "~1.1.2"
+
+type-detect@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-0.1.1.tgz#0ba5ec2a885640e470ea4e8505971900dac58822"
+
+type-detect@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-1.0.0.tgz#762217cc06db258ec48908a1298e8b95121e8ea2"
 
 type-detect@^4.0.0:
   version "4.0.3"
