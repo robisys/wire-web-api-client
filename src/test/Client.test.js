@@ -1,5 +1,5 @@
-import Client from "../../dist/commonjs/Client";
-import Context from "../../dist/commonjs/auth/Context";
+import Client from '../../dist/commonjs/Client';
+import Context from '../../dist/commonjs/auth/Context';
 
 describe('Client', () => {
   describe('"connect"', () => {

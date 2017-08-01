@@ -23,6 +23,7 @@ export default class AuthAPI {
   public postCookiesRemove(login: LoginData, labels?: string[]): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
+        email: login.email,
         labels: labels,
         password: login.password.toString(),
       },
@@ -72,9 +73,7 @@ export default class AuthAPI {
       };
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client._sendRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {

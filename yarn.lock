@@ -10,6 +10,10 @@
   version "8.0.16"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.16.tgz#5aa51abd72621a0ce53fb86bccd76825ee1b4ca9"
 
+"@types/node@8.0.17":
+  version "8.0.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.17.tgz#677bc8c118cfb76013febb62ede1f31d2c7222a1"
+
 "@types/spark-md5@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/spark-md5/-/spark-md5-3.0.0.tgz#15b80a036f59167a8ec6045f6f1efcd9c8b02a7c"
@@ -18,11 +22,11 @@
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@types/text-encoding/-/text-encoding-0.0.31.tgz#b120815cda47b8f24100ecdc6564836c523316bc"
 
-"@wireapp/queue-priority@0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@wireapp/queue-priority/-/queue-priority-0.0.9.tgz#17db92673a69453b8c638364ff417f250a9b85ce"
+"@wireapp/queue-priority@0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@wireapp/queue-priority/-/queue-priority-0.0.12.tgz#4d3a9573035449d326b489b732a605d3136b96d7"
   dependencies:
-    "@types/node" "8.0.16"
+    "@types/node" "8.0.17"
 
 "@wireapp/store-engine@0.0.22":
   version "0.0.22"

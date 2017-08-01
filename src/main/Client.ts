@@ -1,7 +1,7 @@
 import AccessTokenStore from './auth/AccessTokenStore';
 import EventEmitter = require('events');
-import {AssetAPI} from './asset';
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
+import {AssetAPI} from './asset';
 import {Backend} from './env';
 import {HttpClient} from './http';
 import {TeamAPI} from './team';
@@ -54,11 +54,14 @@ class Client extends EventEmitter {
     this.auth.api = new AuthAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);
     this.team.api = new TeamAPI(this.client.http);
+
+    this.client.http.authAPI = this.auth.api;
   }
 
   public init(): Promise<Context> {
     return this.accessTokenStore
-      .init(this.auth.api)
+      .init()
+      .then((accessToken: AccessTokenData) => (accessToken ? accessToken : this.auth.api.postAccess()))
       .then((accessToken: AccessTokenData) => this.accessTokenStore.updateToken(accessToken))
       .then((accessToken: AccessTokenData) => this.createContext(accessToken.user));
   }
@@ -82,7 +85,7 @@ class Client extends EventEmitter {
     return this.auth.api
       .postLogout()
       .then(() => this.disconnect())
-      .then(() => this.accessTokenStore.reset())
+      .then(() => this.accessTokenStore.delete())
       .then(() => (this.context = undefined));
   }
 
