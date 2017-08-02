@@ -14,11 +14,12 @@ module.exports = {
     'fs-extra': '{}',
   },
   output: {
-    filename: `${repositoryName}.js`,
+    filename: `${repositoryName}.min.js`,
     library: `${camelCasedRepositoryName}`,
     path: `${__dirname}/dist`,
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({output: {comments: false}}),
     new webpack.BannerPlugin(`${pkg.name} v${pkg.version}`)
   ],
   target: 'web'
