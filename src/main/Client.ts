@@ -4,7 +4,7 @@ import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth
 import {AssetAPI} from './asset';
 import {Backend} from './env';
 import {HttpClient} from './http';
-import {TeamAPI} from './team';
+import {TeamAPI, MemberAPI, InvitationAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
 
@@ -30,8 +30,10 @@ class Client extends EventEmitter {
     api: undefined,
   };
 
-  public team: {api: TeamAPI} = {
-    api: undefined,
+  public teams: {team: {api: TeamAPI}; member: {api: MemberAPI}; invitation: {api: InvitationAPI}} = {
+    team: {api: undefined},
+    member: {api: undefined},
+    invitation: {api: undefined},
   };
 
   public static TOPIC = {
@@ -53,7 +55,10 @@ class Client extends EventEmitter {
     this.asset.api = new AssetAPI(this.client.http);
     this.auth.api = new AuthAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);
-    this.team.api = new TeamAPI(this.client.http);
+
+    this.teams.team.api = new TeamAPI(this.client.http);
+    this.teams.member.api = new MemberAPI(this.client.http);
+    this.teams.invitation.api = new InvitationAPI(this.client.http);
 
     this.client.http.authAPI = this.auth.api;
   }

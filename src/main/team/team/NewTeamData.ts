@@ -1,4 +1,4 @@
-import MemberData from './MemberData';
+import MemberData from '../member/MemberData';
 
 interface NewTeamData {
   members?: MemberData[];
