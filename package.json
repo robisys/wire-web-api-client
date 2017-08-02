@@ -55,6 +55,7 @@
     "clear": "rimraf dist/commonjs && rimraf dist/demo-bundle.js",
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "dist": "yarn clear && tsc",
+    "dist:browser": "yarn dist && webpack --config ./webpack.browser.js",
     "postversion": "git push && git push --tags",
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=120 --write \"src/**/*.ts\"",
