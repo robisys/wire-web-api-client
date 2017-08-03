@@ -22,6 +22,10 @@
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@types/text-encoding/-/text-encoding-0.0.31.tgz#b120815cda47b8f24100ecdc6564836c523316bc"
 
+"@types/tough-cookie@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.1.tgz#2688836dc4535d3156d1789e5ee58d068b992715"
+
 "@wireapp/queue-priority@0.0.12":
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/@wireapp/queue-priority/-/queue-priority-0.0.12.tgz#4d3a9573035449d326b489b732a605d3136b96d7"
@@ -3923,7 +3927,7 @@ to-arraybuffer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz#7d229b1fcc637e466ca081180836a7aabff83f43"
 
-tough-cookie@~2.3.0:
+tough-cookie@2.3.2, tough-cookie@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.2.tgz#f081f76e4c85720e6c37a5faced737150d84072a"
   dependencies:
