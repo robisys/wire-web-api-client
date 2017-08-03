@@ -1,9 +1,11 @@
 import AccessTokenStore from './auth/AccessTokenStore';
+import Config from './Config';
 import EventEmitter = require('events');
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {AssetAPI} from './asset';
 import {Backend} from './env';
 import {HttpClient} from './http';
+import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {TeamAPI, MemberAPI, InvitationAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
@@ -43,17 +45,24 @@ class Client extends EventEmitter {
   public static BACKEND = Backend;
 
   private accessTokenStore: AccessTokenStore;
+  private config: Config;
 
-  constructor(public urls: {rest: string; ws?: string; name?: string} = Client.BACKEND.PRODUCTION) {
+  constructor(config: Config) {
     super();
 
-    this.accessTokenStore = new AccessTokenStore();
+    this.config = {
+      store: new MemoryEngine('wire'),
+      urls: Client.BACKEND.PRODUCTION,
+      ...config,
+    };
 
-    this.client.http = new HttpClient(urls.rest, this.accessTokenStore);
-    this.client.ws = new WebSocketClient(urls.ws, this.accessTokenStore);
+    this.accessTokenStore = new AccessTokenStore(this.config.store);
+
+    this.client.http = new HttpClient(this.config.urls.rest, this.accessTokenStore);
+    this.client.ws = new WebSocketClient(this.config.urls.ws, this.accessTokenStore);
 
     this.asset.api = new AssetAPI(this.client.http);
-    this.auth.api = new AuthAPI(this.client.http);
+    this.auth.api = new AuthAPI(this.client.http, this.config.store);
     this.user.api = new UserAPI(this.client.http);
 
     this.teams.team.api = new TeamAPI(this.client.http);

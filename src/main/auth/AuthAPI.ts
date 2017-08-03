@@ -1,12 +1,13 @@
-import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
-
-import {AccessTokenData, LoginData} from '../auth';
-import {HttpClient} from '../http';
-import UserData from '../user/UserData';
 import RegisterData from './RegisterData';
+import UserData from '../user/UserData';
+import {AccessTokenData, LoginData} from '../auth';
+import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
+import {retrieveCookie, sendRequestWithCookie} from '../util/cookie';
+import {HttpClient} from '../http';
 
 export default class AuthAPI {
-  constructor(private client: HttpClient) {}
+  constructor(private client: HttpClient, private engine: CRUDEngine) {}
 
   static get URL() {
     return {
@@ -40,12 +41,10 @@ export default class AuthAPI {
       data: login,
       withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist}`,
+      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist.toString()}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => retrieveCookie(response, this.engine));
   }
 
   public postLogout(): AxiosPromise {
@@ -62,18 +61,19 @@ export default class AuthAPI {
 
   public postAccess(expiredAccessToken?: AccessTokenData): Promise<AccessTokenData> {
     const config: AxiosRequestConfig = {
+      headers: {},
       withCredentials: true,
       method: 'post',
       url: `${AuthAPI.URL.ACCESS}`,
     };
 
     if (expiredAccessToken) {
-      config.headers = {
-        Authorization: `${expiredAccessToken.token_type} ${decodeURIComponent(expiredAccessToken.access_token)}`,
-      };
+      config.headers['Authorization'] = `${expiredAccessToken.token_type} ${decodeURIComponent(
+        expiredAccessToken.access_token,
+      )}`;
     }
 
-    return this.client._sendRequest(config).then((response: AxiosResponse) => response.data);
+    return sendRequestWithCookie(this.client, config, this.engine).then((response: AxiosResponse) => response.data);
   }
 
   public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {

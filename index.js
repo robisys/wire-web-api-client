@@ -6,24 +6,37 @@ const argv = require('optimist')
   .argv;
 
 const Client = require('./dist/commonjs/Client');
-const http = require('./dist/commonjs/http/index');
-
-console.log(`Testing "http" module: ${http.StatusCode.OK}`);
+const path = require('path');
+const {FileEngine} = require('@wireapp/store-engine/dist/commonjs/engine');
 
 const login = {
   email: argv.email,
   handle: argv.handle,
   password: argv.password,
-  persist: false
+  persist: true
 };
 
-const client = new Client();
+const storagePath = path.join(process.cwd(), '.tmp', login.email);
+
+const config = {
+  store: new FileEngine(storagePath, {fileExtension: '.json'})
+};
+
+const client = new Client(config);
 
 client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
   console.log('Received notification via WebSocket', notification);
 });
 
-client.login(login)
+Promise.resolve()
+  .then(() => {
+    // Trying to login (works only if there is already a valid cookie stored in the FileEngine)
+    return client.init(login.email);
+  })
+  .catch((error) => {
+    console.log(`Authentication via existing authenticator (Session Cookie or Access Token) failed: ${error.message}`);
+    return client.login(login);
+  })
   .then((context) => {
     console.log(`Got self user with ID "${context.userID}".`);
     return client.user.api.getUsers({handles: ['webappbot']})

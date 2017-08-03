@@ -3,20 +3,17 @@ import EventEmitter = require('events');
 import {CRUDEngine, MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 
 export default class AccessTokenStore extends EventEmitter {
-  private ACCESS_TOKEN_DATABASE: string = 'in-memory-database';
   private ACCESS_TOKEN_KEY: string = 'access-token';
-  private ACCESS_TOKEN_TABLE: string = 'expiring-objects';
+  private ACCESS_TOKEN_TABLE: string = 'authentication';
 
-  private tokenStore: CRUDEngine;
   public accessToken: AccessTokenData;
 
   public static TOPIC = {
     ACCESS_TOKEN_REFRESH: 'AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH',
   };
 
-  constructor() {
+  constructor(private tokenStore: CRUDEngine) {
     super();
-    this.tokenStore = new MemoryEngine(this.ACCESS_TOKEN_DATABASE);
   }
 
   public delete(): Promise<void> {
@@ -29,7 +26,7 @@ export default class AccessTokenStore extends EventEmitter {
     if (this.accessToken !== accessToken) {
       return this.tokenStore
         .delete(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
-        .then(() => this.tokenStore.create(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY, this.accessToken))
+        .then(() => this.tokenStore.create(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY, accessToken))
         .then(() => (this.accessToken = accessToken));
     }
     return Promise.resolve(this.accessToken);
