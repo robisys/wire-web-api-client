@@ -1,9 +1,8 @@
-const axios = require('axios');
 const nock = require('nock');
 
-const Client = require('../dist/commonjs/Client');
-const {AuthAPI} = require('../dist/commonjs/auth');
-const {UserAPI} = require('../dist/commonjs/user');
+const Client = require('../../../dist/commonjs/Client');
+const {AuthAPI} = require('../../../dist/commonjs/auth/index');
+const {UserAPI} = require('../../../dist/commonjs/user/index');
 
 describe('Client', () => {
   const baseURL = Client.BACKEND.PRODUCTION.rest;

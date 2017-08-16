@@ -8,7 +8,7 @@ module.exports = {
   entry: {
     demo: `${__dirname}/src/demo/demo.js`,
     client: `${__dirname}/dist/commonjs/Client.js`,
-    test: `${__dirname}/src/test/index.js`,
+    test: `${__dirname}/src/test/browser/index.js`,
   },
   externals: {
     'fs-extra': '{}',
