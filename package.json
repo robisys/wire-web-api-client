@@ -60,7 +60,7 @@
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "dist": "yarn clear && tsc",
     "dist:browser": "yarn dist && webpack --config ./webpack.browser.js",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags && yarn dist:browser",
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=120 --write \"src/**/*.ts\"",
     "preversion": "yarn && yarn dist && yarn test",
