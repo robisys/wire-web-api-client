@@ -4,17 +4,22 @@ const Html5WebSocket = require('html5-websocket');
 const ReconnectingWebsocket = require('reconnecting-websocket');
 
 export default class WebSocketClient {
+  private clientId: string;
+  private PING_INTERVAL: number = 30000;
   private socket: WebSocket;
 
   constructor(private baseURL: string, private accessTokenStore: AccessTokenStore) {}
 
   public connect(clientId?: string): Promise<WebSocket> {
-    const PING_INTERVAL = 30000;
-    let url = `${this.baseURL}/await?access_token=${this.accessTokenStore.accessToken.access_token}`;
+    this.clientId = clientId;
 
-    if (clientId) {
-      url += `&client=${clientId}`;
-    }
+    const getUrl = () => {
+      let url = `${this.baseURL}/await?access_token=${this.accessTokenStore.accessToken.access_token}`;
+      if (this.clientId) {
+        url += `&client=${this.clientId}`;
+      }
+      return url;
+    };
 
     const reconnectingOptions = {
       connectionTimeout: 4000,
@@ -25,14 +30,14 @@ export default class WebSocketClient {
       minReconnectionDelay: 4000,
       reconnectionDelayGrowFactor: 1.3,
     };
-    this.socket = new ReconnectingWebsocket(url, undefined, reconnectingOptions);
+    this.socket = new ReconnectingWebsocket(getUrl, undefined, reconnectingOptions);
     this.socket.binaryType = 'arraybuffer';
 
     return new Promise(resolve => {
       this.socket.onopen = () => {
         let pinger: number | NodeJS.Timer = setInterval(() => {
           this.socket.send('Wire is so much nicer with Internet!');
-        }, PING_INTERVAL);
+        }, this.PING_INTERVAL);
 
         this.socket.onclose = () => {
           clearInterval(<number>pinger);
