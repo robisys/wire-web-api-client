@@ -61,8 +61,11 @@ export default class TeamAPI {
     });
   }
 
-  public deleteTeam(teamId: string): AxiosPromise {
+  public deleteTeam(teamId: string, password: string): AxiosPromise {
     const config: AxiosRequestConfig = {
+      data: {
+        password,
+      },
       method: 'delete',
       url: `${TeamAPI.URL.TEAMS}/${teamId}`,
     };
