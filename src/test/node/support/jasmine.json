@@ -3,7 +3,7 @@
     "helpers/**/*.js"
   ],
   "random": true,
-  "spec_dir": "src/test/node",
+  "spec_dir": "src/test/node/spec",
   "spec_files": [
     "**/*.test.js"
   ],

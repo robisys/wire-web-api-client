@@ -1,4 +1,4 @@
-const {unsafeAlphanumeric} = require('../../../../dist/commonjs/util/random');
+const {unsafeAlphanumeric} = require('../../../../../dist/commonjs/util/random');
 
 describe('"unsafeAlphanumeric"', function() {
   it('should generate string of length 32 as default', function() {

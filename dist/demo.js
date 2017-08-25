@@ -724,8 +724,11 @@ var TeamAPI = (function () {
             return response.data;
         });
     };
-    TeamAPI.prototype.deleteTeam = function (teamId) {
+    TeamAPI.prototype.deleteTeam = function (teamId, password) {
         var config = {
+            data: {
+                password: password,
+            },
             method: 'delete',
             url: TeamAPI.URL.TEAMS + "/" + teamId,
         };
@@ -4721,6 +4724,9 @@ exports.default = WebSocket;
 
 "use strict";
 
+;
+;
+;
 var isWebSocket = function (constructor) {
     return constructor && constructor.CLOSING === 2;
 };
@@ -4762,7 +4768,9 @@ var reassignEventListeners = function (ws, oldWs, listeners) {
         });
     });
     if (oldWs) {
-        LEVEL_0_EVENTS.forEach(function (name) { ws[name] = oldWs[name]; });
+        LEVEL_0_EVENTS.forEach(function (name) {
+            ws[name] = oldWs[name];
+        });
     }
 };
 var ReconnectingWebsocket = function (url, protocols, options) {
@@ -4869,8 +4877,8 @@ var ReconnectingWebsocket = function (url, protocols, options) {
         if (code === void 0) { code = 1000; }
         if (reason === void 0) { reason = ''; }
         var _b = _a === void 0 ? {} : _a, _c = _b.keepClosed, keepClosed = _c === void 0 ? false : _c, _d = _b.fastClose, fastClose = _d === void 0 ? true : _d, _e = _b.delay, delay = _e === void 0 ? 0 : _e;
-        log('close - params:', { reason: reason, keepClosed: keepClosed, fastClose: fastClose, delay: delay });
-        shouldRetry = !keepClosed;
+        log('close - params:', { reason: reason, keepClosed: keepClosed, fastClose: fastClose, delay: delay, retriesCount: retriesCount, maxRetries: config.maxRetries });
+        shouldRetry = !keepClosed && retriesCount <= config.maxRetries;
         if (delay) {
             reconnectDelay = delay;
         }

@@ -1,6 +1,6 @@
-const WebSocketClient = require('../../../../dist/commonjs/tcp/WebSocketClient').default;
+const WebSocketClient = require('../../../../../dist/commonjs/tcp/WebSocketClient').default;
 const WebSocketServer = require('ws').Server;
-const {AccessTokenStore} = require('../../../../dist/commonjs/auth/index');
+const {AccessTokenStore} = require('../../../../../dist/commonjs/auth/index');
 
 const WEBSOCKET_PORT = 8087;
 const WEBSOCKET_URL = `ws://localhost:${WEBSOCKET_PORT}`;
