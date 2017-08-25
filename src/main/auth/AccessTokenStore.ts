@@ -1,6 +1,7 @@
 import AccessTokenData from './AccessTokenData';
 import EventEmitter = require('events');
-import {CRUDEngine, MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
+import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
+import {RecordNotFoundError} from '@wireapp/store-engine/dist/commonjs/engine/error';
 
 export default class AccessTokenStore extends EventEmitter {
   private ACCESS_TOKEN_KEY: string = 'access-token';
@@ -35,6 +36,13 @@ export default class AccessTokenStore extends EventEmitter {
   public init(): Promise<AccessTokenData> {
     return this.tokenStore
       .read(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
+      .catch(error => {
+        if (error instanceof RecordNotFoundError) {
+          return undefined;
+        }
+
+        throw error;
+      })
       .then((accessToken: AccessTokenData) => (this.accessToken = accessToken));
   }
 }

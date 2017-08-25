@@ -3,22 +3,32 @@ import {AxiosResponse, AxiosRequestConfig, AxiosPromise} from 'axios';
 import {Cookie} from 'tough-cookie';
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {HttpClient} from '../http';
+import {RecordNotFoundError} from '@wireapp/store-engine/dist/commonjs/engine/error';
 
 const COOKIE_PRIMARY_KEY: string = 'cookie';
 const COOKIE_NAME: string = 'zuid';
 const TABLE_NAME: string = 'authentication';
 
 const loadExistingCookie = (engine: CRUDEngine): Promise<object> => {
-  return engine.read(TABLE_NAME, COOKIE_PRIMARY_KEY).then((fileContent: {expiration: string; zuid: string}) => {
-    return typeof fileContent === 'object'
-      ? {
-          isExpired: new Date() > new Date(fileContent.expiration),
-          ...fileContent,
-        }
-      : {
-          isExpired: true,
-        };
-  });
+  return engine
+    .read(TABLE_NAME, COOKIE_PRIMARY_KEY)
+    .catch(error => {
+      if (error instanceof RecordNotFoundError) {
+        return {isExpired: true};
+      }
+
+      throw error;
+    })
+    .then((fileContent: {expiration: string; zuid: string}) => {
+      return typeof fileContent === 'object'
+        ? {
+            isExpired: new Date() > new Date(fileContent.expiration),
+            ...fileContent,
+          }
+        : {
+            isExpired: true,
+          };
+    });
 };
 
 const setInternalCookie = (zuid: string, expiration: Date, engine: CRUDEngine): Promise<string> => {

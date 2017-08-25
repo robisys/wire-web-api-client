@@ -11,7 +11,7 @@
     "@types/text-encoding": "0.0.32",
     "@types/tough-cookie": "2.3.1",
     "@wireapp/queue-priority": "0.0.12",
-    "@wireapp/store-engine": "0.0.22",
+    "@wireapp/store-engine": "0.1.0",
     "axios": "0.16.2",
     "html5-websocket": "1.0.0",
     "reconnecting-websocket": "3.2.1",
