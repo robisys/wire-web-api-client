@@ -31,7 +31,7 @@ client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
 Promise.resolve()
   .then(() => {
     // Trying to login (works only if there is already a valid cookie stored in the FileEngine)
-    return client.init(login.email);
+    return client.init();
   })
   .catch((error) => {
     console.log(`Authentication via existing authenticator (Session Cookie or Access Token) failed: ${error.message}`);
