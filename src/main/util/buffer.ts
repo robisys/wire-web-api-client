@@ -5,7 +5,9 @@ export const bufferToString = (buffer: ArrayBuffer): string => {
 };
 
 export const base64MD5FromBuffer = (buffer: ArrayBuffer): string => {
-  return createHash('md5').update(Buffer.from(buffer)).digest('base64');
+  return createHash('md5')
+    .update(Buffer.from(buffer))
+    .digest('base64');
 };
 
 export const concatToBuffer = (...items: any[]) => {

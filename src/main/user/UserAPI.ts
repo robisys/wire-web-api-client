@@ -1,8 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {UserData} from '../user';
-import {SearchableData} from '../user';
+import {NewClient, UserData, RegisteredClient, SearchableData} from '../user';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {}
@@ -11,8 +10,8 @@ export default class UserAPI {
     return {
       CONNECTIONS: '/connections',
       PROPERTIES: '/properties',
-      SELF: '/self',
       SEARCHABLE: 'searchable',
+      SELF: '/self',
       USERS: '/users',
     };
   }
@@ -23,9 +22,7 @@ export default class UserAPI {
       url: UserAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public putSearchable(data: SearchableData): Promise<void> {
@@ -46,9 +43,7 @@ export default class UserAPI {
       url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public getUsers(parameters: {handles?: string[]; ids?: string[]}): Promise<UserData[]> {
@@ -65,8 +60,6 @@ export default class UserAPI {
       config.url += `?ids=${parameters.ids.join(',')}`;
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 }
