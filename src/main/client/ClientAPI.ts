@@ -1,7 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {NewClient, RegisteredClient} from '../user';
+import {NewClient, RegisteredClient} from '../client/index';
 
 export default class ClientAPI {
   constructor(private client: HttpClient) {}

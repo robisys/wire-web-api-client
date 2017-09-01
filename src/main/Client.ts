@@ -5,6 +5,7 @@ import EventEmitter = require('events');
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {AssetAPI} from './asset';
 import {Backend} from './env';
+import {ConversationAPI} from './conversation';
 import {HttpClient} from './http';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {TeamAPI, MemberAPI, InvitationAPI} from './team';
@@ -29,6 +30,10 @@ class Client extends EventEmitter {
   };
 
   public context: Context = undefined;
+
+  public conversation: {api: ConversationAPI} = {
+    api: undefined,
+  };
 
   public user: {api: UserAPI} = {
     api: undefined,
@@ -65,12 +70,12 @@ class Client extends EventEmitter {
 
     this.asset.api = new AssetAPI(this.client.http);
     this.auth.api = new AuthAPI(this.client.http, this.config.store);
-    this.user.api = new UserAPI(this.client.http);
     this.client.api = new ClientAPI(this.client.http);
-
-    this.teams.team.api = new TeamAPI(this.client.http);
-    this.teams.member.api = new MemberAPI(this.client.http);
+    this.conversation.api = new ConversationAPI(this.client.http);
     this.teams.invitation.api = new InvitationAPI(this.client.http);
+    this.teams.member.api = new MemberAPI(this.client.http);
+    this.teams.team.api = new TeamAPI(this.client.http);
+    this.user.api = new UserAPI(this.client.http);
 
     this.client.http.authAPI = this.auth.api;
   }

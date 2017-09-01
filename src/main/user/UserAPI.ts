@@ -1,19 +1,28 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {NewClient, UserData, RegisteredClient, SearchableData} from '../user';
+import {UserClientPreKeyMap, UserClientMap, UserData, SearchableData} from '../user';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {}
 
   static get URL() {
     return {
-      CONNECTIONS: '/connections',
-      PROPERTIES: '/properties',
+      PRE_KEYS: 'prekeys',
       SEARCHABLE: 'searchable',
       SELF: '/self',
       USERS: '/users',
     };
+  }
+
+  public getPreKeys(userClientMap: UserClientMap): Promise<UserClientPreKeyMap> {
+    const config: AxiosRequestConfig = {
+      data: userClientMap,
+      method: 'post',
+      url: `${UserAPI.URL.USERS}/${UserAPI.URL.PRE_KEYS}`,
+    };
+
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public getSelf(): Promise<UserData> {
