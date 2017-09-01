@@ -11,6 +11,7 @@ module.exports = {
     client: `${__dirname}/dist/commonjs/Client.js`
   },
   externals: {
+    'dexie': 'Dexie',
     'fs-extra': '{}',
   },
   output: {
