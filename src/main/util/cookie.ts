@@ -31,9 +31,8 @@ const loadExistingCookie = (engine: CRUDEngine): Promise<object> => {
     });
 };
 
-const setInternalCookie = (zuid: string, expiration: Date, engine: CRUDEngine): Promise<string> => {
-  return engine.create(TABLE_NAME, COOKIE_PRIMARY_KEY, {zuid, expiration});
-};
+const setInternalCookie = (zuid: string, expiration: Date, engine: CRUDEngine): Promise<string> =>
+  engine.create(TABLE_NAME, COOKIE_PRIMARY_KEY, {zuid, expiration});
 
 export const retrieveCookie = (response: AxiosResponse, engine: CRUDEngine): Promise<AccessTokenData> => {
   if (response.headers && response.headers['set-cookie']) {

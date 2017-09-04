@@ -5,11 +5,4 @@ import UserClientMap from './UserClientMap';
 import UserClientPreKeyMap from './UserClientPreKeyMap';
 import UserData from './UserData';
 
-export {
-  SearchableData,
-  UserAPI,
-  UserAssetData,
-  UserClientMap,
-  UserClientPreKeyMap,
-  UserData,
-};
+export {SearchableData, UserAPI, UserAssetData, UserClientMap, UserClientPreKeyMap, UserData};

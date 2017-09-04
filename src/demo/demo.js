@@ -1,4 +1,4 @@
-import Client from "../../dist/commonjs/Client";
+import Client from '../../dist/commonjs/Client';
 
 window.onload = function() {
   function initBackendLabel() {
@@ -18,28 +18,26 @@ window.onload = function() {
       const login = {
         email: email,
         password: password,
-        persist: false
+        persist: false,
       };
 
       return Promise.resolve()
-        .then(() => {
-          // Trying to login (works only if there is already a valid cookie stored in the browser)
-          return client.init();
-        }).catch((error) => {
-          return client.login(login);
-        }).then((context) => {
+        .then(() => client.init()) // Trying to login (works only if there is already a valid cookie stored in the browser)
+        .catch(error => client.login(login))
+        .then(context => {
           console.log('Login successful', context);
 
           LOGIN_BUTTON.className = 'valid';
-          LOGIN_BUTTON.firstChild.data = "😊";
+          LOGIN_BUTTON.firstChild.data = '😊';
 
           LOGOUT_BUTTON.className = 'valid';
 
           return client.connect();
-        }).catch((error) => {
+        })
+        .catch(error => {
           console.error(`Login failed: ${error.message}`, error);
           LOGIN_BUTTON.className = 'invalid';
-          LOGIN_BUTTON.firstChild.data = "😞";
+          LOGIN_BUTTON.firstChild.data = '😞';
         });
 
       return false;
@@ -50,17 +48,20 @@ window.onload = function() {
     LOGOUT_BUTTON.onclick = function(event) {
       event.preventDefault();
 
-      client.logout().then(() => {
-        console.log('Logout successful');
+      client
+        .logout()
+        .then(() => {
+          console.log('Logout successful');
 
-        LOGIN_BUTTON.className = 'valid';
-        LOGIN_BUTTON.firstChild.data = 'login';
+          LOGIN_BUTTON.className = 'valid';
+          LOGIN_BUTTON.firstChild.data = 'login';
 
-        LOGOUT_BUTTON.classList.remove('valid');
-      }).catch((error) => {
-        console.error(`Logout failed: ${error.message}`, error);
-        LOGOUT_BUTTON.className = 'invalid';
-      });
+          LOGOUT_BUTTON.classList.remove('valid');
+        })
+        .catch(error => {
+          console.error(`Logout failed: ${error.message}`, error);
+          LOGOUT_BUTTON.className = 'invalid';
+        });
 
       return false;
     };
@@ -72,11 +73,11 @@ window.onload = function() {
 
   const client = new Client(BACKEND_ENV);
 
-  client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, (notification) => {
+  client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, notification => {
     console.log('Received notification via WebSocket', notification);
   });
 
-  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', (accessToken) => {
+  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', accessToken => {
     console.log('Acquired AccessToken', accessToken);
   });
 

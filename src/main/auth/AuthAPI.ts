@@ -54,9 +54,7 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public postAccess(expiredAccessToken?: AccessTokenData): Promise<AccessTokenData> {
@@ -84,8 +82,6 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.REGISTER}?challenge_cookie=${challengeCookie}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 }

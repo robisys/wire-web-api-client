@@ -32,9 +32,7 @@ export default class AssetAPI {
         },
         true,
       )
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+      .then((response: AxiosResponse) => response.data);
   }
 
   postAsset(asset: Uint8Array, options: {public: boolean; retention: AssetRetentionPolicy}): Promise<AssetUploadData> {
@@ -75,8 +73,6 @@ export default class AssetAPI {
         },
         data: concatToBuffer(body, asset, footer),
       })
-      .then((response: AxiosResponse) => {
-        return response.data;
-      });
+      .then((response: AxiosResponse) => response.data);
   }
 }

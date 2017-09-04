@@ -41,9 +41,7 @@ export default class UserAPI {
       url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
   }
 
   public getSearchable(): Promise<SearchableData> {
