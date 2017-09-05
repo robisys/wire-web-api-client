@@ -7,13 +7,9 @@ import PriorityQueue from '@wireapp/queue-priority/dist/commonjs/PriorityQueue';
 
 export default class HttpClient {
   private _authAPI: AuthAPI;
-  private accessTokenStore: AccessTokenStore;
-  private baseURL: string;
   private requestQueue: PriorityQueue<number>;
 
-  constructor(baseURL: string, accessTokenStore: AccessTokenStore) {
-    this.accessTokenStore = accessTokenStore;
-    this.baseURL = baseURL;
+  constructor(private baseURL: string, private accessTokenStore: AccessTokenStore) {
     this.requestQueue = new PriorityQueue({
       maxRetries: 0,
       retryDelay: 1000,
