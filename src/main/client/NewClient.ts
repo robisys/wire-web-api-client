@@ -1,16 +1,18 @@
+import {PreKey} from '../auth';
+
 interface NewClient {
-  label?: string;
   class: 'desktop' | 'phone' | 'tablet';
   cookie: string;
-  password?: string;
+  label?: string;
+  lastkey: PreKey;
   model?: string;
-  type: 'permanent' | 'temporary';
-  lastkey: Object;
-  prekeys: Array<Object>;
+  password?: string;
+  prekeys: PreKey[];
   sigkeys: {
     enckey: string;
     mackey: string;
   };
+  type: 'permanent' | 'temporary';
 }
 
 export default NewClient;

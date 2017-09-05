@@ -1,5 +1,5 @@
 interface UserClientMap {
-  [index: string]: string[];
+  [userId: string]: string[];
 }
 
 export default UserClientMap;

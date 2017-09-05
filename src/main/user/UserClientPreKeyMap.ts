@@ -1,5 +1,9 @@
+import {ClientPreKey} from '../auth';
+
 interface UserClientPreKeyMap {
-  [index: string]: {[index: string]: {key: string; id: number}};
+  [userId: string]: {
+    [clientId: string]: ClientPreKey;
+  };
 }
 
 export default UserClientPreKeyMap;

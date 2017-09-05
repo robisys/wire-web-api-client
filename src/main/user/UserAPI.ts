@@ -1,7 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {UserClientPreKeyMap, UserClientMap, UserData, SearchableData} from '../user';
+import {SearchableData, UserClientPreKeyMap, UserClientMap, UserData, UserPreKeyBundleMap} from '../user';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {}
@@ -15,7 +15,7 @@ export default class UserAPI {
     };
   }
 
-  public getPreKeys(userClientMap: UserClientMap): Promise<UserClientPreKeyMap> {
+  public getPreKeys(userClientMap: UserClientMap): Promise<UserPreKeyBundleMap> {
     const config: AxiosRequestConfig = {
       data: userClientMap,
       method: 'post',

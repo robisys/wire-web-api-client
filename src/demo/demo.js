@@ -1,4 +1,5 @@
 import Client from '../../dist/commonjs/Client';
+import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 
 window.onload = function() {
   function initBackendLabel() {
@@ -71,7 +72,12 @@ window.onload = function() {
   const LOGIN_BUTTON = document.getElementById('wire-login-form-submit');
   const LOGOUT_BUTTON = document.getElementById('wire-logout-form-submit');
 
-  const client = new Client(BACKEND_ENV);
+  const config = {
+    store: new MemoryEngine('wire-demo'),
+    urls: BACKEND_ENV,
+  };
+
+  const client = new Client(config);
 
   client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, notification => {
     console.log('Received notification via WebSocket', notification);
