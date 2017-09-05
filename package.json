@@ -1,9 +1,9 @@
 {
   "author": "Wire",
   "browser": {
-    "html5-websocket": "./dist/commonjs/shims/websocket.js",
-    "./dist/commonjs/util/buffer": "./dist/commonjs/shims/buffer.js",
-    "./dist/commonjs/util/cookie": "./dist/commonjs/shims/cookie.js"
+    "html5-websocket": "./dist/commonjs/shims/browser/websocket.js",
+    "./dist/commonjs/shims/node/buffer": "./dist/commonjs/shims/browser/buffer.js",
+    "./dist/commonjs/shims/node/cookie": "./dist/commonjs/shims/browser/cookie.js"
   },
   "dependencies": {
     "@types/node": "8.0.26",

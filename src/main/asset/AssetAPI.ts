@@ -1,10 +1,10 @@
 import axios, {AxiosPromise, AxiosResponse} from 'axios';
 import {HttpClient} from '../http';
 import {isValidKey, isValidToken} from './AssetUtil';
-import {unsafeAlphanumeric} from '../util/random';
+import {unsafeAlphanumeric} from '../shims/node/random';
 import AssetRetentionPolicy from './AssetRetentionPolicy';
 import AssetUploadData from './AssetUploadData';
-import {concatToBuffer, base64MD5FromBuffer} from '../util/buffer';
+import {concatToBuffer, base64MD5FromBuffer} from '../shims/node/buffer';
 
 export default class AssetAPI {
   private static ASSET_URL = '/assets/v3';

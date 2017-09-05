@@ -1,8 +1,8 @@
-import {AccessTokenData} from '../auth';
+import {AccessTokenData} from '../../auth';
 import {AxiosResponse, AxiosRequestConfig, AxiosPromise} from 'axios';
 import {Cookie} from 'tough-cookie';
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
-import {HttpClient} from '../http';
+import {HttpClient} from '../../http';
 import {RecordNotFoundError} from '@wireapp/store-engine/dist/commonjs/engine/error';
 
 const COOKIE_PRIMARY_KEY: string = 'cookie';

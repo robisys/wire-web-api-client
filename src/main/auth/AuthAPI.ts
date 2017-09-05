@@ -3,7 +3,7 @@ import UserData from '../user/UserData';
 import {AccessTokenData, LoginData} from '../auth';
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
-import {retrieveCookie, sendRequestWithCookie} from '../util/cookie';
+import {retrieveCookie, sendRequestWithCookie} from '../shims/node/cookie';
 import {HttpClient} from '../http';
 
 export default class AuthAPI {

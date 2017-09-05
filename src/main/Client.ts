@@ -12,7 +12,7 @@ import {TeamAPI, MemberAPI, InvitationAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
 
-const buffer = require('./util/buffer');
+const buffer = require('./shims/node/buffer');
 
 class Client extends EventEmitter {
   public asset: {api: AssetAPI} = {
