@@ -1,13 +1,3 @@
------
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/wireapp/wire-web-api-client.svg)](https://greenkeeper.io/)
-
-:warning: *THIS PROJECT IS NOT OFFICIALLY SUPPORTED! ALL CODE IN HERE IS
-IN DEVELOPMENT AND LIKELY TO CHANGE WITHOUT WARNING. USE AT YOUR OWN
-RISK.* :warning:
-
------
-
 # Wire
 
 This repository is part of the source code of Wire. You can find more information at [wire.com](https://wire.com) or by contacting opensource@wire.com.
@@ -19,6 +9,10 @@ For licensing information, see the attached LICENSE file and the list of third-p
 ## Wire API Client
 
 Wire for Web's API client.
+
+## Build Status
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/wireapp/wire-web-api-client.svg)](https://greenkeeper.io/)
 
 ## Development
 
@@ -51,17 +45,14 @@ yarn add @wireapp/api-client
 #!/bin/bash
 
 EMAIL="name@email.com"
-HANDLE="username"
 PASSWORD="password"
 
-node docs/index.js --e="$EMAIL" --p="$PASSWORD"
-# or
-node docs/index.js --h="$HANDLE" --p="$PASSWORD"
+node index.js --e="$EMAIL" --p="$PASSWORD"
 ```
 
 **Node**
 
 ```bash
 npm run dist
-node docs/index.js --e="name@email.com" --p="password"
+node index.js --e="name@email.com" --p="password"
 ```
