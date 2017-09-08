@@ -1,10 +1,8 @@
-import AccessTokenStore from './auth/AccessTokenStore';
-import ClientAPI from './client/ClientAPI';
-import Config from './Config';
-import EventEmitter = require('events');
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {AssetAPI} from './asset';
 import {Backend} from './env';
+import {ClientAPI} from './client';
+import {ConnectionAPI} from './connection';
 import {ConversationAPI} from './conversation';
 import {HttpClient} from './http';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
@@ -12,6 +10,9 @@ import {SelfAPI} from './self';
 import {TeamAPI, MemberAPI, InvitationAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
+import AccessTokenStore from './auth/AccessTokenStore';
+import Config from './Config';
+import EventEmitter = require('events');
 
 const buffer = require('./shims/node/buffer');
 
@@ -31,6 +32,10 @@ class Client extends EventEmitter {
   };
 
   public context: Context = undefined;
+
+  public connection: {api: ConnectionAPI} = {
+    api: undefined,
+  };
 
   public conversation: {api: ConversationAPI} = {
     api: undefined,
@@ -76,6 +81,7 @@ class Client extends EventEmitter {
     this.asset.api = new AssetAPI(this.client.http);
     this.auth.api = new AuthAPI(this.client.http, this.config.store);
     this.client.api = new ClientAPI(this.client.http);
+    this.connection.api = new ConnectionAPI(this.client.http);
     this.conversation.api = new ConversationAPI(this.client.http);
     this.self.api = new SelfAPI(this.client.http);
     this.teams.invitation.api = new InvitationAPI(this.client.http);
