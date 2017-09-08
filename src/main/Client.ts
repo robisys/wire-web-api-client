@@ -8,6 +8,7 @@ import {Backend} from './env';
 import {ConversationAPI} from './conversation';
 import {HttpClient} from './http';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
+import {SelfAPI} from './self';
 import {TeamAPI, MemberAPI, InvitationAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
@@ -32,6 +33,10 @@ class Client extends EventEmitter {
   public context: Context = undefined;
 
   public conversation: {api: ConversationAPI} = {
+    api: undefined,
+  };
+
+  public self: {api: SelfAPI} = {
     api: undefined,
   };
 
@@ -72,6 +77,7 @@ class Client extends EventEmitter {
     this.auth.api = new AuthAPI(this.client.http, this.config.store);
     this.client.api = new ClientAPI(this.client.http);
     this.conversation.api = new ConversationAPI(this.client.http);
+    this.self.api = new SelfAPI(this.client.http);
     this.teams.invitation.api = new InvitationAPI(this.client.http);
     this.teams.member.api = new MemberAPI(this.client.http);
     this.teams.team.api = new TeamAPI(this.client.http);
