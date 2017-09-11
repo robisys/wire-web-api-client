@@ -38,11 +38,14 @@ export default class ConnectionsAPI {
   public getConnections(limit: number = 100, connectionId?: string): Promise<UserConnectionList> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${ConnectionsAPI.URL.CONNECTIONS}?size=${limit}`,
+      params: {
+        size: limit,
+      },
+      url: ConnectionsAPI.URL.CONNECTIONS,
     };
 
     if (connectionId) {
-      config.url += `&start=${connectionId}`;
+      config.params.start = connectionId;
     }
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);

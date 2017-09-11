@@ -56,15 +56,16 @@ export default class UserAPI {
   public getUsers(parameters: {handles?: string[]; ids?: string[]}): Promise<UserData[]> {
     const config: AxiosRequestConfig = {
       method: 'get',
+      params: {},
       url: UserAPI.URL.USERS,
     };
 
     if (parameters.handles) {
-      config.url += `?handles=${parameters.handles.join(',')}`;
+      config.params.handles = parameters.handles.join(',');
     }
 
     if (parameters.ids) {
-      config.url += `?ids=${parameters.ids.join(',')}`;
+      config.params.ids = parameters.ids.join(',');
     }
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);

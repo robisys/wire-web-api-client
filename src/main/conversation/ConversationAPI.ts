@@ -21,11 +21,14 @@ export default class ConversationAPI {
 
     const config: AxiosRequestConfig = {
       data: {
-        sender: clientID,
+        params: {
+          ignore_missing: hasContent,
+        },
         recipients: payload,
+        sender: clientID,
       },
       method: 'post',
-      url: `/conversations/${conversationId}/otr/messages?ignore_missing=${hasContent}`,
+      url: `/conversations/${conversationId}/otr/messages`,
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);

@@ -39,9 +39,12 @@ export default class AuthAPI {
     login.password = login.password.toString();
     const config: AxiosRequestConfig = {
       data: login,
-      withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.LOGIN}?persist=${login.persist.toString()}`,
+      params: {
+        persist: login.persist.toString(),
+      },
+      url: AuthAPI.URL.LOGIN,
+      withCredentials: true,
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => retrieveCookie(response, this.engine));
@@ -77,9 +80,12 @@ export default class AuthAPI {
   public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {
     const config: AxiosRequestConfig = {
       data: register,
-      withCredentials: true,
       method: 'post',
-      url: `${AuthAPI.URL.REGISTER}?challenge_cookie=${challengeCookie}`,
+      params: {
+        challenge_cookie: challengeCookie,
+      },
+      url: AuthAPI.URL.REGISTER,
+      withCredentials: true,
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);

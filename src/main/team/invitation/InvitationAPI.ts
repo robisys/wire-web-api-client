@@ -53,7 +53,10 @@ export default class InvitationAPI {
   public getInvitationFromCode(invitationCode: string): Promise<InvitationData> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${InvitationAPI.URL.INVITATIONS}/info?code=${invitationCode}`,
+      params: {
+        code: invitationCode,
+      },
+      url: `${TeamAPI.URL.TEAMS}/${InvitationAPI.URL.INVITATIONS}/info`,
     };
 
     return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
