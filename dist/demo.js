@@ -706,7 +706,7 @@ var TeamAPI = (function () {
             method: 'post',
             url: "" + TeamAPI.URL.TEAMS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.headers['location']; });
+        return this.client.sendJSON(config).then(function (response) { return response.headers['location']; });
     };
     TeamAPI.prototype.putTeam = function (team) {
         var config = {
@@ -717,21 +717,21 @@ var TeamAPI = (function () {
             method: 'put',
             url: TeamAPI.URL.TEAMS + "/" + team.id,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.getTeams = function () {
         var config = {
             method: 'get',
             url: "" + TeamAPI.URL.TEAMS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.getTeam = function (teamId) {
         var config = {
             method: 'get',
             url: TeamAPI.URL.TEAMS + "/" + teamId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.deleteTeam = function (teamId, password) {
         var config = {
@@ -741,7 +741,7 @@ var TeamAPI = (function () {
             method: 'delete',
             url: TeamAPI.URL.TEAMS + "/" + teamId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return TeamAPI;
 }());
@@ -1857,7 +1857,7 @@ var AuthAPI = (function () {
             url: AuthAPI.URL.LOGIN,
             withCredentials: true,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return cookie_1.retrieveCookie(response, _this.engine); });
+        return this.client.sendJSON(config).then(function (response) { return cookie_1.retrieveCookie(response, _this.engine); });
     };
     AuthAPI.prototype.postLogout = function () {
         var config = {
@@ -1865,7 +1865,7 @@ var AuthAPI = (function () {
             method: 'post',
             url: AuthAPI.URL.ACCESS + "/" + AuthAPI.URL.LOGOUT,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     AuthAPI.prototype.postAccess = function (expiredAccessToken) {
         var config = {
@@ -1890,7 +1890,7 @@ var AuthAPI = (function () {
             url: AuthAPI.URL.REGISTER,
             withCredentials: true,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return AuthAPI;
 }());
@@ -2849,7 +2849,7 @@ var ClientAPI = (function () {
             method: 'post',
             url: ClientAPI.URL.CLIENTS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ClientAPI.prototype.deleteClient = function (clientId, password) {
         var config = {
@@ -2859,7 +2859,7 @@ var ClientAPI = (function () {
             method: 'delete',
             url: ClientAPI.URL.CLIENTS + "/" + clientId,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     ClientAPI.prototype.getClient = function (clientId) {
         var config = {
@@ -2867,7 +2867,7 @@ var ClientAPI = (function () {
             method: 'get',
             url: ClientAPI.URL.CLIENTS + "/" + clientId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ClientAPI.prototype.getClients = function () {
         var config = {
@@ -2875,7 +2875,7 @@ var ClientAPI = (function () {
             method: 'get',
             url: ClientAPI.URL.CLIENTS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ClientAPI.prototype.getClientPreKeys = function (clientId) {
         var config = {
@@ -2883,7 +2883,7 @@ var ClientAPI = (function () {
             method: 'get',
             url: ClientAPI.URL.CLIENTS + "/" + clientId + "/prekeys",
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return ClientAPI;
 }());
@@ -2926,7 +2926,7 @@ var ConnectionsAPI = (function () {
             method: 'get',
             url: ConnectionsAPI.URL.CONNECTIONS + "/" + userId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConnectionsAPI.prototype.getConnections = function (limit, connectionId) {
         if (limit === void 0) { limit = 100; }
@@ -2940,7 +2940,7 @@ var ConnectionsAPI = (function () {
         if (connectionId) {
             config.params.start = connectionId;
         }
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConnectionsAPI.prototype.postConnection = function (connectionRequestData) {
         var config = {
@@ -2948,7 +2948,7 @@ var ConnectionsAPI = (function () {
             method: 'post',
             url: ConnectionsAPI.URL.CONNECTIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConnectionsAPI.prototype.putConnection = function (updatedConnection) {
         var config = {
@@ -2956,7 +2956,7 @@ var ConnectionsAPI = (function () {
             method: 'put',
             url: ConnectionsAPI.URL.CONNECTIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return ConnectionsAPI;
 }());
@@ -3005,21 +3005,21 @@ var ConversationAPI = (function () {
             method: 'delete',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.BOTS + "/" + botId,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     ConversationAPI.prototype.deleteMember = function (conversationId, userId) {
         var config = {
             method: 'delete',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.MEMBERS + "/" + userId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.getConversation = function (conversationId) {
         var config = {
             method: 'get',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.getConversationIds = function (limit, conversationId) {
         var config = {
@@ -3032,7 +3032,7 @@ var ConversationAPI = (function () {
         if (conversationId) {
             config.data.start = conversationId;
         }
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.getConversations = function (limit, conversationId, conversationIds) {
         if (limit === void 0) { limit = 100; }
@@ -3049,14 +3049,14 @@ var ConversationAPI = (function () {
         else if (conversationIds) {
             config.data.ids = conversationIds.join(',');
         }
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.getMembershipProperties = function (conversationId) {
         var config = {
             method: 'get',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/self",
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.post1to1 = function (conversationData) {
         var config = {
@@ -3064,7 +3064,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/one2one",
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     ConversationAPI.prototype.postAddMembers = function (conversationId, invitationData) {
         var config = {
@@ -3072,7 +3072,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postBot = function (conversationId, providerId, serviceId) {
         var config = {
@@ -3083,7 +3083,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.BOTS,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     ConversationAPI.prototype.postConversation = function (conversationData) {
         var config = {
@@ -3091,7 +3091,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postJoin = function (conversationId) {
         var config = {
@@ -3099,7 +3099,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postOTRMessage = function (clientId, conversationId, messageData) {
         var hasContent = !!messageData.data;
@@ -3112,7 +3112,10 @@ var ConversationAPI = (function () {
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
                 .MESSAGES,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        if (typeof messageData.data === 'string') {
+            return this.client.sendJSON(config).then(function (response) { return response.data; });
+        }
+        return this.client.sendProtocolBuffer(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postSelf = function () {
         var config = {
@@ -3120,7 +3123,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/self",
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postTyping = function (conversationId, typingData) {
         var config = {
@@ -3128,7 +3131,7 @@ var ConversationAPI = (function () {
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     ConversationAPI.prototype.putConversation = function (conversationId, conversationData) {
         var config = {
@@ -3136,7 +3139,7 @@ var ConversationAPI = (function () {
             method: 'put',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.putMembershipProperties = function (conversationId, memberData) {
         var config = {
@@ -3144,7 +3147,7 @@ var ConversationAPI = (function () {
             method: 'put',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     return ConversationAPI;
 }());
@@ -3162,6 +3165,7 @@ var ContentType = (function () {
     function ContentType() {
     }
     ContentType.APPLICATION_JSON = 'application/json;charset=UTF-8';
+    ContentType.APPLICATION_PROTOBUF = 'application/x-protobuf';
     return ContentType;
 }());
 exports.default = ContentType;
@@ -3237,8 +3241,12 @@ var HttpClient = (function () {
         if (tokenAsParam === void 0) { tokenAsParam = false; }
         return this.requestQueue.add(function () { return _this._sendRequest(config, tokenAsParam); });
     };
-    HttpClient.prototype.sendJSONRequest = function (config) {
+    HttpClient.prototype.sendJSON = function (config) {
         config.headers = __assign({}, config.headers, { 'Content-Type': http_1.ContentType.APPLICATION_JSON });
+        return this.sendRequest(config);
+    };
+    HttpClient.prototype.sendProtocolBuffer = function (config) {
+        config.headers = __assign({}, config.headers, { 'Content-Type': http_1.ContentType.APPLICATION_PROTOBUF });
         return this.sendRequest(config);
     };
     return HttpClient;
@@ -9894,14 +9902,14 @@ var SelfAPI = (function () {
             method: 'delete',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.EMAIL,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.deletePhone = function () {
         var config = {
             method: 'delete',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PHONE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.deleteSelf = function (deleteData) {
         var config = {
@@ -9909,28 +9917,28 @@ var SelfAPI = (function () {
             method: 'delete',
             url: SelfAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.getName = function () {
         var config = {
             method: 'get',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.NAME,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.getSearchable = function () {
         var config = {
             method: 'get',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.getSelf = function () {
         var config = {
             method: 'get',
             url: SelfAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putEmail = function (emailData) {
         var config = {
@@ -9938,7 +9946,7 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.EMAIL,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putHandle = function (handleData) {
         var config = {
@@ -9946,7 +9954,7 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.HANDLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putLocale = function (localeData) {
         var config = {
@@ -9954,7 +9962,7 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.LOCALE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putPassword = function (passwordData) {
         var config = {
@@ -9962,7 +9970,7 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PASSWORD,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putPhone = function (phoneData) {
         var config = {
@@ -9970,7 +9978,7 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PHONE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     SelfAPI.prototype.putSearchable = function (statusData) {
         var config = {
@@ -9978,14 +9986,14 @@ var SelfAPI = (function () {
             method: 'put',
             url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     SelfAPI.prototype.putSelf = function (profileData) {
         var config = {
             method: 'put',
             url: SelfAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     return SelfAPI;
 }());
@@ -10044,21 +10052,21 @@ var InvitationAPI = (function () {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.getInvitations = function (teamId) {
         var config = {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
         var config = {
             method: 'delete',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.postInvitation = function (teamId, invitation) {
         var config = {
@@ -10066,7 +10074,7 @@ var InvitationAPI = (function () {
             method: 'post',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
         var config = {
@@ -10076,7 +10084,7 @@ var InvitationAPI = (function () {
             },
             url: TeamAPI_1.default.URL.TEAMS + "/" + InvitationAPI.URL.INVITATIONS + "/info",
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return InvitationAPI;
 }());
@@ -10120,7 +10128,7 @@ var MemberAPI = (function () {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.deleteMember = function (teamId, userId, password) {
         var config = {
@@ -10130,7 +10138,7 @@ var MemberAPI = (function () {
             method: 'delete',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS + "/" + userId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.postMembers = function (teamId, member) {
         var config = {
@@ -10140,7 +10148,7 @@ var MemberAPI = (function () {
             method: 'post',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.putMembers = function (teamId, member) {
         var config = {
@@ -10150,7 +10158,7 @@ var MemberAPI = (function () {
             method: 'put',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return MemberAPI;
 }());
@@ -10208,14 +10216,14 @@ var UserAPI = (function () {
             method: 'post',
             url: UserAPI.URL.USERS + "/" + UserAPI.URL.PRE_KEYS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getSelf = function () {
         var config = {
             method: 'get',
             url: UserAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.putSearchable = function (data) {
         var config = {
@@ -10223,14 +10231,14 @@ var UserAPI = (function () {
             method: 'put',
             url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getSearchable = function () {
         var config = {
             method: 'get',
             url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getUsers = function (parameters) {
         var config = {
@@ -10244,7 +10252,7 @@ var UserAPI = (function () {
         if (parameters.ids) {
             config.params.ids = parameters.ids.join(',');
         }
-        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return UserAPI;
 }());
