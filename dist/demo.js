@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 79);
+/******/ 	return __webpack_require__(__webpack_require__.s = 87);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(10);
-var isBuffer = __webpack_require__(36);
+var isBuffer = __webpack_require__(43);
 
 /*global toString:true*/
 
@@ -380,13 +380,13 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var PathValidationError_1 = __webpack_require__(18);
+var PathValidationError_1 = __webpack_require__(20);
 exports.PathValidationError = PathValidationError_1.default;
-var RecordAlreadyExistsError_1 = __webpack_require__(19);
+var RecordAlreadyExistsError_1 = __webpack_require__(21);
 exports.RecordAlreadyExistsError = RecordAlreadyExistsError_1.default;
-var RecordNotFoundError_1 = __webpack_require__(20);
+var RecordNotFoundError_1 = __webpack_require__(22);
 exports.RecordNotFoundError = RecordNotFoundError_1.default;
-var RecordTypeError_1 = __webpack_require__(21);
+var RecordTypeError_1 = __webpack_require__(23);
 exports.RecordTypeError = RecordTypeError_1.default;
 
 
@@ -588,7 +588,7 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(38);
+var normalizeHeaderName = __webpack_require__(45);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -706,9 +706,7 @@ var TeamAPI = (function () {
             method: 'post',
             url: "" + TeamAPI.URL.TEAMS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.headers['location'];
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.headers['location']; });
     };
     TeamAPI.prototype.putTeam = function (team) {
         var config = {
@@ -719,27 +717,21 @@ var TeamAPI = (function () {
             method: 'put',
             url: TeamAPI.URL.TEAMS + "/" + team.id,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.getTeams = function () {
         var config = {
             method: 'get',
             url: "" + TeamAPI.URL.TEAMS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.getTeam = function (teamId) {
         var config = {
             method: 'get',
             url: TeamAPI.URL.TEAMS + "/" + teamId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     TeamAPI.prototype.deleteTeam = function (teamId, password) {
         var config = {
@@ -749,9 +741,7 @@ var TeamAPI = (function () {
             method: 'delete',
             url: TeamAPI.URL.TEAMS + "/" + teamId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     return TeamAPI;
 }());
@@ -765,13 +755,9 @@ exports.default = TeamAPI;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var SparkMD5 = __webpack_require__(29);
-exports.bufferToString = function (buffer) {
-    return new TextDecoder('utf-8').decode(new Uint8Array(buffer));
-};
-exports.base64MD5FromBuffer = function (buffer) {
-    return window.btoa(SparkMD5.ArrayBuffer.hash(buffer, true));
-};
+var SparkMD5 = __webpack_require__(30);
+exports.bufferToString = function (buffer) { return new TextDecoder('utf-8').decode(new Uint8Array(buffer)); };
+exports.base64MD5FromBuffer = function (buffer) { return window.btoa(SparkMD5.ArrayBuffer.hash(buffer, true)); };
 exports.concatToBuffer = function () {
     var items = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -1176,11 +1162,11 @@ exports.default = AssetRetentionPolicy;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ContentType_1 = __webpack_require__(32);
+var ContentType_1 = __webpack_require__(39);
 exports.ContentType = ContentType_1.default;
-var HttpClient_1 = __webpack_require__(33);
+var HttpClient_1 = __webpack_require__(40);
 exports.HttpClient = HttpClient_1.default;
-var StatusCode_1 = __webpack_require__(56);
+var StatusCode_1 = __webpack_require__(63);
 exports.StatusCode = StatusCode_1.default;
 
 
@@ -1210,12 +1196,12 @@ module.exports = function bind(fn, thisArg) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(39);
-var buildURL = __webpack_require__(41);
-var parseHeaders = __webpack_require__(42);
-var isURLSameOrigin = __webpack_require__(43);
+var settle = __webpack_require__(46);
+var buildURL = __webpack_require__(48);
+var parseHeaders = __webpack_require__(49);
+var isURLSameOrigin = __webpack_require__(50);
 var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(44);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(51);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1312,7 +1298,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(45);
+      var cookies = __webpack_require__(52);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1397,7 +1383,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(40);
+var enhanceError = __webpack_require__(47);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1489,8 +1475,8 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Context = (function () {
     function Context(userID, clientID) {
-        this.clientID = clientID;
         this.userID = userID;
+        this.clientID = clientID;
     }
     return Context;
 }());
@@ -1499,6 +1485,23 @@ exports.default = Context;
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var FileEngine_1 = __webpack_require__(64);
+exports.FileEngine = FileEngine_1.default;
+var IndexedDBEngine_1 = __webpack_require__(67);
+exports.IndexedDBEngine = IndexedDBEngine_1.default;
+var MemoryEngine_1 = __webpack_require__(71);
+exports.MemoryEngine = MemoryEngine_1.default;
+var LocalStorageEngine_1 = __webpack_require__(72);
+exports.LocalStorageEngine = LocalStorageEngine_1.default;
+
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1521,16 +1524,20 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
+var auth_1 = __webpack_require__(19);
+var asset_1 = __webpack_require__(26);
+var env_1 = __webpack_require__(31);
+var client_1 = __webpack_require__(33);
+var connection_1 = __webpack_require__(35);
+var conversation_1 = __webpack_require__(37);
+var http_1 = __webpack_require__(9);
+var engine_1 = __webpack_require__(17);
+var self_1 = __webpack_require__(73);
+var team_1 = __webpack_require__(75);
+var user_1 = __webpack_require__(81);
+var tcp_1 = __webpack_require__(83);
 var AccessTokenStore_1 = __webpack_require__(6);
 var EventEmitter = __webpack_require__(7);
-var auth_1 = __webpack_require__(22);
-var asset_1 = __webpack_require__(25);
-var env_1 = __webpack_require__(30);
-var http_1 = __webpack_require__(9);
-var engine_1 = __webpack_require__(57);
-var team_1 = __webpack_require__(67);
-var user_1 = __webpack_require__(73);
-var tcp_1 = __webpack_require__(75);
 var buffer = __webpack_require__(5);
 var Client = (function (_super) {
     __extends(Client, _super);
@@ -1543,10 +1550,20 @@ var Client = (function (_super) {
             api: undefined,
         };
         _this.client = {
+            api: undefined,
             http: undefined,
             ws: undefined,
         };
         _this.context = undefined;
+        _this.connection = {
+            api: undefined,
+        };
+        _this.conversation = {
+            api: undefined,
+        };
+        _this.self = {
+            api: undefined,
+        };
         _this.user = {
             api: undefined,
         };
@@ -1561,10 +1578,14 @@ var Client = (function (_super) {
         _this.client.ws = new tcp_1.WebSocketClient(_this.config.urls.ws, _this.accessTokenStore);
         _this.asset.api = new asset_1.AssetAPI(_this.client.http);
         _this.auth.api = new auth_1.AuthAPI(_this.client.http, _this.config.store);
-        _this.user.api = new user_1.UserAPI(_this.client.http);
-        _this.teams.team.api = new team_1.TeamAPI(_this.client.http);
-        _this.teams.member.api = new team_1.MemberAPI(_this.client.http);
+        _this.client.api = new client_1.ClientAPI(_this.client.http);
+        _this.connection.api = new connection_1.ConnectionAPI(_this.client.http);
+        _this.conversation.api = new conversation_1.ConversationAPI(_this.client.http);
+        _this.self.api = new self_1.SelfAPI(_this.client.http);
         _this.teams.invitation.api = new team_1.InvitationAPI(_this.client.http);
+        _this.teams.member.api = new team_1.MemberAPI(_this.client.http);
+        _this.teams.team.api = new team_1.TeamAPI(_this.client.http);
+        _this.user.api = new user_1.UserAPI(_this.client.http);
         _this.client.http.authAPI = _this.auth.api;
         return _this;
     }
@@ -1629,7 +1650,22 @@ module.exports = Client;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AccessTokenStore_1 = __webpack_require__(6);
+exports.AccessTokenStore = AccessTokenStore_1.default;
+var AuthAPI_1 = __webpack_require__(24);
+exports.AuthAPI = AuthAPI_1.default;
+var Context_1 = __webpack_require__(16);
+exports.Context = Context_1.default;
+
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1671,7 +1707,7 @@ exports.default = PathValidationError;
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1704,7 +1740,7 @@ exports.default = RecordAlreadyExistsError;
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1737,7 +1773,7 @@ exports.default = RecordNotFoundError;
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1770,28 +1806,13 @@ exports.default = RecordTypeError;
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var AccessTokenStore_1 = __webpack_require__(6);
-exports.AccessTokenStore = AccessTokenStore_1.default;
-var AuthAPI_1 = __webpack_require__(23);
-exports.AuthAPI = AuthAPI_1.default;
-var Context_1 = __webpack_require__(16);
-exports.Context = Context_1.default;
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var cookie_1 = __webpack_require__(24);
+var cookie_1 = __webpack_require__(25);
 var AuthAPI = (function () {
     function AuthAPI(client, engine) {
         this.client = client;
@@ -1829,9 +1850,12 @@ var AuthAPI = (function () {
         login.password = login.password.toString();
         var config = {
             data: login,
-            withCredentials: true,
             method: 'post',
-            url: AuthAPI.URL.LOGIN + "?persist=" + login.persist.toString(),
+            params: {
+                persist: login.persist.toString(),
+            },
+            url: AuthAPI.URL.LOGIN,
+            withCredentials: true,
         };
         return this.client.sendJSONRequest(config).then(function (response) { return cookie_1.retrieveCookie(response, _this.engine); });
     };
@@ -1841,9 +1865,7 @@ var AuthAPI = (function () {
             method: 'post',
             url: AuthAPI.URL.ACCESS + "/" + AuthAPI.URL.LOGOUT,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     AuthAPI.prototype.postAccess = function (expiredAccessToken) {
         var config = {
@@ -1861,13 +1883,14 @@ var AuthAPI = (function () {
         if (challengeCookie === void 0) { challengeCookie = true; }
         var config = {
             data: register,
-            withCredentials: true,
             method: 'post',
-            url: AuthAPI.URL.REGISTER + "?challenge_cookie=" + challengeCookie,
+            params: {
+                challenge_cookie: challengeCookie,
+            },
+            url: AuthAPI.URL.REGISTER,
+            withCredentials: true,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     return AuthAPI;
 }());
@@ -1875,7 +1898,7 @@ exports.default = AuthAPI;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1890,27 +1913,27 @@ exports.sendRequestWithCookie = function (client, config) {
 
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var AssetAPI_1 = __webpack_require__(26);
-exports.AssetAPI = AssetAPI_1.default;
-var AssetRetentionPolicy_1 = __webpack_require__(8);
-exports.AssetRetentionPolicy = AssetRetentionPolicy_1.default;
-
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var AssetUtil_1 = __webpack_require__(27);
-var random_1 = __webpack_require__(28);
+var AssetAPI_1 = __webpack_require__(27);
+exports.AssetAPI = AssetAPI_1.default;
+var AssetRetentionPolicy_1 = __webpack_require__(8);
+exports.AssetRetentionPolicy = AssetRetentionPolicy_1.default;
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AssetUtil_1 = __webpack_require__(28);
+var random_1 = __webpack_require__(29);
 var AssetRetentionPolicy_1 = __webpack_require__(8);
 var buffer_1 = __webpack_require__(5);
 var AssetAPI = (function () {
@@ -1933,9 +1956,7 @@ var AssetAPI = (function () {
                 asset_token: token,
             },
         }, true)
-            .then(function (response) {
-            return response.data;
-        });
+            .then(function (response) { return response.data; });
     };
     AssetAPI.prototype.postAsset = function (asset, options) {
         var BOUNDARY = "Frontier" + random_1.unsafeAlphanumeric();
@@ -1964,29 +1985,12 @@ var AssetAPI = (function () {
             },
             data: buffer_1.concatToBuffer(body, asset, footer),
         })
-            .then(function (response) {
-            return response.data;
-        });
+            .then(function (response) { return response.data; });
     };
     AssetAPI.ASSET_URL = '/assets/v3';
     return AssetAPI;
 }());
 exports.default = AssetAPI;
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.isValidKey = function (key) {
-    return /^[A-Za-z0-9-]+$/.test(key);
-};
-exports.isValidToken = function (token) {
-    return /^[A-Za-z0-9+/=\-]+$/.test(token);
-};
 
 
 /***/ }),
@@ -1996,18 +2000,27 @@ exports.isValidToken = function (token) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsafeAlphanumeric = function (length) {
-    if (length === void 0) { length = 32; }
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var range = Array.from(Array(length).keys());
-    return range.reduce(function (acc, index) {
-        return acc + chars[Math.floor(Math.random() * chars.length)];
-    }, '');
-};
+exports.isValidKey = function (key) { return /^[A-Za-z0-9-]+$/.test(key); };
+exports.isValidToken = function (token) { return /^[A-Za-z0-9+/=\-]+$/.test(token); };
 
 
 /***/ }),
 /* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.unsafeAlphanumeric = function (length) {
+    if (length === void 0) { length = 32; }
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var range = Array.from(Array(length).keys());
+    return range.reduce(function (acc, index) { return acc + chars[Math.floor(Math.random() * chars.length)]; }, '');
+};
+
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (factory) {
@@ -2764,18 +2777,18 @@ exports.unsafeAlphanumeric = function (length) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Backend_1 = __webpack_require__(31);
+var Backend_1 = __webpack_require__(32);
 exports.Backend = Backend_1.default;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2800,7 +2813,346 @@ exports.default = Backend;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ClientAPI_1 = __webpack_require__(34);
+exports.ClientAPI = ClientAPI_1.default;
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ClientAPI = (function () {
+    function ClientAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(ClientAPI, "URL", {
+        get: function () {
+            return {
+                CLIENTS: '/clients',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ClientAPI.prototype.postClient = function (newClient) {
+        var config = {
+            data: newClient,
+            method: 'post',
+            url: ClientAPI.URL.CLIENTS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ClientAPI.prototype.deleteClient = function (clientId, password) {
+        var config = {
+            data: {
+                password: password,
+            },
+            method: 'delete',
+            url: ClientAPI.URL.CLIENTS + "/" + clientId,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    ClientAPI.prototype.getClient = function (clientId) {
+        var config = {
+            data: {},
+            method: 'get',
+            url: ClientAPI.URL.CLIENTS + "/" + clientId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ClientAPI.prototype.getClients = function () {
+        var config = {
+            data: {},
+            method: 'get',
+            url: ClientAPI.URL.CLIENTS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ClientAPI.prototype.getClientPreKeys = function (clientId) {
+        var config = {
+            data: {},
+            method: 'get',
+            url: ClientAPI.URL.CLIENTS + "/" + clientId + "/prekeys",
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    return ClientAPI;
+}());
+exports.default = ClientAPI;
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConnectionAPI_1 = __webpack_require__(36);
+exports.ConnectionAPI = ConnectionAPI_1.default;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConnectionsAPI = (function () {
+    function ConnectionsAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(ConnectionsAPI, "URL", {
+        get: function () {
+            return {
+                CONNECTIONS: '/connections',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ConnectionsAPI.prototype.getConnection = function (userId) {
+        var config = {
+            method: 'get',
+            url: ConnectionsAPI.URL.CONNECTIONS + "/" + userId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConnectionsAPI.prototype.getConnections = function (limit, connectionId) {
+        if (limit === void 0) { limit = 100; }
+        var config = {
+            method: 'get',
+            params: {
+                size: limit,
+            },
+            url: ConnectionsAPI.URL.CONNECTIONS,
+        };
+        if (connectionId) {
+            config.params.start = connectionId;
+        }
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConnectionsAPI.prototype.postConnection = function (connectionRequestData) {
+        var config = {
+            data: connectionRequestData,
+            method: 'post',
+            url: ConnectionsAPI.URL.CONNECTIONS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConnectionsAPI.prototype.putConnection = function (updatedConnection) {
+        var config = {
+            data: updatedConnection,
+            method: 'put',
+            url: ConnectionsAPI.URL.CONNECTIONS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    return ConnectionsAPI;
+}());
+exports.default = ConnectionsAPI;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConversationAPI_1 = __webpack_require__(38);
+exports.ConversationAPI = ConversationAPI_1.default;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConversationAPI = (function () {
+    function ConversationAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(ConversationAPI, "URL", {
+        get: function () {
+            return {
+                BOTS: 'bots',
+                CLIENTS: '/clients',
+                CONVERSATIONS: '/conversations',
+                MEMBERS: 'members',
+                MESSAGES: 'messages',
+                OTR: 'otr',
+                SELF: 'self',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ConversationAPI.prototype.deleteBot = function (conversationId, botId) {
+        var config = {
+            method: 'delete',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.BOTS + "/" + botId,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    ConversationAPI.prototype.deleteMember = function (conversationId, userId) {
+        var config = {
+            method: 'delete',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.MEMBERS + "/" + userId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.getConversation = function (conversationId) {
+        var config = {
+            method: 'get',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.getConversationIds = function (limit, conversationId) {
+        var config = {
+            params: {
+                size: limit,
+            },
+            method: 'get',
+            url: ConversationAPI.URL.CONVERSATIONS + "/ids",
+        };
+        if (conversationId) {
+            config.data.start = conversationId;
+        }
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.getConversations = function (limit, conversationId, conversationIds) {
+        if (limit === void 0) { limit = 100; }
+        var config = {
+            params: {
+                size: limit,
+            },
+            method: 'get',
+            url: ConversationAPI.URL.CONVERSATIONS + "/ids",
+        };
+        if (conversationId) {
+            config.data.start = conversationId;
+        }
+        else if (conversationIds) {
+            config.data.ids = conversationIds.join(',');
+        }
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.getMembershipProperties = function (conversationId) {
+        var config = {
+            method: 'get',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/self",
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.post1to1 = function (conversationData) {
+        var config = {
+            data: conversationData,
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/one2one",
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    ConversationAPI.prototype.postAddMembers = function (conversationId, invitationData) {
+        var config = {
+            data: invitationData,
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.MEMBERS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.postBot = function (conversationId, providerId, serviceId) {
+        var config = {
+            data: {
+                provider: providerId,
+                service: serviceId,
+            },
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.BOTS,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    ConversationAPI.prototype.postConversation = function (conversationData) {
+        var config = {
+            data: conversationData,
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.postJoin = function (conversationId) {
+        var config = {
+            data: {},
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.postOTRMessage = function (clientId, conversationId, messageData) {
+        var hasContent = !!messageData.data;
+        var config = {
+            data: messageData,
+            params: {
+                ignore_missing: hasContent,
+            },
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
+                .MESSAGES,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.postSelf = function () {
+        var config = {
+            data: {},
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/self",
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.postTyping = function (conversationId, typingData) {
+        var config = {
+            data: typingData,
+            method: 'post',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.SELF,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    ConversationAPI.prototype.putConversation = function (conversationId, conversationData) {
+        var config = {
+            data: conversationData,
+            method: 'put',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    ConversationAPI.prototype.putMembershipProperties = function (conversationId, memberData) {
+        var config = {
+            data: memberData,
+            method: 'put',
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.SELF,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    return ConversationAPI;
+}());
+exports.default = ConversationAPI;
+
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2816,7 +3168,7 @@ exports.default = ContentType;
 
 
 /***/ }),
-/* 33 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2830,13 +3182,13 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(34);
+var axios_1 = __webpack_require__(41);
 var http_1 = __webpack_require__(9);
-var PriorityQueue_1 = __webpack_require__(53);
+var PriorityQueue_1 = __webpack_require__(60);
 var HttpClient = (function () {
     function HttpClient(baseURL, accessTokenStore) {
-        this.accessTokenStore = accessTokenStore;
         this.baseURL = baseURL;
+        this.accessTokenStore = accessTokenStore;
         this.requestQueue = new PriorityQueue_1.default({
             maxRetries: 0,
             retryDelay: 1000,
@@ -2895,13 +3247,13 @@ exports.default = HttpClient;
 
 
 /***/ }),
-/* 34 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(35);
+module.exports = __webpack_require__(42);
 
 /***/ }),
-/* 35 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2909,7 +3261,7 @@ module.exports = __webpack_require__(35);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(10);
-var Axios = __webpack_require__(37);
+var Axios = __webpack_require__(44);
 var defaults = __webpack_require__(3);
 
 /**
@@ -2944,14 +3296,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(14);
-axios.CancelToken = __webpack_require__(51);
+axios.CancelToken = __webpack_require__(58);
 axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(52);
+axios.spread = __webpack_require__(59);
 
 module.exports = axios;
 
@@ -2960,7 +3312,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 36 */
+/* 43 */
 /***/ (function(module, exports) {
 
 /*!
@@ -2987,7 +3339,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 37 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2995,10 +3347,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(46);
-var dispatchRequest = __webpack_require__(47);
-var isAbsoluteURL = __webpack_require__(49);
-var combineURLs = __webpack_require__(50);
+var InterceptorManager = __webpack_require__(53);
+var dispatchRequest = __webpack_require__(54);
+var isAbsoluteURL = __webpack_require__(56);
+var combineURLs = __webpack_require__(57);
 
 /**
  * Create a new instance of Axios
@@ -3080,7 +3432,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 38 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3099,7 +3451,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 39 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3132,7 +3484,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 40 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3160,7 +3512,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 41 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3235,7 +3587,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 42 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3279,7 +3631,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 43 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3354,7 +3706,7 @@ module.exports = (
 
 
 /***/ }),
-/* 44 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3397,7 +3749,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 45 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3457,7 +3809,7 @@ module.exports = (
 
 
 /***/ }),
-/* 46 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3516,14 +3868,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 47 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(48);
+var transformData = __webpack_require__(55);
 var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(3);
 
@@ -3602,7 +3954,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 48 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3629,7 +3981,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 49 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3650,7 +4002,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 50 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3671,7 +4023,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 51 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3735,7 +4087,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 52 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3769,14 +4121,14 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 53 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Item_1 = __webpack_require__(54);
-var Priority_1 = __webpack_require__(55);
+var Item_1 = __webpack_require__(61);
+var Priority_1 = __webpack_require__(62);
 var PriorityQueue = (function () {
     function PriorityQueue(config) {
         this.defaults = {
@@ -3882,7 +4234,7 @@ exports.default = PriorityQueue;
 
 
 /***/ }),
-/* 54 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3897,7 +4249,7 @@ exports.default = Item;
 
 
 /***/ }),
-/* 55 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3913,7 +4265,7 @@ exports.default = Priority;
 
 
 /***/ }),
-/* 56 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3944,24 +4296,7 @@ exports.default = StatusCode;
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var FileEngine_1 = __webpack_require__(58);
-exports.FileEngine = FileEngine_1.default;
-var IndexedDBEngine_1 = __webpack_require__(61);
-exports.IndexedDBEngine = IndexedDBEngine_1.default;
-var MemoryEngine_1 = __webpack_require__(65);
-exports.MemoryEngine = MemoryEngine_1.default;
-var LocalStorageEngine_1 = __webpack_require__(66);
-exports.LocalStorageEngine = LocalStorageEngine_1.default;
-
-
-/***/ }),
-/* 58 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3975,8 +4310,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = __webpack_require__(59);
-var path = __webpack_require__(60);
+var fs = __webpack_require__(65);
+var path = __webpack_require__(66);
 var error_1 = __webpack_require__(1);
 var FileEngine = (function () {
     function FileEngine(storeName, options) {
@@ -4146,13 +4481,13 @@ exports.default = FileEngine;
 
 
 /***/ }),
-/* 59 */
+/* 65 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 /***/ }),
-/* 60 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -4383,13 +4718,13 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 61 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dexie_1 = __webpack_require__(62);
+var dexie_1 = __webpack_require__(68);
 var error_1 = __webpack_require__(1);
 var IndexedDBEngine = (function () {
     function IndexedDBEngine(db) {
@@ -4449,7 +4784,7 @@ exports.default = IndexedDBEngine;
 
 
 /***/ }),
-/* 62 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {(function (global, factory) {
@@ -9057,10 +9392,10 @@ return Dexie;
 })));
 //# sourceMappingURL=dexie.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(63).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(69).setImmediate))
 
 /***/ }),
-/* 63 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -9113,13 +9448,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(64);
+__webpack_require__(70);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 64 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -9312,7 +9647,7 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(2)))
 
 /***/ }),
-/* 65 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9402,7 +9737,7 @@ exports.default = MemoryEngine;
 
 
 /***/ }),
-/* 66 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9517,33 +9852,174 @@ exports.default = LocalStorageEngine;
 
 
 /***/ }),
-/* 67 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var invitation_1 = __webpack_require__(68);
+var SelfAPI_1 = __webpack_require__(74);
+exports.SelfAPI = SelfAPI_1.default;
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SelfAPI = (function () {
+    function SelfAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(SelfAPI, "URL", {
+        get: function () {
+            return {
+                EMAIL: 'email',
+                HANDLE: 'handle',
+                LOCALE: 'locale',
+                NAME: 'name',
+                PASSWORD: 'password',
+                PHONE: 'phone',
+                SEARCHABLE: 'searchable',
+                SELF: '/self',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SelfAPI.prototype.deleteEmail = function () {
+        var config = {
+            method: 'delete',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.EMAIL,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.deletePhone = function () {
+        var config = {
+            method: 'delete',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PHONE,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.deleteSelf = function (deleteData) {
+        var config = {
+            data: deleteData,
+            method: 'delete',
+            url: SelfAPI.URL.SELF,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.getName = function () {
+        var config = {
+            method: 'get',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.NAME,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.getSearchable = function () {
+        var config = {
+            method: 'get',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.SEARCHABLE,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.getSelf = function () {
+        var config = {
+            method: 'get',
+            url: SelfAPI.URL.SELF,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putEmail = function (emailData) {
+        var config = {
+            data: emailData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.EMAIL,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putHandle = function (handleData) {
+        var config = {
+            data: handleData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.HANDLE,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putLocale = function (localeData) {
+        var config = {
+            data: localeData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.LOCALE,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putPassword = function (passwordData) {
+        var config = {
+            data: passwordData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PASSWORD,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putPhone = function (phoneData) {
+        var config = {
+            data: phoneData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.PHONE,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
+    SelfAPI.prototype.putSearchable = function (statusData) {
+        var config = {
+            data: statusData,
+            method: 'put',
+            url: SelfAPI.URL.SELF + "/" + SelfAPI.URL.SEARCHABLE,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    SelfAPI.prototype.putSelf = function (profileData) {
+        var config = {
+            method: 'put',
+            url: SelfAPI.URL.SELF,
+        };
+        return this.client.sendJSONRequest(config).then(function () { return ({}); });
+    };
+    return SelfAPI;
+}());
+exports.default = SelfAPI;
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var invitation_1 = __webpack_require__(76);
 exports.InvitationAPI = invitation_1.InvitationAPI;
-var member_1 = __webpack_require__(70);
+var member_1 = __webpack_require__(78);
 exports.MemberAPI = member_1.MemberAPI;
-var team_1 = __webpack_require__(72);
+var team_1 = __webpack_require__(80);
 exports.TeamAPI = team_1.TeamAPI;
 
 
 /***/ }),
-/* 68 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var InvitationAPI_1 = __webpack_require__(69);
+var InvitationAPI_1 = __webpack_require__(77);
 exports.InvitationAPI = InvitationAPI_1.default;
 
 
 /***/ }),
-/* 69 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9568,27 +10044,21 @@ var InvitationAPI = (function () {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.getInvitations = function (teamId) {
         var config = {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
         var config = {
             method: 'delete',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.postInvitation = function (teamId, invitation) {
         var config = {
@@ -9596,18 +10066,17 @@ var InvitationAPI = (function () {
             method: 'post',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     InvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
         var config = {
             method: 'get',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + InvitationAPI.URL.INVITATIONS + "/info?code=" + invitationCode,
+            params: {
+                code: invitationCode,
+            },
+            url: TeamAPI_1.default.URL.TEAMS + "/" + InvitationAPI.URL.INVITATIONS + "/info",
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     return InvitationAPI;
 }());
@@ -9615,18 +10084,18 @@ exports.default = InvitationAPI;
 
 
 /***/ }),
-/* 70 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var MemberAPI_1 = __webpack_require__(71);
+var MemberAPI_1 = __webpack_require__(79);
 exports.MemberAPI = MemberAPI_1.default;
 
 
 /***/ }),
-/* 71 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9651,9 +10120,7 @@ var MemberAPI = (function () {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.deleteMember = function (teamId, userId, password) {
         var config = {
@@ -9663,9 +10130,7 @@ var MemberAPI = (function () {
             method: 'delete',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS + "/" + userId,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.postMembers = function (teamId, member) {
         var config = {
@@ -9675,9 +10140,7 @@ var MemberAPI = (function () {
             method: 'post',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     MemberAPI.prototype.putMembers = function (teamId, member) {
         var config = {
@@ -9687,9 +10150,7 @@ var MemberAPI = (function () {
             method: 'put',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     return MemberAPI;
 }());
@@ -9697,7 +10158,7 @@ exports.default = MemberAPI;
 
 
 /***/ }),
-/* 72 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9708,18 +10169,18 @@ exports.TeamAPI = TeamAPI_1.default;
 
 
 /***/ }),
-/* 73 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var UserAPI_1 = __webpack_require__(74);
+var UserAPI_1 = __webpack_require__(82);
 exports.UserAPI = UserAPI_1.default;
 
 
 /***/ }),
-/* 74 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9732,24 +10193,29 @@ var UserAPI = (function () {
     Object.defineProperty(UserAPI, "URL", {
         get: function () {
             return {
-                CONNECTIONS: '/connections',
-                PROPERTIES: '/properties',
-                SELF: '/self',
+                PRE_KEYS: 'prekeys',
                 SEARCHABLE: 'searchable',
+                SELF: '/self',
                 USERS: '/users',
             };
         },
         enumerable: true,
         configurable: true
     });
+    UserAPI.prototype.getPreKeys = function (userClientMap) {
+        var config = {
+            data: userClientMap,
+            method: 'post',
+            url: UserAPI.URL.USERS + "/" + UserAPI.URL.PRE_KEYS,
+        };
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
+    };
     UserAPI.prototype.getSelf = function () {
         var config = {
             method: 'get',
             url: UserAPI.URL.SELF,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.putSearchable = function (data) {
         var config = {
@@ -9757,33 +10223,28 @@ var UserAPI = (function () {
             method: 'put',
             url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getSearchable = function () {
         var config = {
             method: 'get',
             url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
         };
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getUsers = function (parameters) {
         var config = {
             method: 'get',
+            params: {},
             url: UserAPI.URL.USERS,
         };
         if (parameters.handles) {
-            config.url += "?handles=" + parameters.handles.join(',');
+            config.params.handles = parameters.handles.join(',');
         }
         if (parameters.ids) {
-            config.url += "?ids=" + parameters.ids.join(',');
+            config.params.ids = parameters.ids.join(',');
         }
-        return this.client.sendJSONRequest(config).then(function (response) {
-            return response.data;
-        });
+        return this.client.sendJSONRequest(config).then(function (response) { return response.data; });
     };
     return UserAPI;
 }());
@@ -9791,25 +10252,25 @@ exports.default = UserAPI;
 
 
 /***/ }),
-/* 75 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var WebSocketClient_1 = __webpack_require__(76);
+var WebSocketClient_1 = __webpack_require__(84);
 exports.WebSocketClient = WebSocketClient_1.default;
 
 
 /***/ }),
-/* 76 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Html5WebSocket = __webpack_require__(77);
-var ReconnectingWebsocket = __webpack_require__(78);
+var Html5WebSocket = __webpack_require__(85);
+var ReconnectingWebsocket = __webpack_require__(86);
 var WebSocketClient = (function () {
     function WebSocketClient(baseURL, accessTokenStore) {
         this.baseURL = baseURL;
@@ -9861,7 +10322,7 @@ exports.default = WebSocketClient;
 
 
 /***/ }),
-/* 77 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9871,7 +10332,7 @@ exports.default = WebSocket;
 
 
 /***/ }),
-/* 78 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10094,13 +10555,16 @@ module.exports = ReconnectingWebsocket;
 
 
 /***/ }),
-/* 79 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__);
+
 
 
 window.onload = function() {
@@ -10121,28 +10585,26 @@ window.onload = function() {
       const login = {
         email: email,
         password: password,
-        persist: false
+        persist: false,
       };
 
       return Promise.resolve()
-        .then(() => {
-          // Trying to login (works only if there is already a valid cookie stored in the browser)
-          return client.init();
-        }).catch((error) => {
-          return client.login(login);
-        }).then((context) => {
+        .then(() => client.init()) // Trying to login (works only if there is already a valid cookie stored in the browser)
+        .catch(error => client.login(login))
+        .then(context => {
           console.log('Login successful', context);
 
           LOGIN_BUTTON.className = 'valid';
-          LOGIN_BUTTON.firstChild.data = "😊";
+          LOGIN_BUTTON.firstChild.data = '😊';
 
           LOGOUT_BUTTON.className = 'valid';
 
           return client.connect();
-        }).catch((error) => {
+        })
+        .catch(error => {
           console.error(`Login failed: ${error.message}`, error);
           LOGIN_BUTTON.className = 'invalid';
-          LOGIN_BUTTON.firstChild.data = "😞";
+          LOGIN_BUTTON.firstChild.data = '😞';
         });
 
       return false;
@@ -10153,17 +10615,20 @@ window.onload = function() {
     LOGOUT_BUTTON.onclick = function(event) {
       event.preventDefault();
 
-      client.logout().then(() => {
-        console.log('Logout successful');
+      client
+        .logout()
+        .then(() => {
+          console.log('Logout successful');
 
-        LOGIN_BUTTON.className = 'valid';
-        LOGIN_BUTTON.firstChild.data = 'login';
+          LOGIN_BUTTON.className = 'valid';
+          LOGIN_BUTTON.firstChild.data = 'login';
 
-        LOGOUT_BUTTON.classList.remove('valid');
-      }).catch((error) => {
-        console.error(`Logout failed: ${error.message}`, error);
-        LOGOUT_BUTTON.className = 'invalid';
-      });
+          LOGOUT_BUTTON.classList.remove('valid');
+        })
+        .catch(error => {
+          console.error(`Logout failed: ${error.message}`, error);
+          LOGOUT_BUTTON.className = 'invalid';
+        });
 
       return false;
     };
@@ -10173,13 +10638,18 @@ window.onload = function() {
   const LOGIN_BUTTON = document.getElementById('wire-login-form-submit');
   const LOGOUT_BUTTON = document.getElementById('wire-logout-form-submit');
 
-  const client = new __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a(BACKEND_ENV);
+  const config = {
+    store: new __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__["MemoryEngine"]('wire-demo'),
+    urls: BACKEND_ENV,
+  };
 
-  client.on(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a.TOPIC.WEB_SOCKET_MESSAGE, (notification) => {
+  const client = new __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a(config);
+
+  client.on(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a.TOPIC.WEB_SOCKET_MESSAGE, notification => {
     console.log('Received notification via WebSocket', notification);
   });
 
-  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', (accessToken) => {
+  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', accessToken => {
     console.log('Acquired AccessToken', accessToken);
   });
 
