@@ -26,7 +26,7 @@ export default class ConnectionsAPI {
       url: `${ConnectionsAPI.URL.CONNECTIONS}/${userId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -48,7 +48,7 @@ export default class ConnectionsAPI {
       config.params.start = connectionId;
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -64,7 +64,7 @@ export default class ConnectionsAPI {
       url: ConnectionsAPI.URL.CONNECTIONS,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -80,6 +80,6 @@ export default class ConnectionsAPI {
       url: ConnectionsAPI.URL.CONNECTIONS,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 }

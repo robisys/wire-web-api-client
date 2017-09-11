@@ -22,7 +22,7 @@ export default class UserAPI {
       url: `${UserAPI.URL.USERS}/${UserAPI.URL.PRE_KEYS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getSelf(): Promise<UserData> {
@@ -31,7 +31,7 @@ export default class UserAPI {
       url: UserAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public putSearchable(data: SearchableData): Promise<void> {
@@ -41,7 +41,7 @@ export default class UserAPI {
       url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getSearchable(): Promise<SearchableData> {
@@ -50,7 +50,7 @@ export default class UserAPI {
       url: `${UserAPI.URL.SELF}/${UserAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getUsers(parameters: {handles?: string[]; ids?: string[]}): Promise<UserData[]> {
@@ -68,6 +68,6 @@ export default class UserAPI {
       config.params.ids = parameters.ids.join(',');
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 }

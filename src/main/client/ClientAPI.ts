@@ -20,7 +20,7 @@ export default class ClientAPI {
       url: ClientAPI.URL.CLIENTS,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public deleteClient(clientId: string, password?: string): Promise<Object> {
@@ -32,7 +32,7 @@ export default class ClientAPI {
       url: `${ClientAPI.URL.CLIENTS}/${clientId}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   public getClient(clientId: string): Promise<RegisteredClient> {
@@ -42,7 +42,7 @@ export default class ClientAPI {
       url: `${ClientAPI.URL.CLIENTS}/${clientId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getClients(): Promise<RegisteredClient[]> {
@@ -52,7 +52,7 @@ export default class ClientAPI {
       url: ClientAPI.URL.CLIENTS,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getClientPreKeys(clientId: string): Promise<PreKeyBundle> {
@@ -62,6 +62,6 @@ export default class ClientAPI {
       url: `${ClientAPI.URL.CLIENTS}/${clientId}/prekeys`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 }

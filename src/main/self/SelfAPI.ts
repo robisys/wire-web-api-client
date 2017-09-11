@@ -30,7 +30,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.EMAIL}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -43,7 +43,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.PHONE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -57,7 +57,7 @@ export default class SelfAPI {
       url: SelfAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -70,7 +70,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.NAME}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -83,7 +83,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -96,7 +96,7 @@ export default class SelfAPI {
       url: SelfAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -111,7 +111,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.EMAIL}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -126,7 +126,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.HANDLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -141,7 +141,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.LOCALE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -156,7 +156,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.PASSWORD}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -171,7 +171,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.PHONE}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -186,7 +186,7 @@ export default class SelfAPI {
       url: `${SelfAPI.URL.SELF}/${SelfAPI.URL.SEARCHABLE}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -200,6 +200,6 @@ export default class SelfAPI {
       url: SelfAPI.URL.SELF,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 }

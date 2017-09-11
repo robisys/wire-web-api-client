@@ -47,7 +47,7 @@ export default class AuthAPI {
       withCredentials: true,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => retrieveCookie(response, this.engine));
+    return this.client.sendJSON(config).then((response: AxiosResponse) => retrieveCookie(response, this.engine));
   }
 
   public postLogout(): AxiosPromise {
@@ -57,7 +57,7 @@ export default class AuthAPI {
       url: `${AuthAPI.URL.ACCESS}/${AuthAPI.URL.LOGOUT}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public postAccess(expiredAccessToken?: AccessTokenData): Promise<AccessTokenData> {
@@ -88,6 +88,6 @@ export default class AuthAPI {
       withCredentials: true,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 }

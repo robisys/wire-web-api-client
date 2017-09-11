@@ -64,10 +64,18 @@ export default class HttpClient {
     return this.requestQueue.add(() => this._sendRequest(config, tokenAsParam));
   }
 
-  public sendJSONRequest(config: AxiosRequestConfig): AxiosPromise {
+  public sendJSON(config: AxiosRequestConfig): AxiosPromise {
     config.headers = {
       ...config.headers,
       'Content-Type': ContentType.APPLICATION_JSON,
+    };
+    return this.sendRequest(config);
+  }
+
+  public sendProtocolBuffer(config: AxiosRequestConfig): AxiosPromise {
+    config.headers = {
+      ...config.headers,
+      'Content-Type': ContentType.APPLICATION_PROTOBUF,
     };
     return this.sendRequest(config);
   }

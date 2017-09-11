@@ -42,7 +42,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.BOTS}/${botId}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -57,7 +57,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.MEMBERS}/${userId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -71,7 +71,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -93,7 +93,7 @@ export default class ConversationAPI {
       config.data.start = conversationId;
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -123,7 +123,7 @@ export default class ConversationAPI {
       config.data.ids = conversationIds.join(',');
     }
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -137,7 +137,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/self`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -152,7 +152,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/one2one`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -168,7 +168,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.MEMBERS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -187,7 +187,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.BOTS}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -202,7 +202,7 @@ export default class ConversationAPI {
       url: ConversationAPI.URL.CONVERSATIONS,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -217,7 +217,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -240,7 +240,11 @@ export default class ConversationAPI {
         .MESSAGES}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    if (typeof messageData.data === 'string') {
+      return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+    }
+
+    return this.client.sendProtocolBuffer(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -254,7 +258,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/self`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -270,7 +274,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.SELF}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -286,7 +290,7 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -302,6 +306,6 @@ export default class ConversationAPI {
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.SELF}`,
     };
 
-    return this.client.sendJSONRequest(config).then(() => ({}));
+    return this.client.sendJSON(config).then(() => ({}));
   }
 }

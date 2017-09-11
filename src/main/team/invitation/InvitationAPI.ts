@@ -19,7 +19,7 @@ export default class InvitationAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}/${invitationId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getInvitations(teamId: string): Promise<InvitationChunkData> {
@@ -28,7 +28,7 @@ export default class InvitationAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public deleteInvitation(teamId: string, invitationId: string): AxiosPromise {
@@ -37,7 +37,7 @@ export default class InvitationAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}/${invitationId}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public postInvitation(teamId: string, invitation: NewInvitationData): AxiosPromise {
@@ -47,7 +47,7 @@ export default class InvitationAPI {
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   public getInvitationFromCode(invitationCode: string): Promise<InvitationData> {
@@ -59,6 +59,6 @@ export default class InvitationAPI {
       url: `${TeamAPI.URL.TEAMS}/${InvitationAPI.URL.INVITATIONS}/info`,
     };
 
-    return this.client.sendJSONRequest(config).then((response: AxiosResponse) => response.data);
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 }
