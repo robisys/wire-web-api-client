@@ -1,31 +1,32 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import {InvitationChunkData, NewInvitationData, InvitationData} from '../';
+import {NewTeamInvitation, TeamInvitationChunk, TeamInvitation} from '../invitation';
 import {HttpClient} from '../../http';
-import TeamAPI from '../team/TeamAPI';
+import {TeamAPI} from '../team';
 
-export default class InvitationAPI {
+export default class TeamInvitationAPI {
   constructor(private client: HttpClient) {}
 
   static get URL() {
     return {
+      INFO: 'info',
       INVITATIONS: 'invitations',
     };
   }
 
-  public getInvitation(teamId: string, invitationId: string): Promise<InvitationData> {
+  public getInvitation(teamId: string, invitationId: string): Promise<TeamInvitation> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}/${invitationId}`,
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamInvitationAPI.URL.INVITATIONS}/${invitationId}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
-  public getInvitations(teamId: string): Promise<InvitationChunkData> {
+  public getInvitations(teamId: string): Promise<TeamInvitationChunk> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}`,
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamInvitationAPI.URL.INVITATIONS}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
@@ -34,29 +35,29 @@ export default class InvitationAPI {
   public deleteInvitation(teamId: string, invitationId: string): AxiosPromise {
     const config: AxiosRequestConfig = {
       method: 'delete',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}/${invitationId}`,
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamInvitationAPI.URL.INVITATIONS}/${invitationId}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
-  public postInvitation(teamId: string, invitation: NewInvitationData): AxiosPromise {
+  public postInvitation(teamId: string, invitation: NewTeamInvitation): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: invitation,
       method: 'post',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${InvitationAPI.URL.INVITATIONS}`,
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamInvitationAPI.URL.INVITATIONS}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
-  public getInvitationFromCode(invitationCode: string): Promise<InvitationData> {
+  public getInvitationFromCode(invitationCode: string): Promise<TeamInvitation> {
     const config: AxiosRequestConfig = {
-      method: 'get',
       params: {
         code: invitationCode,
       },
-      url: `${TeamAPI.URL.TEAMS}/${InvitationAPI.URL.INVITATIONS}/info`,
+      method: 'get',
+      url: `${TeamAPI.URL.TEAMS}/${TeamInvitationAPI.URL.INVITATIONS}/${TeamInvitationAPI.URL.INFO}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);

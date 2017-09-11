@@ -7,7 +7,7 @@ import {ConversationAPI} from './conversation';
 import {HttpClient} from './http';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {SelfAPI} from './self';
-import {TeamAPI, MemberAPI, InvitationAPI} from './team';
+import {TeamAPI, TeamInvitationAPI, MemberAPI} from './team';
 import {UserAPI} from './user';
 import {WebSocketClient} from './tcp';
 import AccessTokenStore from './auth/AccessTokenStore';
@@ -49,7 +49,7 @@ class Client extends EventEmitter {
     api: undefined,
   };
 
-  public teams: {team: {api: TeamAPI}; member: {api: MemberAPI}; invitation: {api: InvitationAPI}} = {
+  public teams: {team: {api: TeamAPI}; member: {api: MemberAPI}; invitation: {api: TeamInvitationAPI}} = {
     team: {api: undefined},
     member: {api: undefined},
     invitation: {api: undefined},
@@ -84,7 +84,7 @@ class Client extends EventEmitter {
     this.connection.api = new ConnectionAPI(this.client.http);
     this.conversation.api = new ConversationAPI(this.client.http);
     this.self.api = new SelfAPI(this.client.http);
-    this.teams.invitation.api = new InvitationAPI(this.client.http);
+    this.teams.invitation.api = new TeamInvitationAPI(this.client.http);
     this.teams.member.api = new MemberAPI(this.client.http);
     this.teams.team.api = new TeamAPI(this.client.http);
     this.user.api = new UserAPI(this.client.http);

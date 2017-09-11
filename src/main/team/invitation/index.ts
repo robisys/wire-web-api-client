@@ -1,6 +1,6 @@
-import InvitationAPI from './InvitationAPI';
-import InvitationChunkData from './InvitationChunkData';
-import InvitationData from './InvitationData';
-import NewInvitationData from './NewInvitationData';
+import NewTeamInvitation from './NewTeamInvitation';
+import TeamInvitationAPI from './TeamInvitationAPI';
+import TeamInvitationChunk from './TeamInvitationChunk';
+import TeamInvitation from './TeamInvitation';
 
-export {InvitationAPI, InvitationChunkData, InvitationData, NewInvitationData};
+export {NewTeamInvitation, TeamInvitationAPI, TeamInvitationChunk, TeamInvitation};
