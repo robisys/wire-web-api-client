@@ -70,8 +70,8 @@
 "use strict";
 
 
-var bind = __webpack_require__(10);
-var isBuffer = __webpack_require__(43);
+var bind = __webpack_require__(9);
+var isBuffer = __webpack_require__(44);
 
 /*global toString:true*/
 
@@ -380,13 +380,13 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var PathValidationError_1 = __webpack_require__(20);
+var PathValidationError_1 = __webpack_require__(21);
 exports.PathValidationError = PathValidationError_1.default;
-var RecordAlreadyExistsError_1 = __webpack_require__(21);
+var RecordAlreadyExistsError_1 = __webpack_require__(22);
 exports.RecordAlreadyExistsError = RecordAlreadyExistsError_1.default;
-var RecordNotFoundError_1 = __webpack_require__(22);
+var RecordNotFoundError_1 = __webpack_require__(23);
 exports.RecordNotFoundError = RecordNotFoundError_1.default;
-var RecordTypeError_1 = __webpack_require__(23);
+var RecordTypeError_1 = __webpack_require__(24);
 exports.RecordTypeError = RecordTypeError_1.default;
 
 
@@ -588,7 +588,7 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(45);
+var normalizeHeaderName = __webpack_require__(46);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -604,10 +604,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
+    adapter = __webpack_require__(10);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(11);
+    adapter = __webpack_require__(10);
   }
   return adapter;
 }
@@ -687,75 +687,7 @@ module.exports = defaults;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI = (function () {
-    function TeamAPI(client) {
-        this.client = client;
-    }
-    Object.defineProperty(TeamAPI, "URL", {
-        get: function () {
-            return {
-                TEAMS: '/teams',
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TeamAPI.prototype.postTeam = function (team) {
-        var config = {
-            data: team,
-            method: 'post',
-            url: "" + TeamAPI.URL.TEAMS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.headers['location']; });
-    };
-    TeamAPI.prototype.putTeam = function (team) {
-        var config = {
-            data: {
-                name: team.name,
-                icon: team.icon,
-            },
-            method: 'put',
-            url: TeamAPI.URL.TEAMS + "/" + team.id,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamAPI.prototype.getTeams = function () {
-        var config = {
-            method: 'get',
-            url: "" + TeamAPI.URL.TEAMS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamAPI.prototype.getTeam = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI.URL.TEAMS + "/" + teamId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamAPI.prototype.deleteTeam = function (teamId, password) {
-        var config = {
-            data: {
-                password: password,
-            },
-            method: 'delete',
-            url: TeamAPI.URL.TEAMS + "/" + teamId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    return TeamAPI;
-}());
-exports.default = TeamAPI;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var SparkMD5 = __webpack_require__(30);
+var SparkMD5 = __webpack_require__(31);
 exports.bufferToString = function (buffer) { return new TextDecoder('utf-8').decode(new Uint8Array(buffer)); };
 exports.base64MD5FromBuffer = function (buffer) { return window.btoa(SparkMD5.ArrayBuffer.hash(buffer, true)); };
 exports.concatToBuffer = function () {
@@ -768,7 +700,7 @@ exports.concatToBuffer = function () {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -784,7 +716,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var EventEmitter = __webpack_require__(7);
+var EventEmitter = __webpack_require__(6);
 var error_1 = __webpack_require__(1);
 var AccessTokenStore = (function (_super) {
     __extends(AccessTokenStore, _super);
@@ -832,7 +764,7 @@ exports.default = AccessTokenStore;
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -1140,7 +1072,7 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1156,22 +1088,22 @@ exports.default = AssetRetentionPolicy;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ContentType_1 = __webpack_require__(39);
+var ContentType_1 = __webpack_require__(40);
 exports.ContentType = ContentType_1.default;
-var HttpClient_1 = __webpack_require__(40);
+var HttpClient_1 = __webpack_require__(41);
 exports.HttpClient = HttpClient_1.default;
-var StatusCode_1 = __webpack_require__(63);
+var StatusCode_1 = __webpack_require__(64);
 exports.StatusCode = StatusCode_1.default;
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1189,19 +1121,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(46);
-var buildURL = __webpack_require__(48);
-var parseHeaders = __webpack_require__(49);
-var isURLSameOrigin = __webpack_require__(50);
-var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(51);
+var settle = __webpack_require__(47);
+var buildURL = __webpack_require__(49);
+var parseHeaders = __webpack_require__(50);
+var isURLSameOrigin = __webpack_require__(51);
+var createError = __webpack_require__(11);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(52);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1298,7 +1230,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(52);
+      var cookies = __webpack_require__(53);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1377,13 +1309,13 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(47);
+var enhanceError = __webpack_require__(48);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1402,7 +1334,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1414,7 +1346,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1440,7 +1372,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1467,7 +1399,86 @@ module.exports = g;
 
 
 /***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamAPI_1 = __webpack_require__(16);
+exports.TeamAPI = TeamAPI_1.default;
+
+
+/***/ }),
 /* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamAPI = (function () {
+    function TeamAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(TeamAPI, "URL", {
+        get: function () {
+            return {
+                TEAMS: '/teams',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TeamAPI.prototype.postTeam = function (team) {
+        var config = {
+            data: team,
+            method: 'post',
+            url: "" + TeamAPI.URL.TEAMS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.headers['location']; });
+    };
+    TeamAPI.prototype.putTeam = function (team) {
+        var config = {
+            data: {
+                name: team.name,
+                icon: team.icon,
+            },
+            method: 'put',
+            url: TeamAPI.URL.TEAMS + "/" + team.id,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.getTeams = function () {
+        var config = {
+            method: 'get',
+            url: "" + TeamAPI.URL.TEAMS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.getTeam = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.deleteTeam = function (teamId, password) {
+        var config = {
+            data: {
+                password: password,
+            },
+            method: 'delete',
+            url: TeamAPI.URL.TEAMS + "/" + teamId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    return TeamAPI;
+}());
+exports.default = TeamAPI;
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1484,24 +1495,24 @@ exports.default = Context;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var FileEngine_1 = __webpack_require__(64);
+var FileEngine_1 = __webpack_require__(65);
 exports.FileEngine = FileEngine_1.default;
-var IndexedDBEngine_1 = __webpack_require__(67);
+var IndexedDBEngine_1 = __webpack_require__(68);
 exports.IndexedDBEngine = IndexedDBEngine_1.default;
-var MemoryEngine_1 = __webpack_require__(71);
+var MemoryEngine_1 = __webpack_require__(72);
 exports.MemoryEngine = MemoryEngine_1.default;
-var LocalStorageEngine_1 = __webpack_require__(72);
+var LocalStorageEngine_1 = __webpack_require__(73);
 exports.LocalStorageEngine = LocalStorageEngine_1.default;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1524,21 +1535,21 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-var auth_1 = __webpack_require__(19);
-var asset_1 = __webpack_require__(26);
-var env_1 = __webpack_require__(31);
-var client_1 = __webpack_require__(33);
-var connection_1 = __webpack_require__(35);
-var conversation_1 = __webpack_require__(37);
-var http_1 = __webpack_require__(9);
-var engine_1 = __webpack_require__(17);
-var self_1 = __webpack_require__(73);
-var team_1 = __webpack_require__(75);
+var auth_1 = __webpack_require__(20);
+var asset_1 = __webpack_require__(27);
+var env_1 = __webpack_require__(32);
+var client_1 = __webpack_require__(34);
+var connection_1 = __webpack_require__(36);
+var conversation_1 = __webpack_require__(38);
+var http_1 = __webpack_require__(8);
+var engine_1 = __webpack_require__(18);
+var self_1 = __webpack_require__(74);
+var team_1 = __webpack_require__(76);
 var user_1 = __webpack_require__(81);
 var tcp_1 = __webpack_require__(83);
-var AccessTokenStore_1 = __webpack_require__(6);
-var EventEmitter = __webpack_require__(7);
-var buffer = __webpack_require__(5);
+var AccessTokenStore_1 = __webpack_require__(5);
+var EventEmitter = __webpack_require__(6);
+var buffer = __webpack_require__(4);
 var Client = (function (_super) {
     __extends(Client, _super);
     function Client(config) {
@@ -1582,7 +1593,7 @@ var Client = (function (_super) {
         _this.connection.api = new connection_1.ConnectionAPI(_this.client.http);
         _this.conversation.api = new conversation_1.ConversationAPI(_this.client.http);
         _this.self.api = new self_1.SelfAPI(_this.client.http);
-        _this.teams.invitation.api = new team_1.InvitationAPI(_this.client.http);
+        _this.teams.invitation.api = new team_1.TeamInvitationAPI(_this.client.http);
         _this.teams.member.api = new team_1.MemberAPI(_this.client.http);
         _this.teams.team.api = new team_1.TeamAPI(_this.client.http);
         _this.user.api = new user_1.UserAPI(_this.client.http);
@@ -1650,22 +1661,22 @@ module.exports = Client;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var AccessTokenStore_1 = __webpack_require__(6);
+var AccessTokenStore_1 = __webpack_require__(5);
 exports.AccessTokenStore = AccessTokenStore_1.default;
-var AuthAPI_1 = __webpack_require__(24);
+var AuthAPI_1 = __webpack_require__(25);
 exports.AuthAPI = AuthAPI_1.default;
-var Context_1 = __webpack_require__(16);
+var Context_1 = __webpack_require__(17);
 exports.Context = Context_1.default;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1707,7 +1718,7 @@ exports.default = PathValidationError;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1740,7 +1751,7 @@ exports.default = RecordAlreadyExistsError;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1773,7 +1784,7 @@ exports.default = RecordNotFoundError;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1806,13 +1817,13 @@ exports.default = RecordTypeError;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var cookie_1 = __webpack_require__(25);
+var cookie_1 = __webpack_require__(26);
 var AuthAPI = (function () {
     function AuthAPI(client, engine) {
         this.client = client;
@@ -1898,7 +1909,7 @@ exports.default = AuthAPI;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1913,29 +1924,29 @@ exports.sendRequestWithCookie = function (client, config) {
 
 
 /***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var AssetAPI_1 = __webpack_require__(27);
-exports.AssetAPI = AssetAPI_1.default;
-var AssetRetentionPolicy_1 = __webpack_require__(8);
-exports.AssetRetentionPolicy = AssetRetentionPolicy_1.default;
-
-
-/***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var AssetUtil_1 = __webpack_require__(28);
-var random_1 = __webpack_require__(29);
-var AssetRetentionPolicy_1 = __webpack_require__(8);
-var buffer_1 = __webpack_require__(5);
+var AssetAPI_1 = __webpack_require__(28);
+exports.AssetAPI = AssetAPI_1.default;
+var AssetRetentionPolicy_1 = __webpack_require__(7);
+exports.AssetRetentionPolicy = AssetRetentionPolicy_1.default;
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AssetUtil_1 = __webpack_require__(29);
+var random_1 = __webpack_require__(30);
+var AssetRetentionPolicy_1 = __webpack_require__(7);
+var buffer_1 = __webpack_require__(4);
 var AssetAPI = (function () {
     function AssetAPI(client) {
         this.client = client;
@@ -1994,7 +2005,7 @@ exports.default = AssetAPI;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2005,7 +2016,7 @@ exports.isValidToken = function (token) { return /^[A-Za-z0-9+/=\-]+$/.test(toke
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2020,7 +2031,7 @@ exports.unsafeAlphanumeric = function (length) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (factory) {
@@ -2777,18 +2788,18 @@ exports.unsafeAlphanumeric = function (length) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Backend_1 = __webpack_require__(32);
+var Backend_1 = __webpack_require__(33);
 exports.Backend = Backend_1.default;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2813,18 +2824,18 @@ exports.default = Backend;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ClientAPI_1 = __webpack_require__(34);
+var ClientAPI_1 = __webpack_require__(35);
 exports.ClientAPI = ClientAPI_1.default;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2891,18 +2902,18 @@ exports.default = ClientAPI;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ConnectionAPI_1 = __webpack_require__(36);
+var ConnectionAPI_1 = __webpack_require__(37);
 exports.ConnectionAPI = ConnectionAPI_1.default;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2964,18 +2975,18 @@ exports.default = ConnectionsAPI;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ConversationAPI_1 = __webpack_require__(38);
+var ConversationAPI_1 = __webpack_require__(39);
 exports.ConversationAPI = ConversationAPI_1.default;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3155,7 +3166,7 @@ exports.default = ConversationAPI;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3172,7 +3183,7 @@ exports.default = ContentType;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3186,9 +3197,9 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var axios_1 = __webpack_require__(41);
-var http_1 = __webpack_require__(9);
-var PriorityQueue_1 = __webpack_require__(60);
+var axios_1 = __webpack_require__(42);
+var http_1 = __webpack_require__(8);
+var PriorityQueue_1 = __webpack_require__(61);
 var HttpClient = (function () {
     function HttpClient(baseURL, accessTokenStore) {
         this.baseURL = baseURL;
@@ -3255,21 +3266,21 @@ exports.default = HttpClient;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(43);
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(10);
-var Axios = __webpack_require__(44);
+var bind = __webpack_require__(9);
+var Axios = __webpack_require__(45);
 var defaults = __webpack_require__(3);
 
 /**
@@ -3303,15 +3314,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(14);
-axios.CancelToken = __webpack_require__(58);
-axios.isCancel = __webpack_require__(13);
+axios.Cancel = __webpack_require__(13);
+axios.CancelToken = __webpack_require__(59);
+axios.isCancel = __webpack_require__(12);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(59);
+axios.spread = __webpack_require__(60);
 
 module.exports = axios;
 
@@ -3320,7 +3331,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 /*!
@@ -3347,7 +3358,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3355,10 +3366,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(53);
-var dispatchRequest = __webpack_require__(54);
-var isAbsoluteURL = __webpack_require__(56);
-var combineURLs = __webpack_require__(57);
+var InterceptorManager = __webpack_require__(54);
+var dispatchRequest = __webpack_require__(55);
+var isAbsoluteURL = __webpack_require__(57);
+var combineURLs = __webpack_require__(58);
 
 /**
  * Create a new instance of Axios
@@ -3440,7 +3451,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3459,13 +3470,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(12);
+var createError = __webpack_require__(11);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -3492,7 +3503,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3520,7 +3531,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3595,7 +3606,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3639,7 +3650,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3714,7 +3725,7 @@ module.exports = (
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3757,7 +3768,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3817,7 +3828,7 @@ module.exports = (
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3876,15 +3887,15 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(55);
-var isCancel = __webpack_require__(13);
+var transformData = __webpack_require__(56);
+var isCancel = __webpack_require__(12);
 var defaults = __webpack_require__(3);
 
 /**
@@ -3962,7 +3973,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3989,7 +4000,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4010,7 +4021,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4031,13 +4042,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(14);
+var Cancel = __webpack_require__(13);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -4095,7 +4106,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4129,14 +4140,14 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Item_1 = __webpack_require__(61);
-var Priority_1 = __webpack_require__(62);
+var Item_1 = __webpack_require__(62);
+var Priority_1 = __webpack_require__(63);
 var PriorityQueue = (function () {
     function PriorityQueue(config) {
         this.defaults = {
@@ -4242,7 +4253,7 @@ exports.default = PriorityQueue;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4257,7 +4268,7 @@ exports.default = Item;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4273,7 +4284,7 @@ exports.default = Priority;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4304,7 +4315,7 @@ exports.default = StatusCode;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4318,8 +4329,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = __webpack_require__(65);
-var path = __webpack_require__(66);
+var fs = __webpack_require__(66);
+var path = __webpack_require__(67);
 var error_1 = __webpack_require__(1);
 var FileEngine = (function () {
     function FileEngine(storeName, options) {
@@ -4489,13 +4500,13 @@ exports.default = FileEngine;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -4726,13 +4737,13 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dexie_1 = __webpack_require__(68);
+var dexie_1 = __webpack_require__(69);
 var error_1 = __webpack_require__(1);
 var IndexedDBEngine = (function () {
     function IndexedDBEngine(db) {
@@ -4792,7 +4803,7 @@ exports.default = IndexedDBEngine;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {(function (global, factory) {
@@ -9400,10 +9411,10 @@ return Dexie;
 })));
 //# sourceMappingURL=dexie.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(69).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(70).setImmediate))
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -9456,13 +9467,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(70);
+__webpack_require__(71);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -9652,10 +9663,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(2)))
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9745,7 +9756,7 @@ exports.default = MemoryEngine;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9860,18 +9871,18 @@ exports.default = LocalStorageEngine;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var SelfAPI_1 = __webpack_require__(74);
+var SelfAPI_1 = __webpack_require__(75);
 exports.SelfAPI = SelfAPI_1.default;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10001,29 +10012,18 @@ exports.default = SelfAPI;
 
 
 /***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var invitation_1 = __webpack_require__(76);
-exports.InvitationAPI = invitation_1.InvitationAPI;
-var member_1 = __webpack_require__(78);
-exports.MemberAPI = member_1.MemberAPI;
-var team_1 = __webpack_require__(80);
-exports.TeamAPI = team_1.TeamAPI;
-
-
-/***/ }),
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var InvitationAPI_1 = __webpack_require__(77);
-exports.InvitationAPI = InvitationAPI_1.default;
+var invitation_1 = __webpack_require__(77);
+exports.TeamInvitationAPI = invitation_1.TeamInvitationAPI;
+var member_1 = __webpack_require__(79);
+exports.MemberAPI = member_1.MemberAPI;
+var team_1 = __webpack_require__(15);
+exports.TeamAPI = team_1.TeamAPI;
 
 
 /***/ }),
@@ -10033,62 +10033,8 @@ exports.InvitationAPI = InvitationAPI_1.default;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(4);
-var InvitationAPI = (function () {
-    function InvitationAPI(client) {
-        this.client = client;
-    }
-    Object.defineProperty(InvitationAPI, "URL", {
-        get: function () {
-            return {
-                INVITATIONS: 'invitations',
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    InvitationAPI.prototype.getInvitation = function (teamId, invitationId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    InvitationAPI.prototype.getInvitations = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    InvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
-        var config = {
-            method: 'delete',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS + "/" + invitationId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    InvitationAPI.prototype.postInvitation = function (teamId, invitation) {
-        var config = {
-            data: invitation,
-            method: 'post',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + InvitationAPI.URL.INVITATIONS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    InvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
-        var config = {
-            method: 'get',
-            params: {
-                code: invitationCode,
-            },
-            url: TeamAPI_1.default.URL.TEAMS + "/" + InvitationAPI.URL.INVITATIONS + "/info",
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    return InvitationAPI;
-}());
-exports.default = InvitationAPI;
+var TeamInvitationAPI_1 = __webpack_require__(78);
+exports.TeamInvitationAPI = TeamInvitationAPI_1.default;
 
 
 /***/ }),
@@ -10098,8 +10044,63 @@ exports.default = InvitationAPI;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var MemberAPI_1 = __webpack_require__(79);
-exports.MemberAPI = MemberAPI_1.default;
+var team_1 = __webpack_require__(15);
+var TeamInvitationAPI = (function () {
+    function TeamInvitationAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(TeamInvitationAPI, "URL", {
+        get: function () {
+            return {
+                INFO: 'info',
+                INVITATIONS: 'invitations',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TeamInvitationAPI.prototype.getInvitation = function (teamId, invitationId) {
+        var config = {
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.getInvitations = function (teamId) {
+        var config = {
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
+        var config = {
+            method: 'delete',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.postInvitation = function (teamId, invitation) {
+        var config = {
+            data: invitation,
+            method: 'post',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
+        var config = {
+            params: {
+                code: invitationCode,
+            },
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + TeamInvitationAPI.URL.INFO,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    return TeamInvitationAPI;
+}());
+exports.default = TeamInvitationAPI;
 
 
 /***/ }),
@@ -10109,7 +10110,18 @@ exports.MemberAPI = MemberAPI_1.default;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(4);
+var MemberAPI_1 = __webpack_require__(80);
+exports.MemberAPI = MemberAPI_1.default;
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamAPI_1 = __webpack_require__(16);
 var MemberAPI = (function () {
     function MemberAPI(client) {
         this.client = client;
@@ -10166,17 +10178,6 @@ exports.default = MemberAPI;
 
 
 /***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(4);
-exports.TeamAPI = TeamAPI_1.default;
-
-
-/***/ }),
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10201,16 +10202,45 @@ var UserAPI = (function () {
     Object.defineProperty(UserAPI, "URL", {
         get: function () {
             return {
+                CLIENTS: 'clients',
+                DELETE: '/delete',
+                HANDLES: 'handles',
                 PRE_KEYS: 'prekeys',
-                SEARCHABLE: 'searchable',
-                SELF: '/self',
                 USERS: '/users',
             };
         },
         enumerable: true,
         configurable: true
     });
-    UserAPI.prototype.getPreKeys = function (userClientMap) {
+    UserAPI.prototype.getClient = function (userId, clientId) {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.USERS + "/" + userId + "/" + UserAPI.URL.CLIENTS + "/" + clientId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getClientPreKey = function (userId, clientId) {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.USERS + "/" + userId + "/" + UserAPI.URL.PRE_KEYS + "/" + clientId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getClients = function (userId) {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.USERS + "/" + userId + "/" + UserAPI.URL.CLIENTS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getHandle = function (handle) {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.USERS + "/" + UserAPI.URL.HANDLES + "/" + handle,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getMultiPreKeyBundles = function (userClientMap) {
         var config = {
             data: userClientMap,
             method: 'post',
@@ -10218,40 +10248,48 @@ var UserAPI = (function () {
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
-    UserAPI.prototype.getSelf = function () {
+    UserAPI.prototype.getUser = function (userId) {
         var config = {
             method: 'get',
-            url: UserAPI.URL.SELF,
+            url: UserAPI.URL.USERS + "/" + userId,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
-    UserAPI.prototype.putSearchable = function (data) {
-        var config = {
-            data: data,
-            method: 'put',
-            url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    UserAPI.prototype.getSearchable = function () {
+    UserAPI.prototype.getUserPreKeys = function (userId) {
         var config = {
             method: 'get',
-            url: UserAPI.URL.SELF + "/" + UserAPI.URL.SEARCHABLE,
+            url: UserAPI.URL.USERS + "/" + userId + "/" + UserAPI.URL.PRE_KEYS,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getUsers = function (parameters) {
         var config = {
-            method: 'get',
             params: {},
+            method: 'get',
             url: UserAPI.URL.USERS,
         };
         if (parameters.handles) {
             config.params.handles = parameters.handles.join(',');
         }
-        if (parameters.ids) {
+        else if (parameters.ids) {
             config.params.ids = parameters.ids.join(',');
         }
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.postDelete = function (verificationData) {
+        var config = {
+            data: verificationData,
+            method: 'post',
+            url: UserAPI.URL.DELETE,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
+    };
+    UserAPI.prototype.postHandles = function (handles) {
+        var config = {
+            data: handles,
+            method: 'post',
+            url: UserAPI.URL.USERS + "/" + UserAPI.URL.HANDLES,
+        };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     return UserAPI;
@@ -10568,9 +10606,9 @@ module.exports = ReconnectingWebsocket;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__wireapp_store_engine_dist_commonjs_engine__);
 
 
