@@ -2,7 +2,7 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
 import {ChangePassword, Delete, SearchableStatus, Self} from '../self';
-import {UserData, UserUpdate} from '../user';
+import {UserUpdate} from '../user';
 
 export default class SelfAPI {
   constructor(private client: HttpClient) {}

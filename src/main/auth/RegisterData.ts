@@ -1,4 +1,4 @@
-import UserAssetData from '../user/UserAssetData';
+import {UserAsset} from '../user';
 import TeamData from '../team/team/TeamData';
 
 interface RegisterData {
@@ -11,7 +11,7 @@ interface RegisterData {
   label?: string;
   phone?: string;
   phone_code?: string;
-  assets?: UserAssetData[];
+  assets?: UserAsset[];
   team?: TeamData;
 }
 

@@ -1,8 +1,8 @@
-import {UserAssetData} from '../user';
+import {UserAsset} from '../user';
 
 interface UserUpdate {
   accent_id?: number;
-  assets?: UserAssetData[];
+  assets?: UserAsset[];
   name: string;
 }
 

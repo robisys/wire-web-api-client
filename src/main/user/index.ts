@@ -1,19 +1,23 @@
-import SearchableData from './SearchableData';
+import CheckHandles from './CheckHandles';
+import HandleInfo from './HandleInfo';
+import User from './User';
 import UserAPI from './UserAPI';
-import UserAssetData from './UserData';
+import UserAsset from './UserAsset';
 import UserClientMap from './UserClientMap';
 import UserClientPreKeyMap from './UserClientPreKeyMap';
-import UserData from './UserData';
 import UserPreKeyBundleMap from './UserPreKeyBundleMap';
 import UserUpdate from './UserUpdate';
+import VerifyDelete from './VerifyDelete';
 
 export {
-  SearchableData,
+  CheckHandles,
+  HandleInfo,
+  User,
   UserAPI,
-  UserAssetData,
+  UserAsset,
   UserClientMap,
   UserClientPreKeyMap,
-  UserData,
   UserPreKeyBundleMap,
   UserUpdate,
+  VerifyDelete,
 };

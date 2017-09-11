@@ -1,16 +1,14 @@
+import {ServiceRef} from '../conversation';
 import {UserAsset} from '../user';
 
-interface Self {
+interface User {
   accent_id?: number;
   assets: UserAsset[];
   deleted?: boolean;
-  email?: string;
   handle?: string;
   id: string;
-  locale: string;
   name: string;
-  phone?: string;
-  team?: string;
+  service?: ServiceRef;
 }
 
-export default Self;
+export default User;

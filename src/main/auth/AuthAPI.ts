@@ -1,5 +1,5 @@
 import RegisterData from './RegisterData';
-import UserData from '../user/UserData';
+import {User} from '../user';
 import {AccessTokenData, LoginData} from '../auth';
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
@@ -77,7 +77,7 @@ export default class AuthAPI {
     return sendRequestWithCookie(this.client, config, this.engine).then((response: AxiosResponse) => response.data);
   }
 
-  public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<UserData> {
+  public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<User> {
     const config: AxiosRequestConfig = {
       data: register,
       method: 'post',
