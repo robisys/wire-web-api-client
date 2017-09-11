@@ -1,5 +1,5 @@
 interface UserClients {
-  [index: string]: string[];
+  [clients: string]: string[];
 }
 
 export default UserClients;

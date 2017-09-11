@@ -1,6 +1,6 @@
 import {InvitationAPI, InvitationChunkData, InvitationData, NewInvitationData} from './invitation';
 import {MemberAPI, MemberData, PermissionsData} from './member';
-import {TeamAPI, NewTeamData, TeamChunkData, TeamData} from './team';
+import {TeamAPI, NewTeamData, TeamChunkData, TeamData, TeamInfo} from './team';
 
 export {
   InvitationAPI,
@@ -14,4 +14,5 @@ export {
   TeamAPI,
   TeamChunkData,
   TeamData,
+  TeamInfo,
 };
