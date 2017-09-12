@@ -3,9 +3,14 @@ import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 
 window.onload = function() {
   function initBackendLabel() {
-    const backendInfo = document.getElementById('wire-login-form-backend');
-    backendInfo.textContent = BACKEND_ENV.rest;
-    backendInfo.setAttribute('href', '?env=' + BACKEND_ENV.name);
+    const label = document.getElementById('wire-login-form-backend');
+    label.textContent = BACKEND_ENV.rest;
+    label.setAttribute('href', `?env=${BACKEND_ENV.name}`);
+  }
+
+  function initVersionLabel(client) {
+    const label = document.getElementById('wire-login-form-version');
+    label.textContent = client.VERSION;
   }
 
   function initLoginButton(client) {
@@ -90,6 +95,7 @@ window.onload = function() {
   window.wire = Object.assign({}, {client: client});
 
   initBackendLabel();
+  initVersionLabel(client);
   initLoginButton(client);
   initLogoutButton(client);
 };

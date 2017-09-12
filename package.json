@@ -68,7 +68,7 @@
     "version": "yarn build:node && yarn pack:demo && yarn dist:demo",
     "postversion": "git push && git push --tags && yarn pack:browser",
     "precommit": "lint-staged",
-    "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=1337 --write \"src/**/*.ts\"",
+    "prettier": "prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=120 --write \"src/**/*.ts\"",
     "start": "yarn build:node && concurrently \"tsc -w\" \"webpack -w\" \"browser-sync start -c bs-config.js\"",
     "test:browser": "karma start karma.conf.js",
     "test:node": "cross-env JASMINE_CONFIG_PATH=src/test/node/support/jasmine.json jasmine",

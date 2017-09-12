@@ -60,6 +60,7 @@ class Client extends EventEmitter {
   };
 
   public static BACKEND = Backend;
+  public VERSION: string;
 
   private accessTokenStore: AccessTokenStore;
   private config: Config;
@@ -147,5 +148,7 @@ class Client extends EventEmitter {
     this.client.ws.disconnect();
   }
 }
+
+Client.prototype.VERSION = require('../../package.json').version;
 
 export = Client;
