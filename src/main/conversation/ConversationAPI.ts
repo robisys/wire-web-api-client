@@ -1,8 +1,19 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
-
-import {ClientMismatch, Conversation, ConversationIds, Conversations, ConversationUpdate, Invite, Member, MemberUpdate, NewConversation, NewOTRMessage, Typing} from '../conversation';
-
-import {HttpClient} from '../http';
+import {
+  ClientMismatch,
+  Conversation,
+  ConversationIds,
+  Conversations,
+  ConversationUpdate,
+  Invite,
+  Member,
+  MemberUpdate,
+  NewConversation,
+  NewOTRMessage,
+  Typing,
+} from '../conversation/';
+import {ConversationEvent} from './event/';
+import {HttpClient} from '../http/';
 
 export default class ConversationAPI {
   constructor(private client: HttpClient) {}
@@ -39,7 +50,7 @@ export default class ConversationAPI {
    * @param userId The user to remove
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/removeMember
    */
-  public deleteMember(conversationId: string, userId: string): Promise<Event> {
+  public deleteMember(conversationId: string, userId: string): Promise<ConversationEvent> {
     const config: AxiosRequestConfig = {
       method: 'delete',
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.MEMBERS}/${userId}`,
@@ -92,7 +103,11 @@ export default class ConversationAPI {
    * @param conversationIds Mutually exclusive with `conversationId`. At most 32 IDs per request.
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/conversations
    */
-  public getConversations(limit: number = 100, conversationId?: string, conversationIds?: string[]): Promise<Conversations> {
+  public getConversations(
+    limit: number = 100,
+    conversationId?: string,
+    conversationIds?: string[],
+  ): Promise<Conversations> {
     const config: AxiosRequestConfig = {
       params: {
         size: limit,
@@ -145,7 +160,7 @@ export default class ConversationAPI {
    * @param invitationData The new conversation
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/addMembers
    */
-  public postAddMembers(conversationId: string, invitationData: Invite): Promise<Event> {
+  public postAddMembers(conversationId: string, invitationData: Invite): Promise<ConversationEvent> {
     const config: AxiosRequestConfig = {
       data: invitationData,
       method: 'post',
@@ -194,7 +209,7 @@ export default class ConversationAPI {
    * @param conversationId The conversation ID
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/joinConversation
    */
-  public postJoin(conversationId: string): Promise<Event> {
+  public postJoin(conversationId: string): Promise<ConversationEvent> {
     const config: AxiosRequestConfig = {
       data: {},
       method: 'post',
@@ -211,7 +226,11 @@ export default class ConversationAPI {
    * @param messageData The message content
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/postOtrMessage
    */
-  public postOTRMessage(clientId: string, conversationId: string, messageData?: NewOTRMessage): Promise<ClientMismatch> {
+  public postOTRMessage(
+    clientId: string,
+    conversationId: string,
+    messageData?: NewOTRMessage,
+  ): Promise<ClientMismatch> {
     if (!messageData) {
       messageData = {
         recipients: {},
@@ -227,7 +246,8 @@ export default class ConversationAPI {
         ignore_missing: hasContent,
       },
       method: 'post',
-      url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.OTR}/${ConversationAPI.URL.MESSAGES}`,
+      url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.OTR}/${ConversationAPI.URL
+        .MESSAGES}`,
     };
 
     if (typeof messageData.data === 'string') {
@@ -273,7 +293,7 @@ export default class ConversationAPI {
    * @param conversationData The new conversation
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/updateConversation
    */
-  public putConversation(conversationId: string, conversationData: ConversationUpdate): Promise<Event> {
+  public putConversation(conversationId: string, conversationData: ConversationUpdate): Promise<ConversationEvent> {
     const config: AxiosRequestConfig = {
       data: conversationData,
       method: 'put',

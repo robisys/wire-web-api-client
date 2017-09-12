@@ -3,7 +3,19 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {HttpClient} from '../http';
 import {ClientPreKey, PreKeyBundle} from '../auth';
 import {PublicClient} from '../client/';
-import {Activate, ActivationResponse, CheckHandles, CompletePasswordReset, HandleInfo, NewPasswordReset, SearchResult, SendActivationCode, User, UserPreKeyBundleMap, VerifyDelete} from '../user';
+import {
+  Activate,
+  ActivationResponse,
+  CheckHandles,
+  CompletePasswordReset,
+  HandleInfo,
+  NewPasswordReset,
+  SearchResult,
+  SendActivationCode,
+  User,
+  UserPreKeyBundleMap,
+  VerifyDelete,
+} from '../user';
 import UserClients from '../conversation/UserClients';
 
 export default class UserAPI {

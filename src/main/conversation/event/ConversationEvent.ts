@@ -1,4 +1,4 @@
-interface Event {
+interface ConversationEvent {
   conversation: string;
   from: string;
   time: string;
@@ -14,4 +14,4 @@ interface Event {
     | 'conversation.typing';
 }
 
-export default Event;
+export default ConversationEvent;

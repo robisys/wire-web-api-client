@@ -1,4 +1,4 @@
-import UserClients from './UserClients';
+import {UserClients} from '../conversation/';
 
 interface ClientMismatch {
   deleted: UserClients;

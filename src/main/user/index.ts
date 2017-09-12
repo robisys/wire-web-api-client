@@ -16,4 +16,21 @@ import UserPreKeyBundleMap from './UserPreKeyBundleMap';
 import UserUpdate from './UserUpdate';
 import VerifyDelete from './VerifyDelete';
 
-export {Activate, ActivationResponse, CheckHandles, CompletePasswordReset, Contact, HandleInfo, NewPasswordReset, RTCIceServer, SearchResult, SendActivationCode, User, UserAPI, UserAsset, UserPreKeyBundleMap, UserUpdate, VerifyDelete};
+export {
+  Activate,
+  ActivationResponse,
+  CheckHandles,
+  CompletePasswordReset,
+  Contact,
+  HandleInfo,
+  NewPasswordReset,
+  RTCIceServer,
+  SearchResult,
+  SendActivationCode,
+  User,
+  UserAPI,
+  UserAsset,
+  UserPreKeyBundleMap,
+  UserUpdate,
+  VerifyDelete,
+};
