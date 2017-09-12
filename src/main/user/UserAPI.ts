@@ -153,9 +153,10 @@ export default class UserAPI {
 
   /**
    * Get a prekey for each client of a user.
-   * @param userId
+   * @param userId The user to get client prekeys from
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getPrekeyBundle
    */
-  public getUserPreKeys(userId: string): Promise<PreKeyBundle> {
+  public getClientPreKeys(userId: string): Promise<PreKeyBundle> {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${UserAPI.URL.USERS}/${userId}/${UserAPI.URL.PRE_KEYS}`,
@@ -166,6 +167,7 @@ export default class UserAPI {
 
   /**
    * List users.
+   *
    * Note: The 'ids' and 'handles' parameters are mutually exclusive.
    * @param parameters Multiple user's handles or IDs
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/users
@@ -188,6 +190,7 @@ export default class UserAPI {
 
   /**
    * Activate (i.e. confirm) an email address or phone number.
+   *
    * Note: Activation only succeeds once and the number of failed attempts for a valid key is limited.
    * @param activationData Data to activate an account
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/activate_0
@@ -249,6 +252,7 @@ export default class UserAPI {
 
   /**
    * Given a map of user IDs to client IDs return a prekey for each one.
+   *
    * Note: The maximum map size is 128 entries.
    * @param userClientMap A map of the user's clients
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getMultiPrekeyBundles

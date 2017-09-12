@@ -82,6 +82,7 @@ export default class InvitationAPI {
 
   /**
    * Create and send a new invitation.
+   *
    * Note: Invitations are sent by email.
    * @param invitationData The invitation to send
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/sendInvitation

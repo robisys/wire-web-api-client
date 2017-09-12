@@ -14,7 +14,7 @@ export default class ConnectionsAPI {
 
   /**
    * Get an existing connection to another user.
-   * @param userId The ID of the other user
+   * @param userId The ID of the user connected to
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/connection
    */
   public getConnection(userId: string): Promise<Connection> {
@@ -29,10 +29,10 @@ export default class ConnectionsAPI {
   /**
    * List the connections to other users.
    * @param limit Number of results to return (default 100, max 500)
-   * @param connectionId The connection ID to start from
+   * @param userId The user ID to start from
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/connections
    */
-  public getConnections(limit: number = 100, connectionId?: string): Promise<UserConnectionList> {
+  public getConnections(limit: number = 100, userId?: string): Promise<UserConnectionList> {
     const config: AxiosRequestConfig = {
       method: 'get',
       params: {
@@ -41,8 +41,8 @@ export default class ConnectionsAPI {
       url: ConnectionsAPI.URL.CONNECTIONS,
     };
 
-    if (connectionId) {
-      config.params.start = connectionId;
+    if (userId) {
+      config.params.start = userId;
     }
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
@@ -50,6 +50,7 @@ export default class ConnectionsAPI {
 
   /**
    * Create a connection to another user.
+   *
    * Note: You can have no more than 1000 connections in accepted or sent state.
    * @param connectionRequestData: The connection request
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/createConnection
@@ -66,6 +67,7 @@ export default class ConnectionsAPI {
 
   /**
    * Update a connection.
+   *
    * Note: You can have no more than 1000 connections in accepted or sent state.
    * @param updatedConnection: The updated connection
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/updateConnection

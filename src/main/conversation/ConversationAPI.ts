@@ -86,6 +86,7 @@ export default class ConversationAPI {
 
   /**
    * Get conversations.
+   *
    * Note: At most 500 conversations are returned per request.
    * @param limit Max. number of conversations to return
    * @param conversationId Conversation ID to start from (exclusive). Mutually exclusive with `conversationIds`.

@@ -48,6 +48,12 @@ export default class SelfAPI {
 
   /**
    * Initiate account deletion.
+   *
+   * Note: If the account has a verified identity, a verification code is sent
+   * and needs to be confirmed to authorise the deletion. If the account has no
+   * verified identity but a password, it must be provided. In that case, and
+   * if neither a verified identity nor a password exists, account deletion is
+   * scheduled immediately.
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/deleteUser
    */
   public deleteSelf(deleteData: Delete): Promise<{}> {
