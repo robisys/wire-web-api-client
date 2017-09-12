@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 87);
+/******/ 	return __webpack_require__(__webpack_require__.s = 88);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1657,6 +1657,7 @@ var Client = (function (_super) {
     Client.BACKEND = env_1.Backend;
     return Client;
 }(EventEmitter));
+Client.prototype.VERSION = __webpack_require__(87).version;
 module.exports = Client;
 
 
@@ -3125,7 +3126,8 @@ var ConversationAPI = (function () {
                 ignore_missing: hasContent,
             },
             method: 'post',
-            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL.MESSAGES,
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
+                .MESSAGES,
         };
         if (typeof messageData.data === 'string') {
             return this.client.sendJSON(config).then(function (response) { return response.data; });
@@ -10704,6 +10706,12 @@ module.exports = ReconnectingWebsocket;
 
 /***/ }),
 /* 87 */
+/***/ (function(module, exports) {
+
+module.exports = {"author":"Wire","browser":{"html5-websocket":"./dist/commonjs/shims/browser/websocket.js","./dist/commonjs/shims/node/buffer":"./dist/commonjs/shims/browser/buffer.js","./dist/commonjs/shims/node/cookie":"./dist/commonjs/shims/browser/cookie.js"},"dependencies":{"@types/node":"8.0.28","@types/spark-md5":"3.0.0","@types/text-encoding":"0.0.32","@types/tough-cookie":"2.3.1","@wireapp/queue-priority":"0.0.12","@wireapp/store-engine":"0.1.0","axios":"0.16.2","html5-websocket":"2.0.1","reconnecting-websocket":"3.2.1","tough-cookie":"2.3.2","spark-md5":"3.0.0"},"devDependencies":{"browser-sync":"2.18.13","concurrently":"3.5.0","cross-env":"5.0.5","husky":"0.14.3","istanbul":"0.4.5","jasmine":"2.8.0","karma":"1.7.1","karma-chrome-launcher":"2.2.0","karma-jasmine":"1.1.0","karma-jasmine-diff-reporter":"1.1.0","karma-sourcemap-loader":"0.3.7","lint-staged":"4.1.3","nock":"9.0.14","optimist":"0.6.1","prettier":"1.6.0","rimraf":"2.6.2","sinon":"3.2.1","sinon-har-server":"0.3.0","typescript":"2.5.2","webpack":"3.5.6","webpack-dev-server":"2.7.1"},"description":"Wire API Client to send and receive data.","license":"GPL-3.0","lint-staged":{"*.ts":["yarn prettier","git add"]},"main":"./dist/commonjs/Client.js","name":"@wireapp/api-client","repository":{"type":"git","url":"git+https://github.com/wireapp/wire-web-api-client.git"},"scripts":{"build:node":"yarn && yarn clear && tsc","clear":"rimraf dist","coverage":"istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js","dist:demo":"git add dist/demo.js","dist":"yarn build:node && yarn dist:demo","pack:browser":"webpack --config ./webpack.browser.js","pack:demo":"webpack","pack:test":"webpack","preversion":"yarn test","version":"yarn build:node && yarn pack:demo && yarn dist:demo","postversion":"git push && git push --tags && yarn pack:browser","precommit":"lint-staged","prettier":"prettier --single-quote --trailing-comma=\"all\" --no-bracket-spacing --print-width=120 --write \"src/**/*.ts\"","start":"yarn build:node && concurrently \"tsc -w\" \"webpack -w\" \"browser-sync start -c bs-config.js\"","test:browser":"karma start karma.conf.js","test:node":"cross-env JASMINE_CONFIG_PATH=src/test/node/support/jasmine.json jasmine","test":"yarn build:node && yarn pack:test && yarn test:node && yarn test:browser","watch":"webpack-dev-server --config webpack.config.js --open"},"types":"./dist/commonjs/Client.d.ts","version":"0.1.12"}
+
+/***/ }),
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10717,9 +10725,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 window.onload = function() {
   function initBackendLabel() {
-    const backendInfo = document.getElementById('wire-login-form-backend');
-    backendInfo.textContent = BACKEND_ENV.rest;
-    backendInfo.setAttribute('href', '?env=' + BACKEND_ENV.name);
+    const label = document.getElementById('wire-login-form-backend');
+    label.textContent = BACKEND_ENV.rest;
+    label.setAttribute('href', `?env=${BACKEND_ENV.name}`);
+  }
+
+  function initVersionLabel(client) {
+    const label = document.getElementById('wire-login-form-version');
+    label.textContent = client.VERSION;
   }
 
   function initLoginButton(client) {
@@ -10804,6 +10817,7 @@ window.onload = function() {
   window.wire = Object.assign({}, {client: client});
 
   initBackendLabel();
+  initVersionLabel(client);
   initLoginButton(client);
   initLogoutButton(client);
 };
