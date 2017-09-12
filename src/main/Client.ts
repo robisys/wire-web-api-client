@@ -45,14 +45,14 @@ class Client extends EventEmitter {
     api: undefined,
   };
 
-  public user: {api: UserAPI} = {
-    api: undefined,
-  };
-
   public teams: {team: {api: TeamAPI}; member: {api: MemberAPI}; invitation: {api: TeamInvitationAPI}} = {
     team: {api: undefined},
     member: {api: undefined},
     invitation: {api: undefined},
+  };
+
+  public user: {api: UserAPI} = {
+    api: undefined,
   };
 
   public static TOPIC = {

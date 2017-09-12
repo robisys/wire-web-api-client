@@ -3,7 +3,7 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {HttpClient} from '../http';
 import {ClientPreKey, PreKeyBundle} from '../auth';
 import {PublicClient} from '../client/';
-import {CheckHandles, HandleInfo, User, UserPreKeyBundleMap, VerifyDelete} from '../user';
+import {Activate, ActivationResponse, CheckHandles, CompletePasswordReset, HandleInfo, NewPasswordReset, SearchResult, SendActivationCode, User, UserPreKeyBundleMap, VerifyDelete} from '../user';
 import UserClients from '../conversation/UserClients';
 
 export default class UserAPI {
@@ -11,12 +11,50 @@ export default class UserAPI {
 
   static get URL() {
     return {
+      ACTIVATE: '/activate',
+      CALLS: '/calls',
       CLIENTS: 'clients',
+      CONTACTS: 'contacts',
       DELETE: '/delete',
       HANDLES: 'handles',
+      PASSWORDRESET: '/password-reset',
       PRE_KEYS: 'prekeys',
+      SEARCH: '/search',
+      SEND: 'send',
       USERS: '/users',
     };
+  }
+
+  /**
+   * Activate (i.e. confirm) an email address or phone number.
+   * @param activationCode Activation code
+   * @param activationKey Activation key
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/activate
+   */
+  public getActivation(activationCode: string, activationKey: string): Promise<ActivationResponse> {
+    const config: AxiosRequestConfig = {
+      data: {
+        code: activationCode,
+        key: activationKey,
+      },
+      method: 'get',
+      url: UserAPI.URL.ACTIVATE,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * Retrieve TURN server addresses and credentials.
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getCallsConfig
+   */
+  public getCallsConfiguration(): Promise<RTCConfiguration> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: `${UserAPI.URL.CALLS}/config`,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
   /**
@@ -78,17 +116,23 @@ export default class UserAPI {
   }
 
   /**
-   * Given a map of user IDs to client IDs return a prekey for each one.
-   * Note: The maximum map size is 128 entries.
-   * @param userClientMap A map of the user's clients
-   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getMultiPrekeyBundles
+   * Search for users.
+   * @param query The search query
+   * @param limit Number of results to return
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/search
    */
-  public getMultiPreKeyBundles(userClientMap: UserClients): Promise<UserPreKeyBundleMap> {
+  public getSearchContacts(query: string, limit?: number): Promise<SearchResult> {
     const config: AxiosRequestConfig = {
-      data: userClientMap,
-      method: 'post',
-      url: `${UserAPI.URL.USERS}/${UserAPI.URL.PRE_KEYS}`,
+      params: {
+        q: query,
+      },
+      method: 'get',
+      url: `${UserAPI.URL.SEARCH}/${UserAPI.URL.CONTACTS}`,
     };
+
+    if (limit) {
+      config.params.size = limit;
+    }
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
@@ -143,6 +187,37 @@ export default class UserAPI {
   }
 
   /**
+   * Activate (i.e. confirm) an email address or phone number.
+   * Note: Activation only succeeds once and the number of failed attempts for a valid key is limited.
+   * @param activationData Data to activate an account
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/activate_0
+   */
+  public postActivation(activationData: Activate): Promise<ActivationResponse> {
+    const config: AxiosRequestConfig = {
+      data: activationData,
+      method: 'post',
+      url: UserAPI.URL.ACTIVATE,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * Send (or resend) an email or phone activation code.
+   * @param activationCodeData Data to send an activation code
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/sendActivationCode
+   */
+  public postActivationCode(activationCodeData: SendActivationCode): Promise<{}> {
+    const config: AxiosRequestConfig = {
+      data: activationCodeData,
+      method: 'post',
+      url: `${UserAPI.URL.ACTIVATE}/${UserAPI.URL.SEND}`,
+    };
+
+    return this.client.sendJSON(config).then(() => ({}));
+  }
+
+  /**
    * Verify account deletion with a code.
    * @param verificationData Data to verify the account deletion
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/verifyDeleteUser
@@ -170,5 +245,37 @@ export default class UserAPI {
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * Given a map of user IDs to client IDs return a prekey for each one.
+   * Note: The maximum map size is 128 entries.
+   * @param userClientMap A map of the user's clients
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getMultiPrekeyBundles
+   */
+  public postMultiPreKeyBundles(userClientMap: UserClients): Promise<UserPreKeyBundleMap> {
+    const config: AxiosRequestConfig = {
+      data: userClientMap,
+      method: 'post',
+      url: `${UserAPI.URL.USERS}/${UserAPI.URL.PRE_KEYS}`,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * Initiate or complete a password reset.
+   * @param resetData The data needed to initiate or complete the reset
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/beginPasswordReset
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/completePasswordReset
+   */
+  public postPasswordReset(resetData: NewPasswordReset | CompletePasswordReset): Promise<{}> {
+    const config: AxiosRequestConfig = {
+      data: resetData,
+      method: 'post',
+      url: UserAPI.URL.PASSWORDRESET,
+    };
+
+    return this.client.sendJSON(config).then(() => ({}));
   }
 }

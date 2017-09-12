@@ -1,18 +1,6 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import {
-  ClientMismatch,
-  Conversation,
-  ConversationIds,
-  Conversations,
-  ConversationUpdate,
-  Invite,
-  Member,
-  MemberUpdate,
-  NewConversation,
-  NewOTRMessage,
-  Typing,
-} from '../conversation';
+import {ClientMismatch, Conversation, ConversationIds, Conversations, ConversationUpdate, Invite, Member, MemberUpdate, NewConversation, NewOTRMessage, Typing} from '../conversation';
 
 import {HttpClient} from '../http';
 
@@ -104,11 +92,7 @@ export default class ConversationAPI {
    * @param conversationIds Mutually exclusive with `conversationId`. At most 32 IDs per request.
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/conversations
    */
-  public getConversations(
-    limit: number = 100,
-    conversationId?: string,
-    conversationIds?: string[],
-  ): Promise<Conversations> {
+  public getConversations(limit: number = 100, conversationId?: string, conversationIds?: string[]): Promise<Conversations> {
     const config: AxiosRequestConfig = {
       params: {
         size: limit,
@@ -227,11 +211,7 @@ export default class ConversationAPI {
    * @param messageData The message content
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/postOtrMessage
    */
-  public postOTRMessage(
-    clientId: string,
-    conversationId: string,
-    messageData?: NewOTRMessage,
-  ): Promise<ClientMismatch> {
+  public postOTRMessage(clientId: string, conversationId: string, messageData?: NewOTRMessage): Promise<ClientMismatch> {
     if (!messageData) {
       messageData = {
         recipients: {},
@@ -247,8 +227,7 @@ export default class ConversationAPI {
         ignore_missing: hasContent,
       },
       method: 'post',
-      url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.OTR}/${ConversationAPI.URL
-        .MESSAGES}`,
+      url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.OTR}/${ConversationAPI.URL.MESSAGES}`,
     };
 
     if (typeof messageData.data === 'string') {

@@ -12,7 +12,6 @@ export default class AuthAPI {
   static get URL() {
     return {
       ACCESS: '/access',
-      ACTIVATE: '/activate',
       COOKIES: '/cookies',
       INVITATIONS: '/invitations',
       LOGIN: '/login',
