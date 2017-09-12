@@ -19,10 +19,38 @@ export default class UserAPI {
       HANDLES: 'handles',
       PASSWORDRESET: '/password-reset',
       PRE_KEYS: 'prekeys',
+      PROPERTIES: '/properties',
       SEARCH: '/search',
       SEND: 'send',
       USERS: '/users',
     };
+  }
+
+  /**
+   * Clear all properties.
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/clearProperties
+   */
+  public deleteProperties(): Promise<{}> {
+    const config: AxiosRequestConfig = {
+      method: 'delete',
+      url: UserAPI.URL.PROPERTIES,
+    };
+
+    return this.client.sendJSON(config).then(() => ({}));
+  }
+
+  /**
+   * Delete a property.
+   * @param propertyKey The property key to delete
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/deleteProperty
+   */
+  public deleteProperty(propertyKey: string): Promise<{}> {
+    const config: AxiosRequestConfig = {
+      method: 'delete',
+      url: `${UserAPI.URL.PROPERTIES}/${propertyKey}`,
+    };
+
+    return this.client.sendJSON(config).then(() => ({}));
   }
 
   /**
@@ -110,6 +138,33 @@ export default class UserAPI {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${UserAPI.URL.USERS}/${UserAPI.URL.HANDLES}/${handle}`,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * List all property keys.
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/listPropertyKeys
+   */
+  public getProperties(): Promise<string[]> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: UserAPI.URL.PROPERTIES,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
+  /**
+   * Get a property value.
+   * @param propertyKey The property key to get
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getProperty
+   */
+  public getProperty(propertyKey: string): Promise<Object> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: `${UserAPI.URL.PROPERTIES}/${propertyKey}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
@@ -278,6 +333,22 @@ export default class UserAPI {
       data: resetData,
       method: 'post',
       url: UserAPI.URL.PASSWORDRESET,
+    };
+
+    return this.client.sendJSON(config).then(() => ({}));
+  }
+
+  /**
+   * Set a user property.
+   * @param propertyKey The property key to set
+   * @param propertyData The property data to set
+   * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/setProperty
+   */
+  public putProperty(propertyKey: string, propertyData: Object): Promise<{}> {
+    const config: AxiosRequestConfig = {
+      data: propertyData,
+      method: 'put',
+      url: `${UserAPI.URL.PROPERTIES}/${propertyKey}`,
     };
 
     return this.client.sendJSON(config).then(() => ({}));
