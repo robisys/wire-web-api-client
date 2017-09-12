@@ -1538,7 +1538,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 var auth_1 = __webpack_require__(20);
 var asset_1 = __webpack_require__(27);
 var env_1 = __webpack_require__(32);
-var client_1 = __webpack_require__(34);
+var _1 = __webpack_require__(34);
 var connection_1 = __webpack_require__(36);
 var conversation_1 = __webpack_require__(38);
 var http_1 = __webpack_require__(8);
@@ -1575,13 +1575,13 @@ var Client = (function (_super) {
         _this.self = {
             api: undefined,
         };
-        _this.user = {
-            api: undefined,
-        };
         _this.teams = {
             team: { api: undefined },
             member: { api: undefined },
             invitation: { api: undefined },
+        };
+        _this.user = {
+            api: undefined,
         };
         _this.config = __assign({ store: new engine_1.MemoryEngine('wire'), urls: Client.BACKEND.PRODUCTION }, config);
         _this.accessTokenStore = new AccessTokenStore_1.default(_this.config.store);
@@ -1589,7 +1589,7 @@ var Client = (function (_super) {
         _this.client.ws = new tcp_1.WebSocketClient(_this.config.urls.ws, _this.accessTokenStore);
         _this.asset.api = new asset_1.AssetAPI(_this.client.http);
         _this.auth.api = new auth_1.AuthAPI(_this.client.http, _this.config.store);
-        _this.client.api = new client_1.ClientAPI(_this.client.http);
+        _this.client.api = new _1.ClientAPI(_this.client.http);
         _this.connection.api = new connection_1.ConnectionAPI(_this.client.http);
         _this.conversation.api = new conversation_1.ConversationAPI(_this.client.http);
         _this.self.api = new self_1.SelfAPI(_this.client.http);
@@ -1833,7 +1833,6 @@ var AuthAPI = (function () {
         get: function () {
             return {
                 ACCESS: '/access',
-                ACTIVATE: '/activate',
                 COOKIES: '/cookies',
                 INVITATIONS: '/invitations',
                 LOGIN: '/login',
@@ -3113,6 +3112,12 @@ var ConversationAPI = (function () {
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     ConversationAPI.prototype.postOTRMessage = function (clientId, conversationId, messageData) {
+        if (!messageData) {
+            messageData = {
+                recipients: {},
+                sender: clientId,
+            };
+        }
         var hasContent = !!messageData.data;
         var config = {
             data: messageData,
@@ -3120,8 +3125,7 @@ var ConversationAPI = (function () {
                 ignore_missing: hasContent,
             },
             method: 'post',
-            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
-                .MESSAGES,
+            url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL.MESSAGES,
         };
         if (typeof messageData.data === 'string') {
             return this.client.sendJSON(config).then(function (response) { return response.data; });
@@ -10202,16 +10206,55 @@ var UserAPI = (function () {
     Object.defineProperty(UserAPI, "URL", {
         get: function () {
             return {
+                ACTIVATE: '/activate',
+                CALLS: '/calls',
                 CLIENTS: 'clients',
+                CONTACTS: 'contacts',
                 DELETE: '/delete',
                 HANDLES: 'handles',
+                PASSWORDRESET: '/password-reset',
                 PRE_KEYS: 'prekeys',
+                PROPERTIES: '/properties',
+                SEARCH: '/search',
+                SEND: 'send',
                 USERS: '/users',
             };
         },
         enumerable: true,
         configurable: true
     });
+    UserAPI.prototype.deleteProperties = function () {
+        var config = {
+            method: 'delete',
+            url: UserAPI.URL.PROPERTIES,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
+    };
+    UserAPI.prototype.deleteProperty = function (propertyKey) {
+        var config = {
+            method: 'delete',
+            url: UserAPI.URL.PROPERTIES + "/" + propertyKey,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
+    };
+    UserAPI.prototype.getActivation = function (activationCode, activationKey) {
+        var config = {
+            data: {
+                code: activationCode,
+                key: activationKey,
+            },
+            method: 'get',
+            url: UserAPI.URL.ACTIVATE,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getCallsConfiguration = function () {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.CALLS + "/config",
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
     UserAPI.prototype.getClient = function (userId, clientId) {
         var config = {
             method: 'get',
@@ -10240,12 +10283,31 @@ var UserAPI = (function () {
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
-    UserAPI.prototype.getMultiPreKeyBundles = function (userClientMap) {
+    UserAPI.prototype.getProperties = function () {
         var config = {
-            data: userClientMap,
-            method: 'post',
-            url: UserAPI.URL.USERS + "/" + UserAPI.URL.PRE_KEYS,
+            method: 'get',
+            url: UserAPI.URL.PROPERTIES,
         };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getProperty = function (propertyKey) {
+        var config = {
+            method: 'get',
+            url: UserAPI.URL.PROPERTIES + "/" + propertyKey,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.getSearchContacts = function (query, limit) {
+        var config = {
+            params: {
+                q: query,
+            },
+            method: 'get',
+            url: UserAPI.URL.SEARCH + "/" + UserAPI.URL.CONTACTS,
+        };
+        if (limit) {
+            config.params.size = limit;
+        }
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
     UserAPI.prototype.getUser = function (userId) {
@@ -10276,6 +10338,22 @@ var UserAPI = (function () {
         }
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
+    UserAPI.prototype.postActivation = function (activationData) {
+        var config = {
+            data: activationData,
+            method: 'post',
+            url: UserAPI.URL.ACTIVATE,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.postActivationCode = function (activationCodeData) {
+        var config = {
+            data: activationCodeData,
+            method: 'post',
+            url: UserAPI.URL.ACTIVATE + "/" + UserAPI.URL.SEND,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
+    };
     UserAPI.prototype.postDelete = function (verificationData) {
         var config = {
             data: verificationData,
@@ -10291,6 +10369,30 @@ var UserAPI = (function () {
             url: UserAPI.URL.USERS + "/" + UserAPI.URL.HANDLES,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.postMultiPreKeyBundles = function (userClientMap) {
+        var config = {
+            data: userClientMap,
+            method: 'post',
+            url: UserAPI.URL.USERS + "/" + UserAPI.URL.PRE_KEYS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    UserAPI.prototype.postPasswordReset = function (resetData) {
+        var config = {
+            data: resetData,
+            method: 'post',
+            url: UserAPI.URL.PASSWORDRESET,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
+    };
+    UserAPI.prototype.putProperty = function (propertyKey, propertyData) {
+        var config = {
+            data: propertyData,
+            method: 'put',
+            url: UserAPI.URL.PROPERTIES + "/" + propertyKey,
+        };
+        return this.client.sendJSON(config).then(function () { return ({}); });
     };
     return UserAPI;
 }());
