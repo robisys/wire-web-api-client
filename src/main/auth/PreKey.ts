@@ -1,6 +1,6 @@
 interface PreKey {
   id: number;
-  key: string;
+  key: string; // Serialized PreKey
 }
 
 export default PreKey;

@@ -1,7 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {NewClient, RegisteredClient} from '../client/index';
+import {NewClient, RegisteredClient} from '../client/';
 import {PreKeyBundle} from '../auth';
 
 export default class ClientAPI {

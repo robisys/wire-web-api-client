@@ -1,7 +1,7 @@
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {AssetAPI} from './asset';
 import {Backend} from './env';
-import {ClientAPI} from './client';
+import {ClientAPI} from './client/';
 import {ConnectionAPI} from './connection';
 import {ConversationAPI} from './conversation';
 import {HttpClient} from './http';

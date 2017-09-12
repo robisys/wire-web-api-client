@@ -1,7 +1,7 @@
 import {OTRClientMap} from '../conversation';
 
 interface OTRRecipients {
-  [recipient: string]: OTRClientMap;
+  [userId: string]: OTRClientMap;
 }
 
 export default OTRRecipients;

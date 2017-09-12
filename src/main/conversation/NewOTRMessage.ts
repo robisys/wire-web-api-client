@@ -1,7 +1,7 @@
 import {OTRRecipients} from '../conversation';
 
 interface NewOTRMessage {
-  data?: any; // Use 'string' for JSON, default is Protobuf
+  data?: any; // Defaults to Protocol Buffer. Use type 'string' for JSON.
   native_priority?: 'low' | 'high';
   native_push?: boolean;
   recipients: OTRRecipients;

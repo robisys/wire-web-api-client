@@ -227,7 +227,18 @@ export default class ConversationAPI {
    * @param messageData The message content
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/conversations/postOtrMessage
    */
-  public postOTRMessage(clientId: string, conversationId: string, messageData: NewOTRMessage): Promise<ClientMismatch> {
+  public postOTRMessage(
+    clientId: string,
+    conversationId: string,
+    messageData?: NewOTRMessage,
+  ): Promise<ClientMismatch> {
+    if (!messageData) {
+      messageData = {
+        recipients: {},
+        sender: clientId,
+      };
+    }
+
     const hasContent = !!messageData.data;
 
     const config: AxiosRequestConfig = {

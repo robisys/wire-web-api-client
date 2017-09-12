@@ -7,7 +7,7 @@ interface NewClient {
   lastkey: PreKey;
   model?: string;
   password?: string;
-  prekeys: PreKey[];
+  prekeys: PreKey[]; // Serialized PreKey
   sigkeys: {
     enckey: string;
     mackey: string;

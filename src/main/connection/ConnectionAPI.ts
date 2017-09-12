@@ -1,9 +1,6 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
-import {ClientPreKey, PreKeyBundle} from '../auth';
-import {PublicClient} from '../client';
-import {UserAPI} from '../user';
 import {Connection, ConnectionRequest, ConnectionUpdate, UserConnectionList} from '../connection';
 
 export default class ConnectionsAPI {

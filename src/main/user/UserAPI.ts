@@ -2,16 +2,9 @@ import {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 import {HttpClient} from '../http';
 import {ClientPreKey, PreKeyBundle} from '../auth';
-import {PublicClient} from '../client';
-import {
-  CheckHandles,
-  HandleInfo,
-  UserClientPreKeyMap,
-  UserClientMap,
-  User,
-  UserPreKeyBundleMap,
-  VerifyDelete,
-} from '../user';
+import {PublicClient} from '../client/';
+import {CheckHandles, HandleInfo, User, UserPreKeyBundleMap, VerifyDelete} from '../user';
+import UserClients from '../conversation/UserClients';
 
 export default class UserAPI {
   constructor(private client: HttpClient) {}
@@ -90,7 +83,7 @@ export default class UserAPI {
    * @param userClientMap A map of the user's clients
    * @see https://staging-nginz-https.zinfra.io/swagger-ui/#!/users/getMultiPrekeyBundles
    */
-  public getMultiPreKeyBundles(userClientMap: UserClientMap): Promise<UserPreKeyBundleMap> {
+  public getMultiPreKeyBundles(userClientMap: UserClients): Promise<UserPreKeyBundleMap> {
     const config: AxiosRequestConfig = {
       data: userClientMap,
       method: 'post',
