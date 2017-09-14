@@ -27,18 +27,12 @@ module.exports = function(config) {
   config.set({
     autoWatch: false,
     basePath: '',
-    browsers: ['Chrome_Headless'],
+    browsers: ['ChromeHeadless'],
     client: {
       useIframe: false,
     },
     colors: true,
     concurrency: Infinity,
-    customLaunchers: {
-      Chrome_Headless: {
-        base: 'Chrome',
-        flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222'],
-      },
-    },
     files: [
       `${dist}test.js`
     ],
