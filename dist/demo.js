@@ -3131,7 +3131,7 @@ var ConversationAPI = (function () {
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
                 .MESSAGES,
         };
-        if (typeof messageData.data === 'string') {
+        if (typeof messageData.recipients === 'object') {
             return this.client.sendJSON(config).then(function (response) { return response.data; });
         }
         return this.client.sendProtocolBuffer(config).then(function (response) { return response.data; });
@@ -10805,7 +10805,7 @@ module.exports = {
 		"sinon-har-server": "0.3.0",
 		"typescript": "2.5.2",
 		"webpack": "3.5.6",
-		"webpack-dev-server": "2.8.0"
+		"webpack-dev-server": "2.8.1"
 	},
 	"description": "Wire API Client to send and receive data.",
 	"license": "GPL-3.0",
@@ -10842,7 +10842,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.1.14"
+	"version": "0.1.15"
 };
 
 /***/ }),
