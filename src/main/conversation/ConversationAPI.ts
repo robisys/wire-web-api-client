@@ -250,7 +250,7 @@ export default class ConversationAPI {
         .MESSAGES}`,
     };
 
-    if (typeof messageData.data === 'string') {
+    if (typeof messageData.recipients === 'object') {
       return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
     }
 
