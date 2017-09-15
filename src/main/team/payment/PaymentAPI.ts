@@ -15,7 +15,7 @@ export default class TeamAPI {
 
   public putPaymentData(teamId: string, paymentData: PaymentDataUpdate): AxiosPromise {
     const config: AxiosRequestConfig = {
-      data: {},
+      data: paymentData,
       method: 'put',
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.BILLING}`,
     };
