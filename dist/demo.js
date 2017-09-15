@@ -10221,7 +10221,7 @@ var TeamAPI = (function () {
     });
     TeamAPI.prototype.putPaymentData = function (teamId, paymentData) {
         var config = {
-            data: {},
+            data: paymentData,
             method: 'put',
             url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
         };
@@ -10842,7 +10842,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.1.15"
+	"version": "0.1.16"
 };
 
 /***/ }),
