@@ -131,6 +131,14 @@ class Client extends EventEmitter {
       .then(() => (this.context = undefined));
   }
 
+  public deleteTeam(teamId: string, password: string): Promise<void> {
+    return this.teams.team.api
+      .deleteTeam(teamId, password)
+      .then(() => this.disconnect())
+      .then(() => this.accessTokenStore.delete())
+      .then(() => (this.context = undefined));
+  }
+
   public connect(): Promise<WebSocket> {
     return this.client.ws.connect(this.context.clientID).then((socket: WebSocket) => {
       socket.onmessage = (event: MessageEvent) => {
