@@ -17,11 +17,18 @@
  *
  */
 
-interface InvoiceData {
+// https://stripe.com/docs/api#charge_object
+interface PaymentStripeInvoice {
+  id: string;
   amount: number;
-  company: string;
+  created: number;
   currency: 'eur';
-  date: number;
+  failureCode: string;
+  failureMessage: string;
+  invoice: string;
+  livemode: boolean;
+  paid: boolean;
+  status: 'succeeded' | 'pending' | 'failed';
 }
 
-export default InvoiceData;
+export default PaymentStripeInvoice;
