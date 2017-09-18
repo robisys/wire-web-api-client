@@ -15,7 +15,7 @@ interface PaymentData {
   plan: PaymentPlan;
   planId: 'wire_annual_plan' | 'wire_monthly_plan';
   seats: number;
-  status: string;
+  status: 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
   trialEndsAt: number;
 }
 

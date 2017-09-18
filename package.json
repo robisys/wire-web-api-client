@@ -60,7 +60,7 @@
     "clear": "rimraf dist",
     "coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
     "dist:demo": "git add dist/demo.js",
-    "dist": "yarn build:node && yarn dist:demo",
+    "dist": "yarn build:node",
     "pack:browser": "webpack --config ./webpack.browser.js",
     "pack:demo": "webpack",
     "pack:test": "webpack",

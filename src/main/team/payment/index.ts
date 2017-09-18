@@ -1,8 +1,19 @@
-import PaymentData from './PaymentData';
-import PaymentDataUpdate from './PaymentDataUpdate';
+import InvoiceData from './InvoiceData';
 import PaymentAPI from './PaymentAPI';
 import PaymentBillingData from './PaymentBillingData';
+import PaymentData from './PaymentData';
+import PaymentDataUpdate from './PaymentDataUpdate';
 import PaymentPlan from './PaymentPlan';
-import InvoiceData from './InvoiceData';
+import PaymentStripeInvoice from './PaymentStripeInvoice';
+import PaymentStripePlan from './PaymentStripePlan';
 
-export {PaymentData, PaymentDataUpdate, PaymentAPI, PaymentBillingData, PaymentPlan, InvoiceData};
+export {
+  InvoiceData,
+  PaymentAPI,
+  PaymentBillingData,
+  PaymentData,
+  PaymentDataUpdate,
+  PaymentPlan,
+  PaymentStripeInvoice,
+  PaymentStripePlan,
+};
