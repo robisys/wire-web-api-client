@@ -1,7 +1,7 @@
 import {ConversationMembers} from '../conversation';
 
 interface Conversation {
-  access?: string; // not used
+  access?: string[]; // not used
   creator: string;
   id: string;
   last_event_time: string; // not used
