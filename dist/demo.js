@@ -10214,6 +10214,8 @@ var TeamAPI = (function () {
             return {
                 TEAMS: '/teams',
                 BILLING: 'billing',
+                PLANS: 'plans',
+                INVOICE: 'charges',
             };
         },
         enumerable: true,
@@ -10233,6 +10235,20 @@ var TeamAPI = (function () {
             url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.getPlans = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.PLANS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
+    };
+    TeamAPI.prototype.getInvoices = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.INVOICE,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
     };
     return TeamAPI;
 }());
@@ -10796,16 +10812,16 @@ module.exports = {
 		"karma-jasmine": "1.1.0",
 		"karma-jasmine-diff-reporter": "1.1.0",
 		"karma-sourcemap-loader": "0.3.7",
-		"lint-staged": "4.1.3",
+		"lint-staged": "4.2.1",
 		"nock": "9.0.14",
 		"optimist": "0.6.1",
-		"prettier": "1.6.0",
+		"prettier": "1.7.0",
 		"rimraf": "2.6.2",
 		"sinon": "3.2.1",
 		"sinon-har-server": "0.3.0",
 		"typescript": "2.5.2",
-		"webpack": "3.5.6",
-		"webpack-dev-server": "2.8.1"
+		"webpack": "3.6.0",
+		"webpack-dev-server": "2.8.2"
 	},
 	"description": "Wire API Client to send and receive data.",
 	"license": "GPL-3.0",
@@ -10842,7 +10858,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.1.16"
+	"version": "0.1.17"
 };
 
 /***/ }),
