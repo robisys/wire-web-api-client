@@ -10911,7 +10911,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.1.17"
+	"version": "0.1.18"
 };
 
 /***/ }),
