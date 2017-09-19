@@ -196,6 +196,7 @@ export default class SelfAPI {
    */
   public putSelf(profileData: UserUpdate): Promise<{}> {
     const config: AxiosRequestConfig = {
+      data: profileData,
       method: 'put',
       url: SelfAPI.URL.SELF,
     };
