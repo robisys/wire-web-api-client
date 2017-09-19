@@ -1,18 +1,19 @@
-import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
-import {AssetAPI} from './asset';
-import {Backend} from './env';
-import {ClientAPI} from './client/';
-import {ConnectionAPI} from './connection';
-import {ConversationAPI} from './conversation';
-import {HttpClient} from './http';
-import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
-import {SelfAPI} from './self';
-import {TeamAPI, TeamInvitationAPI, MemberAPI, PaymentAPI} from './team';
-import {UserAPI} from './user';
-import {WebSocketClient} from './tcp';
 import AccessTokenStore from './auth/AccessTokenStore';
 import Config from './Config';
 import EventEmitter = require('events');
+import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
+import {AssetAPI} from './asset/';
+import {Backend} from './env';
+import {ClientAPI} from './client/';
+import {ConnectionAPI} from './connection/';
+import {ConversationAPI} from './conversation/';
+import {GiphyAPI} from './giphy/';
+import {HttpClient} from './http/';
+import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
+import {SelfAPI} from './self/';
+import {TeamAPI, TeamInvitationAPI, MemberAPI, PaymentAPI} from './team/';
+import {UserAPI} from './user/';
+import {WebSocketClient} from './tcp/';
 
 const buffer = require('./shims/node/buffer');
 
@@ -38,6 +39,10 @@ class Client extends EventEmitter {
   };
 
   public conversation: {api: ConversationAPI} = {
+    api: undefined,
+  };
+
+  public giphy: {api: GiphyAPI} = {
     api: undefined,
   };
 
@@ -90,6 +95,7 @@ class Client extends EventEmitter {
     this.client.api = new ClientAPI(this.client.http);
     this.connection.api = new ConnectionAPI(this.client.http);
     this.conversation.api = new ConversationAPI(this.client.http);
+    this.giphy.api = new GiphyAPI(this.client.http);
     this.self.api = new SelfAPI(this.client.http);
     this.teams.invitation.api = new TeamInvitationAPI(this.client.http);
     this.teams.member.api = new MemberAPI(this.client.http);
