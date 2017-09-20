@@ -31,7 +31,7 @@
     "karma-jasmine-diff-reporter": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
     "lint-staged": "4.2.1",
-    "nock": "9.0.16",
+    "nock": "9.0.17",
     "optimist": "0.6.1",
     "prettier": "1.7.0",
     "rimraf": "2.6.2",
