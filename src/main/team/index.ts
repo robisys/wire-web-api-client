@@ -1,6 +1,6 @@
-import {NewTeamInvitation, TeamInvitationAPI, TeamInvitationChunk, TeamInvitation} from './invitation';
+import {NewTeamInvitation, TeamInvitation, TeamInvitationAPI, TeamInvitationChunk} from './invitation';
 import {MemberAPI, MemberData, PermissionsData} from './member';
-import {TeamAPI, NewTeamData, TeamChunkData, TeamData, TeamInfo} from './team';
+import {NewTeamData, TeamAPI, TeamChunkData, TeamData, TeamInfo} from './team';
 import {PaymentAPI, PaymentData} from './payment';
 
 export {

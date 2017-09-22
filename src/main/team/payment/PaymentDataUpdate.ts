@@ -17,7 +17,7 @@
  *
  */
 
-import {PaymentPlan, PaymentBillingData} from '.';
+import {PaymentBillingData, PaymentPlan} from '.';
 
 interface PaymentDataUpdate {
   planId?: PaymentPlan;

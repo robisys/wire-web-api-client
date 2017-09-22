@@ -1,7 +1,7 @@
 import AccessTokenData from './AccessTokenData';
-import EventEmitter = require('events');
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {RecordNotFoundError} from '@wireapp/store-engine/dist/commonjs/engine/error';
+import EventEmitter = require('events');
 
 export default class AccessTokenStore extends EventEmitter {
   private ACCESS_TOKEN_KEY: string = 'access-token';

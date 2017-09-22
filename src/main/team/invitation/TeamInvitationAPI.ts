@@ -1,6 +1,6 @@
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import {NewTeamInvitation, TeamInvitationChunk, TeamInvitation} from '../invitation';
+import {NewTeamInvitation, TeamInvitation, TeamInvitationChunk} from '../invitation';
 import {HttpClient} from '../../http';
 import {TeamAPI} from '../team';
 

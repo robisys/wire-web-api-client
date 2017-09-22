@@ -1,5 +1,5 @@
 import {AccessTokenData} from '../../auth';
-import {AxiosResponse, AxiosRequestConfig, AxiosPromise} from 'axios';
+import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Cookie} from 'tough-cookie';
 import {CRUDEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 import {HttpClient} from '../../http';

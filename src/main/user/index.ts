@@ -5,7 +5,6 @@ import CompletePasswordReset from './CompletePasswordReset';
 import Contact from './Contact';
 import HandleInfo from './HandleInfo';
 import NewPasswordReset from './NewPasswordReset';
-import RTCConfiguration from './RTCConfiguration';
 import RTCIceServer from './RTCIceServer';
 import SearchResult from './SearchResult';
 import SendActivationCode from './SendActivationCode';

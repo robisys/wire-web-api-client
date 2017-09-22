@@ -1,7 +1,6 @@
 import AccessTokenData from '../auth/AccessTokenData';
 import axios, {AxiosError, AxiosPromise, AxiosRequestConfig} from 'axios';
-import {AccessTokenStore} from '../auth';
-import {AuthAPI} from '../auth';
+import {AccessTokenStore, AuthAPI} from '../auth';
 import {ContentType} from '../http';
 import PriorityQueue from '@wireapp/queue-priority/dist/commonjs/PriorityQueue';
 

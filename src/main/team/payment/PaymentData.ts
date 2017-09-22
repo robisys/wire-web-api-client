@@ -17,7 +17,7 @@
  *
  */
 
-import {InvoiceData, PaymentPlan, PaymentBillingData} from '.';
+import {InvoiceData, PaymentBillingData, PaymentPlan} from '.';
 
 interface PaymentData {
   card: {
