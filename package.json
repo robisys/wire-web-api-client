@@ -30,7 +30,7 @@
     "karma-jasmine": "1.1.0",
     "karma-jasmine-diff-reporter": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
-    "lint-staged": "4.2.1",
+    "lint-staged": "4.2.2",
     "nock": "9.0.18",
     "optimist": "0.6.1",
     "prettier": "1.7.0",
