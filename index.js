@@ -8,6 +8,7 @@ const argv = require('optimist')
 const Client = require('./dist/commonjs/Client');
 const path = require('path');
 const {FileEngine} = require('@wireapp/store-engine/dist/commonjs/engine');
+const {WebSocketClient} = require('./dist/commonjs/tcp/');
 
 const login = {
   email: argv.email,
@@ -23,10 +24,6 @@ const config = {
 };
 
 const client = new Client(config);
-
-client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, function(notification) {
-  console.log('Received notification via WebSocket', notification);
-});
 
 Promise.resolve()
   .then(() => {
@@ -44,6 +41,11 @@ Promise.resolve()
   .then((userData) => {
     console.log(`Found user with name "${userData[0].name}" by handle "${userData[0].handle}".`);
     return client.connect();
+  })
+  .then((webSocketClient) => {
+    webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification => {
+      console.log('Received notification via WebSocket', notification);
+    });
   })
   .catch((error) => {
     console.error(error.message, error);

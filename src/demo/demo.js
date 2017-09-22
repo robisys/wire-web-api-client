@@ -1,4 +1,5 @@
 import Client from '../../dist/commonjs/Client';
+import {WebSocketClient} from '../../dist/commonjs/tcp/';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 
 window.onload = function() {
@@ -39,6 +40,11 @@ window.onload = function() {
           LOGOUT_BUTTON.className = 'valid';
 
           return client.connect();
+        })
+        .then((webSocketClient) => {
+          webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification => {
+            console.log('Received notification via WebSocket', notification);
+          });
         })
         .catch(error => {
           console.error(`Login failed: ${error.message}`, error);
@@ -83,10 +89,6 @@ window.onload = function() {
   };
 
   const client = new Client(config);
-
-  client.on(Client.TOPIC.WEB_SOCKET_MESSAGE, notification => {
-    console.log('Received notification via WebSocket', notification);
-  });
 
   client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', accessToken => {
     console.log('Acquired AccessToken', accessToken);

@@ -1,57 +1,65 @@
-import {AccessTokenStore} from '../auth';
+import EventEmitter = require('events');
+import {HttpClient} from '../http/';
 
+const buffer = require('../shims/node/buffer');
 const Html5WebSocket = require('html5-websocket');
 const ReconnectingWebsocket = require('reconnecting-websocket');
 
-export default class WebSocketClient {
+export default class WebSocketClient extends EventEmitter {
   private clientId: string;
-  private PING_INTERVAL: number = 30000;
+
   private socket: WebSocket;
 
-  constructor(private baseURL: string, private accessTokenStore: AccessTokenStore) {}
+  public static RECONNECTING_OPTIONS = {
+    connectionTimeout: 4000,
+    constructor: typeof window !== 'undefined' ? WebSocket : Html5WebSocket,
+    debug: false,
+    maxReconnectionDelay: 10000,
+    maxRetries: Infinity,
+    minReconnectionDelay: 4000,
+    reconnectionDelayGrowFactor: 1.3,
+  };
 
-  public connect(clientId?: string): Promise<WebSocket> {
+  public static TOPIC = {
+    WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
+  };
+
+  constructor(private baseURL: string, public client: HttpClient) {
+    super();
+  }
+
+  private buildWebSocketURL(accessToken: string = this.client.accessTokenStore.accessToken.access_token): string {
+    let url = `${this.baseURL}/await?access_token=${accessToken}`;
+    if (this.clientId) {
+      // Note: If no client ID is given, then the WebSocket connection will receive all notifications for all clients of the connected user
+      url += `&client=${this.clientId}`;
+    }
+    return url;
+  }
+
+  public connect(clientId?: string): Promise<WebSocketClient> {
     this.clientId = clientId;
 
-    const getUrl = () => {
-      let url = `${this.baseURL}/await?access_token=${this.accessTokenStore.accessToken.access_token}`;
-      if (this.clientId) {
-        url += `&client=${this.clientId}`;
-      }
-      return url;
+    this.socket = new ReconnectingWebsocket(
+      () => this.buildWebSocketURL(),
+      undefined,
+      WebSocketClient.RECONNECTING_OPTIONS,
+    );
+
+    this.socket.onmessage = (event: MessageEvent) => {
+      const notification = JSON.parse(buffer.bufferToString(event.data));
+      this.emit(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
     };
 
-    const reconnectingOptions = {
-      connectionTimeout: 4000,
-      constructor: typeof window !== 'undefined' ? WebSocket : Html5WebSocket,
-      debug: false,
-      maxReconnectionDelay: 30000,
-      maxRetries: Infinity,
-      minReconnectionDelay: 4000,
-      reconnectionDelayGrowFactor: 1.3,
-    };
-    this.socket = new ReconnectingWebsocket(getUrl, undefined, reconnectingOptions);
-    this.socket.binaryType = 'arraybuffer';
+    this.socket.onerror = () => this.client.refreshAccessToken();
+    this.socket.onopen = () => (this.socket.binaryType = 'arraybuffer');
 
-    return new Promise(resolve => {
-      this.socket.onopen = () => {
-        let pinger: number | NodeJS.Timer = setInterval(() => {
-          this.socket.send('Wire is so much nicer with Internet!');
-        }, this.PING_INTERVAL);
-
-        this.socket.onclose = () => {
-          clearInterval(<number>pinger);
-        };
-
-        resolve(this.socket);
-      };
-    });
+    return Promise.resolve(this);
   }
 
   public disconnect(): void {
     if (this.socket) {
       this.socket.close();
-      this.socket = undefined;
     }
   }
 }

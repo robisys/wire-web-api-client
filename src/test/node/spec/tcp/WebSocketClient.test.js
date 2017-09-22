@@ -1,6 +1,20 @@
 const WebSocketClient = require('../../../../../dist/commonjs/tcp/WebSocketClient').default;
 const WebSocketServer = require('ws').Server;
-const {AccessTokenStore} = require('../../../../../dist/commonjs/auth/index');
+
+const ACCESS_TOKEN_PAYLOAD = {
+  access_token:
+    'iJCRCjc8oROO-dkrkqCXOade997oa8Jhbz6awMUQPBQo80VenWqp_oNvfY6AnU5BxEsdDPOBfBP-uz_b0gAKBQ==.v=1.k=1.d=1498600993.t=a.l=.u=aaf9a833-ef30-4c22-86a0-9adc8a15b3b4.c=15037015562284012115',
+  expires_in: 900,
+  token_type: 'Bearer',
+  user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4',
+};
+
+const FAKE_HTTP_CLIENT = {
+  accessTokenStore: {
+    accessToken: ACCESS_TOKEN_PAYLOAD
+  },
+  refreshAccessToken: () => Promise.resolve(ACCESS_TOKEN_PAYLOAD),
+};
 
 const WEBSOCKET_PORT = 8087;
 const WEBSOCKET_URL = `ws://localhost:${WEBSOCKET_PORT}`;
@@ -9,9 +23,22 @@ let server = undefined;
 function startEchoServer() {
   server = new WebSocketServer({port: WEBSOCKET_PORT});
   server.on('connection', ws => {
-    ws.on('message', message => server.clients.forEach(client => client.send(`Echo: ${message}`)));
+    ws.on('message', message => server.clients.forEach(client => {
+        const payload = {
+          fromServer: `Echo: ${message}`,
+        };
+
+        const options = {
+          binary: true,
+          mask: false,
+        };
+
+        client.send(JSON.stringify(payload), options);
+      }
+    ));
   });
-  server.on('error', error => console.log(`Echo WebSocket server error: "${error.message}"`));
+
+  server.on('error', error => console.error(`Echo WebSocket server error: "${error.message}"`));
 }
 
 describe('WebSocketClient', () => {
@@ -29,57 +56,39 @@ describe('WebSocketClient', () => {
 
     it('connects to a WebSocket.', done => {
       const message = 'Hello, World!';
-      const accessTokenData = {
-        access_token:
-          'iJCRCjc8oROO-dkrkqCXOade997oa8Jhbz6awMUQPBQo80VenWqp_oNvfY6AnU5BxEsdDPOBfBP-uz_b0gAKBQ==.v=1.k=1.d=1498600993.t=a.l=.u=aaf9a833-ef30-4c22-86a0-9adc8a15b3b4.c=15037015562284012115',
-        expires_in: 900,
-        token_type: 'Bearer',
-        user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4',
-      };
-      const accessTokenStore = new AccessTokenStore();
-      accessTokenStore.accessToken = accessTokenData;
-      const client = new WebSocketClient(WEBSOCKET_URL, accessTokenStore);
+      const client = new WebSocketClient(WEBSOCKET_URL, FAKE_HTTP_CLIENT);
 
       client
         .connect()
-        .then(socket => {
-          expect(socket).toBeDefined();
+        .then(webSocketClient => {
+          expect(webSocketClient).toBeDefined();
 
-          socket.onmessage = event => {
-            expect(event.data).toBe(`Echo: ${message}`);
+          webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, data => {
+            expect(data.fromServer).toBe(`Echo: ${message}`);
             done();
-          };
+          });
 
-          socket.send(message);
+          webSocketClient.socket.addEventListener('open', () => webSocketClient.socket.send(message));
+
         })
         .catch(done.fail);
     });
 
-    xit(
-      'automatically reconnects with a WebSocket.',
-      done => {
-        const accessTokenData = {
-          access_token:
-            'iJCRCjc8oROO-dkrkqCXOade997oa8Jhbz6awMUQPBQo80VenWqp_oNvfY6AnU5BxEsdDPOBfBP-uz_b0gAKBQ==.v=1.k=1.d=1498600993.t=a.l=.u=aaf9a833-ef30-4c22-86a0-9adc8a15b3b4.c=15037015562284012115',
-          expires_in: 900,
-          token_type: 'Bearer',
-          user: 'aaf9a833-ef30-4c22-86a0-9adc8a15b3b4',
-        };
-        const accessTokenStore = new AccessTokenStore();
-        accessTokenStore.accessToken = accessTokenData;
-        const client = new WebSocketClient(WEBSOCKET_URL, accessTokenStore);
+    it('automatically reconnects with a WebSocket.', done => {
+        const client = new WebSocketClient(WEBSOCKET_URL, FAKE_HTTP_CLIENT);
 
         client
           .connect()
-          .then(client => {
+          .then(webSocketClient => {
+            expect(webSocketClient).toBeDefined();
             // "open" listener which will be triggered on WebSocket reconnect which is expected after a WebSocket server restart
-            client.addEventListener('open', done);
+            webSocketClient.socket.addEventListener('open', done);
             // Restart WebSocket server
             server.close(() => startEchoServer());
           })
           .catch(done.fail);
       },
-      10000,
+      WebSocketClient.RECONNECTING_OPTIONS.maxReconnectionDelay,
     );
   });
 });

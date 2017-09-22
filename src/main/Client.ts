@@ -1,6 +1,5 @@
 import AccessTokenStore from './auth/AccessTokenStore';
 import Config from './Config';
-import EventEmitter = require('events');
 import {AccessTokenData, AuthAPI, Context, LoginData, RegisterData} from './auth';
 import {AssetAPI} from './asset/';
 import {Backend} from './env';
@@ -15,9 +14,7 @@ import {TeamAPI, TeamInvitationAPI, MemberAPI, PaymentAPI} from './team/';
 import {UserAPI} from './user/';
 import {WebSocketClient} from './tcp/';
 
-const buffer = require('./shims/node/buffer');
-
-class Client extends EventEmitter {
+class Client {
   public asset: {api: AssetAPI} = {
     api: undefined,
   };
@@ -66,10 +63,6 @@ class Client extends EventEmitter {
     api: undefined,
   };
 
-  public static TOPIC = {
-    WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
-  };
-
   public static BACKEND = Backend;
   public VERSION: string;
 
@@ -77,8 +70,6 @@ class Client extends EventEmitter {
   private config: Config;
 
   constructor(config: Config) {
-    super();
-
     this.config = {
       store: new MemoryEngine('wire'),
       urls: Client.BACKEND.PRODUCTION,
@@ -88,7 +79,7 @@ class Client extends EventEmitter {
     this.accessTokenStore = new AccessTokenStore(this.config.store);
 
     this.client.http = new HttpClient(this.config.urls.rest, this.accessTokenStore);
-    this.client.ws = new WebSocketClient(this.config.urls.ws, this.accessTokenStore);
+    this.client.ws = new WebSocketClient(this.config.urls.ws, this.client.http);
 
     this.asset.api = new AssetAPI(this.client.http);
     this.auth.api = new AuthAPI(this.client.http, this.config.store);
@@ -137,15 +128,8 @@ class Client extends EventEmitter {
       .then(() => (this.context = undefined));
   }
 
-  public connect(): Promise<WebSocket> {
-    return this.client.ws.connect(this.context.clientID).then((socket: WebSocket) => {
-      socket.onmessage = (event: MessageEvent) => {
-        const notification = JSON.parse(buffer.bufferToString(event.data));
-        this.emit(Client.TOPIC.WEB_SOCKET_MESSAGE, notification);
-      };
-
-      return socket;
-    });
+  public connect(): Promise<WebSocketClient> {
+    return this.client.ws.connect(this.context.clientID);
   }
 
   private createContext(userID: string): Context {

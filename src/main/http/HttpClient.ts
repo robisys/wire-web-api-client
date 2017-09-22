@@ -9,7 +9,7 @@ export default class HttpClient {
   private _authAPI: AuthAPI;
   private requestQueue: PriorityQueue<number>;
 
-  constructor(private baseURL: string, private accessTokenStore: AccessTokenStore) {
+  constructor(private baseURL: string, public accessTokenStore: AccessTokenStore) {
     this.requestQueue = new PriorityQueue({
       maxRetries: 0,
       retryDelay: 1000,
@@ -45,19 +45,22 @@ export default class HttpClient {
 
     return axios.request(config).catch((error: AxiosError) => {
       if (error.response && error.response.status === 401) {
-        let expiredAccessToken: AccessTokenData = undefined;
-        if (this.accessTokenStore.accessToken && this.accessTokenStore.accessToken.access_token) {
-          expiredAccessToken = this.accessTokenStore.accessToken;
-        }
-        return this.accessTokenStore
-          .delete()
-          .then(() => this._authAPI.postAccess(expiredAccessToken))
-          .then((accessToken: AccessTokenData) => this.accessTokenStore.updateToken(accessToken))
-          .then(() => this._sendRequest(config, tokenAsParam));
+        return this.refreshAccessToken().then(() => this._sendRequest(config, tokenAsParam));
       }
 
       return Promise.reject(error);
     });
+  }
+
+  public refreshAccessToken(): Promise<AccessTokenData> {
+    let expiredAccessToken: AccessTokenData = undefined;
+    if (this.accessTokenStore.accessToken && this.accessTokenStore.accessToken.access_token) {
+      expiredAccessToken = this.accessTokenStore.accessToken;
+    }
+
+    return this._authAPI
+      .postAccess(expiredAccessToken)
+      .then((accessToken: AccessTokenData) => this.accessTokenStore.updateToken(accessToken));
   }
 
   public sendRequest(config: AxiosRequestConfig, tokenAsParam: boolean = false): AxiosPromise {
