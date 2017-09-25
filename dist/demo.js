@@ -380,13 +380,13 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var PathValidationError_1 = __webpack_require__(21);
+var PathValidationError_1 = __webpack_require__(22);
 exports.PathValidationError = PathValidationError_1.default;
-var RecordAlreadyExistsError_1 = __webpack_require__(22);
+var RecordAlreadyExistsError_1 = __webpack_require__(23);
 exports.RecordAlreadyExistsError = RecordAlreadyExistsError_1.default;
-var RecordNotFoundError_1 = __webpack_require__(23);
+var RecordNotFoundError_1 = __webpack_require__(24);
 exports.RecordNotFoundError = RecordNotFoundError_1.default;
-var RecordTypeError_1 = __webpack_require__(24);
+var RecordTypeError_1 = __webpack_require__(25);
 exports.RecordTypeError = RecordTypeError_1.default;
 
 
@@ -687,6 +687,21 @@ module.exports = defaults;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var AccessTokenStore_1 = __webpack_require__(21);
+exports.AccessTokenStore = AccessTokenStore_1.default;
+var AuthAPI_1 = __webpack_require__(26);
+exports.AuthAPI = AuthAPI_1.default;
+var Context_1 = __webpack_require__(17);
+exports.Context = Context_1.default;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var SparkMD5 = __webpack_require__(32);
 exports.bufferToString = function (buffer) { return new TextDecoder('utf-8').decode(new Uint8Array(buffer)); };
 exports.base64MD5FromBuffer = function (buffer) { return window.btoa(SparkMD5.ArrayBuffer.hash(buffer, true)); };
@@ -697,70 +712,6 @@ exports.concatToBuffer = function () {
     }
     return new Blob(items);
 };
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var error_1 = __webpack_require__(1);
-var EventEmitter = __webpack_require__(6);
-var AccessTokenStore = (function (_super) {
-    __extends(AccessTokenStore, _super);
-    function AccessTokenStore(tokenStore) {
-        var _this = _super.call(this) || this;
-        _this.tokenStore = tokenStore;
-        _this.ACCESS_TOKEN_KEY = 'access-token';
-        _this.ACCESS_TOKEN_TABLE = 'authentication';
-        return _this;
-    }
-    AccessTokenStore.prototype.delete = function () {
-        var _this = this;
-        return this.tokenStore
-            .delete(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
-            .then(function () { return (_this.accessToken = undefined); });
-    };
-    AccessTokenStore.prototype.updateToken = function (accessToken) {
-        var _this = this;
-        if (this.accessToken !== accessToken) {
-            return this.tokenStore
-                .delete(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
-                .then(function () { return _this.tokenStore.create(_this.ACCESS_TOKEN_TABLE, _this.ACCESS_TOKEN_KEY, accessToken); })
-                .then(function () { return (_this.accessToken = accessToken); });
-        }
-        return Promise.resolve(this.accessToken);
-    };
-    AccessTokenStore.prototype.init = function () {
-        var _this = this;
-        return this.tokenStore
-            .read(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
-            .catch(function (error) {
-            if (error instanceof error_1.RecordNotFoundError) {
-                return undefined;
-            }
-            throw error;
-        })
-            .then(function (accessToken) { return (_this.accessToken = accessToken); });
-    };
-    AccessTokenStore.TOPIC = {
-        ACCESS_TOKEN_REFRESH: 'AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH',
-    };
-    return AccessTokenStore;
-}(EventEmitter));
-exports.default = AccessTokenStore;
 
 
 /***/ }),
@@ -1373,44 +1324,17 @@ module.exports = Cancel;
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(16);
+var TeamAPI_1 = __webpack_require__(15);
 exports.TeamAPI = TeamAPI_1.default;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1478,6 +1402,33 @@ exports.default = TeamAPI;
 
 
 /***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1501,13 +1452,13 @@ exports.default = Context;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var FileEngine_1 = __webpack_require__(68);
+var FileEngine_1 = __webpack_require__(75);
 exports.FileEngine = FileEngine_1.default;
-var IndexedDBEngine_1 = __webpack_require__(71);
+var IndexedDBEngine_1 = __webpack_require__(78);
 exports.IndexedDBEngine = IndexedDBEngine_1.default;
-var MemoryEngine_1 = __webpack_require__(75);
+var MemoryEngine_1 = __webpack_require__(82);
 exports.MemoryEngine = MemoryEngine_1.default;
-var LocalStorageEngine_1 = __webpack_require__(76);
+var LocalStorageEngine_1 = __webpack_require__(83);
 exports.LocalStorageEngine = LocalStorageEngine_1.default;
 
 
@@ -1536,72 +1487,58 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-var AccessTokenStore_1 = __webpack_require__(5);
-var auth_1 = __webpack_require__(25);
-var _1 = __webpack_require__(28);
+var auth_1 = __webpack_require__(4);
+var _1 = __webpack_require__(4);
+var _2 = __webpack_require__(28);
 var env_1 = __webpack_require__(33);
-var _2 = __webpack_require__(35);
-var _3 = __webpack_require__(37);
-var _4 = __webpack_require__(39);
-var _5 = __webpack_require__(41);
-var _6 = __webpack_require__(8);
+var _3 = __webpack_require__(35);
+var _4 = __webpack_require__(37);
+var _5 = __webpack_require__(39);
+var _6 = __webpack_require__(41);
+var _7 = __webpack_require__(8);
+var _8 = __webpack_require__(68);
 var engine_1 = __webpack_require__(18);
-var _7 = __webpack_require__(77);
-var _8 = __webpack_require__(79);
-var _9 = __webpack_require__(86);
-var _10 = __webpack_require__(19);
+var _9 = __webpack_require__(84);
+var _10 = __webpack_require__(86);
+var _11 = __webpack_require__(19);
 var Client = (function () {
     function Client(config) {
-        this.asset = {
-            api: undefined,
-        };
-        this.auth = {
-            api: undefined,
-        };
-        this.client = {
-            api: undefined,
-            http: undefined,
-            ws: undefined,
-        };
-        this.context = undefined;
-        this.connection = {
-            api: undefined,
-        };
-        this.conversation = {
-            api: undefined,
-        };
-        this.giphy = {
-            api: undefined,
-        };
-        this.self = {
-            api: undefined,
-        };
+        this.asset = { api: undefined };
+        this.auth = { api: undefined };
+        this.client = { api: undefined };
+        this.connection = { api: undefined };
+        this.conversation = { api: undefined };
+        this.giphy = { api: undefined };
+        this.self = { api: undefined };
         this.teams = {
             team: { api: undefined },
             member: { api: undefined },
             invitation: { api: undefined },
             payment: { api: undefined },
         };
-        this.user = {
-            api: undefined,
+        this.user = { api: undefined };
+        this.context = undefined;
+        this.transport = {
+            http: undefined,
+            ws: undefined,
         };
         this.config = __assign({ store: new engine_1.MemoryEngine('wire'), urls: Client.BACKEND.PRODUCTION }, config);
-        this.accessTokenStore = new AccessTokenStore_1.default(this.config.store);
-        this.client.http = new _6.HttpClient(this.config.urls.rest, this.accessTokenStore);
-        this.client.ws = new _10.WebSocketClient(this.config.urls.ws, this.client.http);
-        this.asset.api = new _1.AssetAPI(this.client.http);
-        this.auth.api = new auth_1.AuthAPI(this.client.http, this.config.store);
-        this.client.api = new _2.ClientAPI(this.client.http);
-        this.connection.api = new _3.ConnectionAPI(this.client.http);
-        this.conversation.api = new _4.ConversationAPI(this.client.http);
-        this.giphy.api = new _5.GiphyAPI(this.client.http);
-        this.self.api = new _7.SelfAPI(this.client.http);
-        this.teams.invitation.api = new _8.TeamInvitationAPI(this.client.http);
-        this.teams.member.api = new _8.MemberAPI(this.client.http);
-        this.teams.payment.api = new _8.PaymentAPI(this.client.http);
-        this.teams.team.api = new _8.TeamAPI(this.client.http);
-        this.user.api = new _9.UserAPI(this.client.http);
-        this.client.http.authAPI = this.auth.api;
+        this.accessTokenStore = new _1.AccessTokenStore(this.config.store);
+        this.transport.http = new _7.HttpClient(this.config.urls.rest, this.accessTokenStore);
+        this.transport.ws = new _11.WebSocketClient(this.config.urls.ws, this.transport.http);
+        this.asset.api = new _2.AssetAPI(this.transport.http);
+        this.auth.api = new auth_1.AuthAPI(this.transport.http, this.config.store);
+        this.client.api = new _3.ClientAPI(this.transport.http);
+        this.connection.api = new _4.ConnectionAPI(this.transport.http);
+        this.conversation.api = new _5.ConversationAPI(this.transport.http);
+        this.giphy.api = new _6.GiphyAPI(this.transport.http);
+        this.self.api = new _9.SelfAPI(this.transport.http);
+        this.teams.invitation.api = new _8.TeamInvitationAPI(this.transport.http);
+        this.teams.member.api = new _8.MemberAPI(this.transport.http);
+        this.teams.payment.api = new _8.PaymentAPI(this.transport.http);
+        this.teams.team.api = new _8.TeamAPI(this.transport.http);
+        this.user.api = new _10.UserAPI(this.transport.http);
+        this.transport.http.authAPI = this.auth.api;
     }
     Client.prototype.init = function () {
         var _this = this;
@@ -1635,7 +1572,7 @@ var Client = (function () {
             .then(function () { return (_this.context = undefined); });
     };
     Client.prototype.connect = function () {
-        return this.client.ws.connect(this.context.clientID);
+        return this.transport.ws.connect(this.context.clientID);
     };
     Client.prototype.createContext = function (userID) {
         if (this.context) {
@@ -1645,7 +1582,7 @@ var Client = (function () {
         return this.context;
     };
     Client.prototype.disconnect = function () {
-        this.client.ws.disconnect();
+        this.transport.ws.disconnect();
     };
     Client.BACKEND = env_1.Backend;
     return Client;
@@ -1656,6 +1593,70 @@ module.exports = Client;
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var error_1 = __webpack_require__(1);
+var EventEmitter = __webpack_require__(6);
+var AccessTokenStore = (function (_super) {
+    __extends(AccessTokenStore, _super);
+    function AccessTokenStore(tokenStore) {
+        var _this = _super.call(this) || this;
+        _this.tokenStore = tokenStore;
+        _this.ACCESS_TOKEN_KEY = 'access-token';
+        _this.ACCESS_TOKEN_TABLE = 'authentication';
+        return _this;
+    }
+    AccessTokenStore.prototype.delete = function () {
+        var _this = this;
+        return this.tokenStore
+            .delete(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
+            .then(function () { return (_this.accessToken = undefined); });
+    };
+    AccessTokenStore.prototype.updateToken = function (accessToken) {
+        var _this = this;
+        if (this.accessToken !== accessToken) {
+            return this.tokenStore
+                .delete(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
+                .then(function () { return _this.tokenStore.create(_this.ACCESS_TOKEN_TABLE, _this.ACCESS_TOKEN_KEY, accessToken); })
+                .then(function () { return (_this.accessToken = accessToken); });
+        }
+        return Promise.resolve(this.accessToken);
+    };
+    AccessTokenStore.prototype.init = function () {
+        var _this = this;
+        return this.tokenStore
+            .read(this.ACCESS_TOKEN_TABLE, this.ACCESS_TOKEN_KEY)
+            .catch(function (error) {
+            if (error instanceof error_1.RecordNotFoundError) {
+                return undefined;
+            }
+            throw error;
+        })
+            .then(function (accessToken) { return (_this.accessToken = accessToken); });
+    };
+    AccessTokenStore.TOPIC = {
+        ACCESS_TOKEN_REFRESH: 'AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH',
+    };
+    return AccessTokenStore;
+}(EventEmitter));
+exports.default = AccessTokenStore;
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1697,7 +1698,7 @@ exports.default = PathValidationError;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1730,7 +1731,7 @@ exports.default = RecordAlreadyExistsError;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1763,7 +1764,7 @@ exports.default = RecordNotFoundError;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1793,21 +1794,6 @@ var RecordTypeError = (function (_super) {
     return RecordTypeError;
 }(Error));
 exports.default = RecordTypeError;
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var AccessTokenStore_1 = __webpack_require__(5);
-exports.AccessTokenStore = AccessTokenStore_1.default;
-var AuthAPI_1 = __webpack_require__(26);
-exports.AuthAPI = AuthAPI_1.default;
-var Context_1 = __webpack_require__(17);
-exports.Context = Context_1.default;
 
 
 /***/ }),
@@ -1939,7 +1925,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var AssetUtil_1 = __webpack_require__(30);
 var random_1 = __webpack_require__(31);
 var AssetRetentionPolicy_1 = __webpack_require__(7);
-var buffer_1 = __webpack_require__(4);
+var buffer_1 = __webpack_require__(5);
 var AssetAPI = (function () {
     function AssetAPI(client) {
         this.client = client;
@@ -4368,6 +4354,242 @@ exports.default = StatusCode;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var invitation_1 = __webpack_require__(69);
+exports.TeamInvitationAPI = invitation_1.TeamInvitationAPI;
+var member_1 = __webpack_require__(71);
+exports.MemberAPI = member_1.MemberAPI;
+var team_1 = __webpack_require__(14);
+exports.TeamAPI = team_1.TeamAPI;
+var payment_1 = __webpack_require__(73);
+exports.PaymentAPI = payment_1.PaymentAPI;
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamInvitationAPI_1 = __webpack_require__(70);
+exports.TeamInvitationAPI = TeamInvitationAPI_1.default;
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var team_1 = __webpack_require__(14);
+var TeamInvitationAPI = (function () {
+    function TeamInvitationAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(TeamInvitationAPI, "URL", {
+        get: function () {
+            return {
+                INFO: 'info',
+                INVITATIONS: 'invitations',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TeamInvitationAPI.prototype.getInvitation = function (teamId, invitationId) {
+        var config = {
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.getInvitations = function (teamId) {
+        var config = {
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
+        var config = {
+            method: 'delete',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.postInvitation = function (teamId, invitation) {
+        var config = {
+            data: invitation,
+            method: 'post',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamInvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
+        var config = {
+            params: {
+                code: invitationCode,
+            },
+            method: 'get',
+            url: team_1.TeamAPI.URL.TEAMS + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + TeamInvitationAPI.URL.INFO,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    return TeamInvitationAPI;
+}());
+exports.default = TeamInvitationAPI;
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MemberAPI_1 = __webpack_require__(72);
+exports.MemberAPI = MemberAPI_1.default;
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamAPI_1 = __webpack_require__(15);
+var MemberAPI = (function () {
+    function MemberAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(MemberAPI, "URL", {
+        get: function () {
+            return {
+                MEMBERS: 'members',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MemberAPI.prototype.getMembers = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    MemberAPI.prototype.deleteMember = function (teamId, userId, password) {
+        var config = {
+            data: {
+                password: password,
+            },
+            method: 'delete',
+            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS + "/" + userId,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    MemberAPI.prototype.postMembers = function (teamId, member) {
+        var config = {
+            data: {
+                member: member,
+            },
+            method: 'post',
+            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    MemberAPI.prototype.putMembers = function (teamId, member) {
+        var config = {
+            data: {
+                member: member,
+            },
+            method: 'put',
+            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    return MemberAPI;
+}());
+exports.default = MemberAPI;
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var PaymentAPI_1 = __webpack_require__(74);
+exports.PaymentAPI = PaymentAPI_1.default;
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TeamAPI = (function () {
+    function TeamAPI(client) {
+        this.client = client;
+    }
+    Object.defineProperty(TeamAPI, "URL", {
+        get: function () {
+            return {
+                TEAMS: '/teams',
+                BILLING: 'billing',
+                PLANS: 'plans',
+                INVOICE: 'charges',
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TeamAPI.prototype.putPaymentData = function (teamId, paymentData) {
+        var config = {
+            data: paymentData,
+            method: 'put',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.getPaymentData = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    TeamAPI.prototype.getPlans = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.PLANS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
+    };
+    TeamAPI.prototype.getInvoices = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.INVOICE,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
+    };
+    return TeamAPI;
+}());
+exports.default = TeamAPI;
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -4377,8 +4599,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = __webpack_require__(69);
-var path = __webpack_require__(70);
+var fs = __webpack_require__(76);
+var path = __webpack_require__(77);
 var error_1 = __webpack_require__(1);
 var FileEngine = (function () {
     function FileEngine(storeName, options) {
@@ -4548,13 +4770,13 @@ exports.default = FileEngine;
 
 
 /***/ }),
-/* 69 */
+/* 76 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 /***/ }),
-/* 70 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -4785,13 +5007,13 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 71 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dexie_1 = __webpack_require__(72);
+var dexie_1 = __webpack_require__(79);
 var error_1 = __webpack_require__(1);
 var IndexedDBEngine = (function () {
     function IndexedDBEngine(db) {
@@ -4851,7 +5073,7 @@ exports.default = IndexedDBEngine;
 
 
 /***/ }),
-/* 72 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {(function (global, factory) {
@@ -9459,10 +9681,10 @@ return Dexie;
 })));
 //# sourceMappingURL=dexie.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(73).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(80).setImmediate))
 
 /***/ }),
-/* 73 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -9515,13 +9737,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(74);
+__webpack_require__(81);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 74 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -9711,10 +9933,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(2)))
 
 /***/ }),
-/* 75 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9804,7 +10026,7 @@ exports.default = MemoryEngine;
 
 
 /***/ }),
-/* 76 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9919,18 +10141,18 @@ exports.default = LocalStorageEngine;
 
 
 /***/ }),
-/* 77 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var SelfAPI_1 = __webpack_require__(78);
+var SelfAPI_1 = __webpack_require__(85);
 exports.SelfAPI = SelfAPI_1.default;
 
 
 /***/ }),
-/* 78 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10058,242 +10280,6 @@ var SelfAPI = (function () {
     return SelfAPI;
 }());
 exports.default = SelfAPI;
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var invitation_1 = __webpack_require__(80);
-exports.TeamInvitationAPI = invitation_1.TeamInvitationAPI;
-var member_1 = __webpack_require__(82);
-exports.MemberAPI = member_1.MemberAPI;
-var team_1 = __webpack_require__(15);
-exports.TeamAPI = team_1.TeamAPI;
-var payment_1 = __webpack_require__(84);
-exports.PaymentAPI = payment_1.PaymentAPI;
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var TeamInvitationAPI_1 = __webpack_require__(81);
-exports.TeamInvitationAPI = TeamInvitationAPI_1.default;
-
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var team_1 = __webpack_require__(15);
-var TeamInvitationAPI = (function () {
-    function TeamInvitationAPI(client) {
-        this.client = client;
-    }
-    Object.defineProperty(TeamInvitationAPI, "URL", {
-        get: function () {
-            return {
-                INFO: 'info',
-                INVITATIONS: 'invitations',
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TeamInvitationAPI.prototype.getInvitation = function (teamId, invitationId) {
-        var config = {
-            method: 'get',
-            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamInvitationAPI.prototype.getInvitations = function (teamId) {
-        var config = {
-            method: 'get',
-            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamInvitationAPI.prototype.deleteInvitation = function (teamId, invitationId) {
-        var config = {
-            method: 'delete',
-            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + invitationId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamInvitationAPI.prototype.postInvitation = function (teamId, invitation) {
-        var config = {
-            data: invitation,
-            method: 'post',
-            url: team_1.TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamInvitationAPI.URL.INVITATIONS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamInvitationAPI.prototype.getInvitationFromCode = function (invitationCode) {
-        var config = {
-            params: {
-                code: invitationCode,
-            },
-            method: 'get',
-            url: team_1.TeamAPI.URL.TEAMS + "/" + TeamInvitationAPI.URL.INVITATIONS + "/" + TeamInvitationAPI.URL.INFO,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    return TeamInvitationAPI;
-}());
-exports.default = TeamInvitationAPI;
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var MemberAPI_1 = __webpack_require__(83);
-exports.MemberAPI = MemberAPI_1.default;
-
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI_1 = __webpack_require__(16);
-var MemberAPI = (function () {
-    function MemberAPI(client) {
-        this.client = client;
-    }
-    Object.defineProperty(MemberAPI, "URL", {
-        get: function () {
-            return {
-                MEMBERS: 'members',
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MemberAPI.prototype.getMembers = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    MemberAPI.prototype.deleteMember = function (teamId, userId, password) {
-        var config = {
-            data: {
-                password: password,
-            },
-            method: 'delete',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS + "/" + userId,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    MemberAPI.prototype.postMembers = function (teamId, member) {
-        var config = {
-            data: {
-                member: member,
-            },
-            method: 'post',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    MemberAPI.prototype.putMembers = function (teamId, member) {
-        var config = {
-            data: {
-                member: member,
-            },
-            method: 'put',
-            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    return MemberAPI;
-}());
-exports.default = MemberAPI;
-
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var PaymentAPI_1 = __webpack_require__(85);
-exports.PaymentAPI = PaymentAPI_1.default;
-
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var TeamAPI = (function () {
-    function TeamAPI(client) {
-        this.client = client;
-    }
-    Object.defineProperty(TeamAPI, "URL", {
-        get: function () {
-            return {
-                TEAMS: '/teams',
-                BILLING: 'billing',
-                PLANS: 'plans',
-                INVOICE: 'charges',
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TeamAPI.prototype.putPaymentData = function (teamId, paymentData) {
-        var config = {
-            data: paymentData,
-            method: 'put',
-            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamAPI.prototype.getPaymentData = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data; });
-    };
-    TeamAPI.prototype.getPlans = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.PLANS,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
-    };
-    TeamAPI.prototype.getInvoices = function (teamId) {
-        var config = {
-            method: 'get',
-            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.INVOICE,
-        };
-        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
-    };
-    return TeamAPI;
-}());
-exports.default = TeamAPI;
 
 
 /***/ }),
@@ -10532,7 +10518,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventEmitter = __webpack_require__(6);
-var buffer = __webpack_require__(4);
+var buffer = __webpack_require__(5);
 var Html5WebSocket = __webpack_require__(89);
 var ReconnectingWebsocket = __webpack_require__(90);
 var WebSocketClient = (function (_super) {
@@ -10557,7 +10543,7 @@ var WebSocketClient = (function (_super) {
         this.socket = new ReconnectingWebsocket(function () { return _this.buildWebSocketURL(); }, undefined, WebSocketClient.RECONNECTING_OPTIONS);
         this.socket.onmessage = function (event) {
             var notification = JSON.parse(buffer.bufferToString(event.data));
-            _this.emit(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
+            _this.emit(WebSocketClient.TOPIC.ON_MESSAGE, notification);
         };
         this.socket.onerror = function () { return _this.client.refreshAccessToken(); };
         this.socket.onopen = function () { return (_this.socket.binaryType = 'arraybuffer'); };
@@ -10578,7 +10564,7 @@ var WebSocketClient = (function (_super) {
         reconnectionDelayGrowFactor: 1.3,
     };
     WebSocketClient.TOPIC = {
-        WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
+        ON_MESSAGE: 'message',
     };
     return WebSocketClient;
 }(EventEmitter));
@@ -10813,7 +10799,6 @@ var ReconnectingWebsocket = function (url, protocols, options) {
         }
         ws.removeEventListener(type, listener, options);
     };
-    return this;
 };
 module.exports = ReconnectingWebsocket;
 
@@ -10830,7 +10815,7 @@ module.exports = {
 		"./dist/commonjs/shims/node/cookie": "./dist/commonjs/shims/browser/cookie.js"
 	},
 	"dependencies": {
-		"@types/node": "8.0.29",
+		"@types/node": "8.0.30",
 		"@types/spark-md5": "3.0.0",
 		"@types/text-encoding": "0.0.32",
 		"@types/tough-cookie": "2.3.1",
@@ -10838,7 +10823,7 @@ module.exports = {
 		"@wireapp/store-engine": "0.1.0",
 		"axios": "0.16.2",
 		"html5-websocket": "2.0.1",
-		"reconnecting-websocket": "3.2.1",
+		"reconnecting-websocket": "3.2.2",
 		"tough-cookie": "2.3.3",
 		"spark-md5": "3.0.0"
 	},
@@ -10852,9 +10837,9 @@ module.exports = {
 		"karma": "1.7.1",
 		"karma-chrome-launcher": "2.2.0",
 		"karma-jasmine": "1.1.0",
-		"karma-jasmine-diff-reporter": "1.1.0",
+		"karma-jasmine-diff-reporter": "1.1.1",
 		"karma-sourcemap-loader": "0.3.7",
-		"lint-staged": "4.2.2",
+		"lint-staged": "4.2.3",
 		"nock": "9.0.18",
 		"optimist": "0.6.1",
 		"prettier": "1.7.0",
@@ -10900,7 +10885,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.2.0"
+	"version": "0.2.1"
 };
 
 /***/ }),
@@ -10911,10 +10896,13 @@ module.exports = {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_commonjs_tcp___ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_commonjs_tcp____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__dist_commonjs_tcp___);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wireapp_store_engine_dist_commonjs_engine__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wireapp_store_engine_dist_commonjs_engine___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__wireapp_store_engine_dist_commonjs_engine__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_commonjs_auth___ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_commonjs_auth____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__dist_commonjs_auth___);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dist_commonjs_tcp___ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dist_commonjs_tcp____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__dist_commonjs_tcp___);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__wireapp_store_engine_dist_commonjs_engine__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__wireapp_store_engine_dist_commonjs_engine___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__wireapp_store_engine_dist_commonjs_engine__);
+
 
 
 
@@ -10958,11 +10946,6 @@ window.onload = function() {
 
           return client.connect();
         })
-        .then((webSocketClient) => {
-          webSocketClient.on(__WEBPACK_IMPORTED_MODULE_1__dist_commonjs_tcp___["WebSocketClient"].TOPIC.WEB_SOCKET_MESSAGE, notification => {
-            console.log('Received notification via WebSocket', notification);
-          });
-        })
         .catch(error => {
           console.error(`Login failed: ${error.message}`, error);
           LOGIN_BUTTON.className = 'invalid';
@@ -11001,22 +10984,26 @@ window.onload = function() {
   const LOGOUT_BUTTON = document.getElementById('wire-logout-form-submit');
 
   const config = {
-    store: new __WEBPACK_IMPORTED_MODULE_2__wireapp_store_engine_dist_commonjs_engine__["MemoryEngine"]('wire-demo'),
+    store: new __WEBPACK_IMPORTED_MODULE_3__wireapp_store_engine_dist_commonjs_engine__["MemoryEngine"]('wire-demo'),
     urls: BACKEND_ENV,
   };
 
-  const client = new __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a(config);
+  const apiClient = new __WEBPACK_IMPORTED_MODULE_0__dist_commonjs_Client___default.a(config);
 
-  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', accessToken => {
+  apiClient.transport.ws.on(__WEBPACK_IMPORTED_MODULE_2__dist_commonjs_tcp___["WebSocketClient"].TOPIC.ON_MESSAGE, notification => {
+    console.log('Received notification via WebSocket', notification);
+  });
+
+  apiClient.accessTokenStore.on(__WEBPACK_IMPORTED_MODULE_1__dist_commonjs_auth___["AccessTokenStore"].TOPIC.ACCESS_TOKEN_REFRESH, accessToken => {
     console.log('Acquired AccessToken', accessToken);
   });
 
-  window.wire = Object.assign({}, {client: client});
+  window.wire = Object.assign({}, {client: apiClient});
 
   initBackendLabel();
-  initVersionLabel(client);
-  initLoginButton(client);
-  initLogoutButton(client);
+  initVersionLabel(apiClient);
+  initLoginButton(apiClient);
+  initLogoutButton(apiClient);
 };
 
 

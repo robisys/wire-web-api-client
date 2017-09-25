@@ -76,5 +76,5 @@
     "watch": "webpack-dev-server --config webpack.config.js --open"
   },
   "types": "./dist/commonjs/Client.d.ts",
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
