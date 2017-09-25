@@ -17,11 +17,11 @@ describe('Client', () => {
       apiClient.context = new Context('userID', undefined);
       apiClient.accessTokenStore.accessToken = accessTokenData;
       const promise = apiClient.connect();
-      apiClient.client.ws.socket.onopen(message);
+      apiClient.transport.ws.socket.onopen(message);
       promise
         .then(socket => {
           expect(socket).toBeDefined();
-          apiClient.client.ws.socket.onmessage(message);
+          apiClient.transport.ws.socket.onmessage(message);
         })
         .then(done);
     });

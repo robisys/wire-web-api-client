@@ -1,4 +1,5 @@
 import Client from '../../dist/commonjs/Client';
+import {AccessTokenStore} from '../../dist/commonjs/auth/';
 import {WebSocketClient} from '../../dist/commonjs/tcp/';
 import {MemoryEngine} from '@wireapp/store-engine/dist/commonjs/engine';
 
@@ -40,11 +41,6 @@ window.onload = function() {
           LOGOUT_BUTTON.className = 'valid';
 
           return client.connect();
-        })
-        .then((webSocketClient) => {
-          webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification => {
-            console.log('Received notification via WebSocket', notification);
-          });
         })
         .catch(error => {
           console.error(`Login failed: ${error.message}`, error);
@@ -88,16 +84,20 @@ window.onload = function() {
     urls: BACKEND_ENV,
   };
 
-  const client = new Client(config);
+  const apiClient = new Client(config);
 
-  client.accessTokenStore.on('AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH', accessToken => {
+  apiClient.transport.ws.on(WebSocketClient.TOPIC.ON_MESSAGE, notification => {
+    console.log('Received notification via WebSocket', notification);
+  });
+
+  apiClient.accessTokenStore.on(AccessTokenStore.TOPIC.ACCESS_TOKEN_REFRESH, accessToken => {
     console.log('Acquired AccessToken', accessToken);
   });
 
-  window.wire = Object.assign({}, {client: client});
+  window.wire = Object.assign({}, {client: apiClient});
 
   initBackendLabel();
-  initVersionLabel(client);
-  initLoginButton(client);
-  initLogoutButton(client);
+  initVersionLabel(apiClient);
+  initLoginButton(apiClient);
+  initLogoutButton(apiClient);
 };

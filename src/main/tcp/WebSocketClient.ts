@@ -21,7 +21,7 @@ export default class WebSocketClient extends EventEmitter {
   };
 
   public static TOPIC = {
-    WEB_SOCKET_MESSAGE: 'Client.TOPIC.WEB_SOCKET_MESSAGE',
+    ON_MESSAGE: 'message',
   };
 
   constructor(private baseURL: string, public client: HttpClient) {
@@ -48,7 +48,7 @@ export default class WebSocketClient extends EventEmitter {
 
     this.socket.onmessage = (event: MessageEvent) => {
       const notification = JSON.parse(buffer.bufferToString(event.data));
-      this.emit(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification);
+      this.emit(WebSocketClient.TOPIC.ON_MESSAGE, notification);
     };
 
     this.socket.onerror = () => this.client.refreshAccessToken();

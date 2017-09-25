@@ -23,27 +23,27 @@ const config = {
   store: new FileEngine(storagePath, {fileExtension: '.json'})
 };
 
-const client = new Client(config);
+const apiClient = new Client(config);
 
 Promise.resolve()
   .then(() => {
     // Trying to login (works only if there is already a valid cookie stored in the FileEngine)
-    return client.init();
+    return apiClient.init();
   })
   .catch((error) => {
     console.log(`Authentication via existing authenticator (Session Cookie or Access Token) failed: ${error.message}`);
-    return client.login(login);
+    return apiClient.login(login);
   })
   .then((context) => {
     console.log(`Got self user with ID "${context.userID}".`);
-    return client.user.api.getUsers({handles: ['webappbot']})
+    return apiClient.user.api.getUsers({handles: ['webappbot']})
   })
   .then((userData) => {
     console.log(`Found user with name "${userData[0].name}" by handle "${userData[0].handle}".`);
-    return client.connect();
+    return apiClient.connect();
   })
   .then((webSocketClient) => {
-    webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, notification => {
+    webSocketClient.on(WebSocketClient.TOPIC.ON_MESSAGE, notification => {
       console.log('Received notification via WebSocket', notification);
     });
   })

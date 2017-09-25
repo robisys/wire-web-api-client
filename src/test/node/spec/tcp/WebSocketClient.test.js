@@ -63,7 +63,7 @@ describe('WebSocketClient', () => {
         .then(webSocketClient => {
           expect(webSocketClient).toBeDefined();
 
-          webSocketClient.on(WebSocketClient.TOPIC.WEB_SOCKET_MESSAGE, data => {
+          webSocketClient.on(WebSocketClient.TOPIC.ON_MESSAGE, data => {
             expect(data.fromServer).toBe(`Echo: ${message}`);
             done();
           });

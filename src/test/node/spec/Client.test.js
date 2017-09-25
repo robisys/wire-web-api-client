@@ -18,8 +18,8 @@ describe('Client', () => {
   describe('"constructor"', () => {
     it('constructs a client with production backend by default', () => {
       const client = new Client();
-      expect(client.client.http.baseURL).toBe(Client.BACKEND.PRODUCTION.rest);
-      expect(client.client.ws.baseURL).toBe(Client.BACKEND.PRODUCTION.ws);
+      expect(client.transport.http.baseURL).toBe(Client.BACKEND.PRODUCTION.rest);
+      expect(client.transport.ws.baseURL).toBe(Client.BACKEND.PRODUCTION.ws);
     });
   });
 
