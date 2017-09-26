@@ -19,7 +19,7 @@
 
 import {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import {PaymentData, PaymentDataUpdate, PaymentStripeInvoice, PaymentStripePlan} from '.';
+import {PaymentData, PaymentDataUpdate, PaymentStripeCharge, PaymentStripeInvoice, PaymentStripePlan} from '.';
 import {HttpClient} from '../../http';
 
 export default class TeamAPI {
@@ -30,7 +30,8 @@ export default class TeamAPI {
       TEAMS: '/teams',
       BILLING: 'billing',
       PLANS: 'plans',
-      INVOICE: 'charges',
+      CHARGES: 'charges',
+      INVOICES: 'invoices',
     };
   }
 
@@ -62,10 +63,19 @@ export default class TeamAPI {
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data.data);
   }
 
+  public getCharges(teamId: string): Promise<PaymentStripeCharge[]> {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.BILLING}/${TeamAPI.URL.CHARGES}`,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data.data);
+  }
+
   public getInvoices(teamId: string): Promise<PaymentStripeInvoice[]> {
     const config: AxiosRequestConfig = {
       method: 'get',
-      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.BILLING}/${TeamAPI.URL.INVOICE}`,
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${TeamAPI.URL.BILLING}/${TeamAPI.URL.INVOICES}`,
     };
 
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data.data);

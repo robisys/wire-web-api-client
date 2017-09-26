@@ -17,24 +17,18 @@
  *
  */
 
-import InvoiceData from './InvoiceData';
-import PaymentAPI from './PaymentAPI';
-import PaymentBillingData from './PaymentBillingData';
-import PaymentData from './PaymentData';
-import PaymentDataUpdate from './PaymentDataUpdate';
-import PaymentPlan from './PaymentPlan';
-import PaymentStripeInvoice from './PaymentStripeInvoice';
-import PaymentStripeCharge from './PaymentStripeCharge';
-import PaymentStripePlan from './PaymentStripePlan';
+// https://stripe.com/docs/api#charge_object
+interface PaymentStripeCharge {
+  id: string;
+  amount: number;
+  created: number;
+  currency: 'eur';
+  failureCode: string;
+  failureMessage: string;
+  invoice: string;
+  livemode: boolean;
+  paid: boolean;
+  status: 'succeeded' | 'pending' | 'failed';
+}
 
-export {
-  InvoiceData,
-  PaymentAPI,
-  PaymentBillingData,
-  PaymentData,
-  PaymentDataUpdate,
-  PaymentPlan,
-  PaymentStripeInvoice,
-  PaymentStripeCharge,
-  PaymentStripePlan,
-};
+export default PaymentStripeCharge;
