@@ -5,6 +5,7 @@ import ConversationIds from './ConversationIds';
 import ConversationMembers from './ConversationMembers';
 import Conversations from './Conversations';
 import ConversationUpdate from './ConversationUpdate';
+import IncomingNotification from './IncomingNotification';
 import Invite from './Invite';
 import Member from './Member';
 import MemberUpdate from './MemberUpdate';
@@ -25,6 +26,7 @@ export {
   ConversationMembers,
   Conversations,
   ConversationUpdate,
+  IncomingNotification,
   Invite,
   Member,
   MemberUpdate,

@@ -1,5 +1,6 @@
 import EventEmitter = require('events');
 import {HttpClient} from '../http/';
+import {IncomingNotification} from '../conversation/';
 
 const buffer = require('../shims/node/buffer');
 const Html5WebSocket = require('html5-websocket');
@@ -47,7 +48,7 @@ export default class WebSocketClient extends EventEmitter {
     );
 
     this.socket.onmessage = (event: MessageEvent) => {
-      const notification = JSON.parse(buffer.bufferToString(event.data));
+      const notification: IncomingNotification = JSON.parse(buffer.bufferToString(event.data));
       this.emit(WebSocketClient.TOPIC.ON_MESSAGE, notification);
     };
 
