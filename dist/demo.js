@@ -4541,10 +4541,11 @@ var TeamAPI = (function () {
     Object.defineProperty(TeamAPI, "URL", {
         get: function () {
             return {
-                TEAMS: '/teams',
                 BILLING: 'billing',
+                CHARGES: 'charges',
+                INVOICES: 'invoices',
                 PLANS: 'plans',
-                INVOICE: 'charges',
+                TEAMS: '/teams',
             };
         },
         enumerable: true,
@@ -4572,10 +4573,17 @@ var TeamAPI = (function () {
         };
         return this.client.sendJSON(config).then(function (response) { return response.data.data; });
     };
+    TeamAPI.prototype.getCharges = function (teamId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.CHARGES,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data.data; });
+    };
     TeamAPI.prototype.getInvoices = function (teamId) {
         var config = {
             method: 'get',
-            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.INVOICE,
+            url: TeamAPI.URL.TEAMS + "/" + teamId + "/" + TeamAPI.URL.BILLING + "/" + TeamAPI.URL.INVOICES,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data.data; });
     };
@@ -10815,7 +10823,7 @@ module.exports = {
 		"./dist/commonjs/shims/node/cookie": "./dist/commonjs/shims/browser/cookie.js"
 	},
 	"dependencies": {
-		"@types/node": "8.0.30",
+		"@types/node": "8.0.31",
 		"@types/spark-md5": "3.0.0",
 		"@types/text-encoding": "0.0.32",
 		"@types/tough-cookie": "2.3.1",
@@ -10844,9 +10852,9 @@ module.exports = {
 		"optimist": "0.6.1",
 		"prettier": "1.7.0",
 		"rimraf": "2.6.2",
-		"sinon": "3.3.0",
+		"sinon": "4.0.0",
 		"sinon-har-server": "0.3.0",
-		"typescript": "2.5.2",
+		"typescript": "2.5.3",
 		"webpack": "3.6.0",
 		"webpack-dev-server": "2.8.2"
 	},
@@ -10885,7 +10893,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.2.1"
+	"version": "0.2.2"
 };
 
 /***/ }),
