@@ -17,21 +17,18 @@
  *
  */
 
-// https://stripe.com/docs/api#invoice_object
-interface PaymentStripeInvoice {
-  amount_due: number;
-  attempt_count: number;
-  attempted: boolean;
-  currency: 'eur';
-  date: number;
+// https://stripe.com/docs/api#charge_object
+interface PaymentStripeCharge {
   id: string;
+  amount: number;
+  created: number;
+  currency: 'eur';
+  failureCode: string;
+  failureMessage: string;
+  invoice: string;
   livemode: boolean;
   paid: boolean;
-  starting_balance: number;
-  subtotal: number;
-  tax_percent: number;
-  tax: number;
-  total: number;
+  status: 'succeeded' | 'pending' | 'failed';
 }
 
-export default PaymentStripeInvoice;
+export default PaymentStripeCharge;

@@ -23,6 +23,7 @@ import PaymentBillingData from './PaymentBillingData';
 import PaymentData from './PaymentData';
 import PaymentDataUpdate from './PaymentDataUpdate';
 import PaymentPlan from './PaymentPlan';
+import PaymentStripeCharge from './PaymentStripeCharge';
 import PaymentStripeInvoice from './PaymentStripeInvoice';
 import PaymentStripePlan from './PaymentStripePlan';
 
@@ -33,6 +34,7 @@ export {
   PaymentData,
   PaymentDataUpdate,
   PaymentPlan,
+  PaymentStripeCharge,
   PaymentStripeInvoice,
   PaymentStripePlan,
 };
