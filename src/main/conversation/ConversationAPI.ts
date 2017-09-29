@@ -230,6 +230,10 @@ export default class ConversationAPI {
     clientId: string,
     conversationId: string,
     messageData?: NewOTRMessage,
+    params?: {
+      ignore_missing?: boolean;
+      report_missing?: string;
+    },
   ): Promise<ClientMismatch> {
     if (!messageData) {
       messageData = {
@@ -238,12 +242,11 @@ export default class ConversationAPI {
       };
     }
 
-    const hasContent = !!messageData.data;
-
     const config: AxiosRequestConfig = {
       data: messageData,
       params: {
-        ignore_missing: hasContent,
+        ignore_missing: !!messageData.data,
+        ...params,
       },
       method: 'post',
       url: `${ConversationAPI.URL.CONVERSATIONS}/${conversationId}/${ConversationAPI.URL.OTR}/${ConversationAPI.URL
