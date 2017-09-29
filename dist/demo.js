@@ -2970,6 +2970,14 @@ exports.ConversationAPI = ConversationAPI_1.default;
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var ConversationAPI = (function () {
     function ConversationAPI(client) {
@@ -3091,19 +3099,16 @@ var ConversationAPI = (function () {
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
-    ConversationAPI.prototype.postOTRMessage = function (clientId, conversationId, messageData) {
+    ConversationAPI.prototype.postOTRMessage = function (clientId, conversationId, messageData, params) {
         if (!messageData) {
             messageData = {
                 recipients: {},
                 sender: clientId,
             };
         }
-        var hasContent = !!messageData.data;
         var config = {
             data: messageData,
-            params: {
-                ignore_missing: hasContent,
-            },
+            params: __assign({ ignore_missing: !!messageData.data }, params),
             method: 'post',
             url: ConversationAPI.URL.CONVERSATIONS + "/" + conversationId + "/" + ConversationAPI.URL.OTR + "/" + ConversationAPI.URL
                 .MESSAGES,
@@ -10850,13 +10855,13 @@ module.exports = {
 		"lint-staged": "4.2.3",
 		"nock": "9.0.18",
 		"optimist": "0.6.1",
-		"prettier": "1.7.0",
+		"prettier": "1.7.2",
 		"rimraf": "2.6.2",
 		"sinon": "4.0.0",
 		"sinon-har-server": "0.3.0",
 		"typescript": "2.5.3",
 		"webpack": "3.6.0",
-		"webpack-dev-server": "2.8.2"
+		"webpack-dev-server": "2.9.1"
 	},
 	"description": "Wire API Client to send and receive data.",
 	"license": "GPL-3.0",
@@ -10877,7 +10882,7 @@ module.exports = {
 		"clear": "rimraf dist",
 		"coverage": "istanbul cover --report html ./node_modules/jasmine/bin/jasmine.js",
 		"dist:demo": "git add dist/demo.js",
-		"dist": "yarn build:node && yarn dist:demo",
+		"dist": "yarn build:node",
 		"pack:browser": "webpack --config ./webpack.browser.js",
 		"pack:demo": "webpack",
 		"pack:test": "webpack",
@@ -10893,7 +10898,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.2.2"
+	"version": "0.2.3"
 };
 
 /***/ }),
