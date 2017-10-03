@@ -22,7 +22,7 @@
     "browser-sync": "2.18.13",
     "concurrently": "3.5.0",
     "cross-env": "5.0.5",
-    "husky": "0.14.3",
+    "husky": "0.15.0-beta.3",
     "istanbul": "0.4.5",
     "jasmine": "2.8.0",
     "karma": "1.7.1",
