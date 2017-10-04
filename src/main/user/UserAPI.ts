@@ -73,7 +73,7 @@ export default class UserAPI {
    */
   public getActivation(activationCode: string, activationKey: string): Promise<ActivationResponse> {
     const config: AxiosRequestConfig = {
-      data: {
+      params: {
         code: activationCode,
         key: activationKey,
       },
