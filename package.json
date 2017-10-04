@@ -33,7 +33,7 @@
     "lint-staged": "4.2.3",
     "nock": "9.0.18",
     "optimist": "0.6.1",
-    "prettier": "1.7.2",
+    "prettier": "1.7.4",
     "rimraf": "2.6.2",
     "sinon": "4.0.1",
     "sinon-har-server": "0.3.0",
