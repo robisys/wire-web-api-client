@@ -207,7 +207,6 @@ describe('Client', () => {
     beforeEach(() => {
       nock(baseURL)
         .post(AuthAPI.URL.REGISTER, registerData)
-        .query({challenge_cookie: true})
         .reply(200, registerData);
 
       nock(baseURL)

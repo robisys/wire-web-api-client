@@ -76,13 +76,10 @@ export default class AuthAPI {
     return sendRequestWithCookie(this.client, config, this.engine).then((response: AxiosResponse) => response.data);
   }
 
-  public postRegister(register: RegisterData, challengeCookie: boolean = true): Promise<User> {
+  public postRegister(register: RegisterData): Promise<User> {
     const config: AxiosRequestConfig = {
       data: register,
       method: 'post',
-      params: {
-        challenge_cookie: challengeCookie,
-      },
       url: AuthAPI.URL.REGISTER,
       withCredentials: true,
     };
