@@ -1869,14 +1869,10 @@ var AuthAPI = (function () {
         }
         return cookie_1.sendRequestWithCookie(this.client, config, this.engine).then(function (response) { return response.data; });
     };
-    AuthAPI.prototype.postRegister = function (register, challengeCookie) {
-        if (challengeCookie === void 0) { challengeCookie = true; }
+    AuthAPI.prototype.postRegister = function (register) {
         var config = {
             data: register,
             method: 'post',
-            params: {
-                challenge_cookie: challengeCookie,
-            },
             url: AuthAPI.URL.REGISTER,
             withCredentials: true,
         };
@@ -4483,6 +4479,13 @@ var MemberAPI = (function () {
         var config = {
             method: 'get',
             url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS,
+        };
+        return this.client.sendJSON(config).then(function (response) { return response.data; });
+    };
+    MemberAPI.prototype.getMember = function (teamId, userId) {
+        var config = {
+            method: 'get',
+            url: TeamAPI_1.default.URL.TEAMS + "/" + teamId + "/" + MemberAPI.URL.MEMBERS + "/" + userId,
         };
         return this.client.sendJSON(config).then(function (response) { return response.data; });
     };
@@ -10353,7 +10356,7 @@ var UserAPI = (function () {
     };
     UserAPI.prototype.getActivation = function (activationCode, activationKey) {
         var config = {
-            data: {
+            params: {
                 code: activationCode,
                 key: activationKey,
             },
@@ -10828,10 +10831,10 @@ module.exports = {
 		"./dist/commonjs/shims/node/cookie": "./dist/commonjs/shims/browser/cookie.js"
 	},
 	"dependencies": {
-		"@types/node": "8.0.31",
+		"@types/node": "8.0.41",
 		"@types/spark-md5": "3.0.0",
 		"@types/text-encoding": "0.0.32",
-		"@types/tough-cookie": "2.3.1",
+		"@types/tough-cookie": "2.3.2",
 		"@wireapp/queue-priority": "0.0.12",
 		"@wireapp/store-engine": "0.1.0",
 		"axios": "0.16.2",
@@ -10843,7 +10846,7 @@ module.exports = {
 	"devDependencies": {
 		"browser-sync": "2.18.13",
 		"concurrently": "3.5.0",
-		"cross-env": "5.0.5",
+		"cross-env": "5.1.0",
 		"husky": "0.14.3",
 		"istanbul": "0.4.5",
 		"jasmine": "2.8.0",
@@ -10855,13 +10858,13 @@ module.exports = {
 		"lint-staged": "4.2.3",
 		"nock": "9.0.18",
 		"optimist": "0.6.1",
-		"prettier": "1.7.2",
+		"prettier": "1.7.4",
 		"rimraf": "2.6.2",
-		"sinon": "4.0.0",
+		"sinon": "4.0.1",
 		"sinon-har-server": "0.3.0",
 		"typescript": "2.5.3",
-		"webpack": "3.6.0",
-		"webpack-dev-server": "2.9.1"
+		"webpack": "3.8.0",
+		"webpack-dev-server": "2.9.2"
 	},
 	"description": "Wire API Client to send and receive data.",
 	"license": "GPL-3.0",
@@ -10898,7 +10901,7 @@ module.exports = {
 		"watch": "webpack-dev-server --config webpack.config.js --open"
 	},
 	"types": "./dist/commonjs/Client.d.ts",
-	"version": "0.2.3"
+	"version": "0.2.4"
 };
 
 /***/ }),
