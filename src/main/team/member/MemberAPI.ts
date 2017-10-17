@@ -22,6 +22,15 @@ export default class MemberAPI {
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
+  public getMember(teamId: string, userId: string): AxiosPromise {
+    const config: AxiosRequestConfig = {
+      method: 'get',
+      url: `${TeamAPI.URL.TEAMS}/${teamId}/${MemberAPI.URL.MEMBERS}/${userId}`,
+    };
+
+    return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
+  }
+
   public deleteMember(teamId: string, userId: string, password: string): AxiosPromise {
     const config: AxiosRequestConfig = {
       data: {
