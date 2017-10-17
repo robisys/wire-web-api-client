@@ -22,7 +22,7 @@ export default class MemberAPI {
     return this.client.sendJSON(config).then((response: AxiosResponse) => response.data);
   }
 
-  public getMember(teamId: string, userId: string): AxiosPromise {
+  public getMember(teamId: string, userId: string): Promise<MemberData> {
     const config: AxiosRequestConfig = {
       method: 'get',
       url: `${TeamAPI.URL.TEAMS}/${teamId}/${MemberAPI.URL.MEMBERS}/${userId}`,
