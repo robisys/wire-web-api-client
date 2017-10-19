@@ -3,15 +3,32 @@ import axios, {AxiosError, AxiosPromise, AxiosRequestConfig} from 'axios';
 import {AccessTokenStore, AuthAPI} from '../auth';
 import {ContentType} from '../http';
 import PriorityQueue from '@wireapp/queue-priority/dist/commonjs/PriorityQueue';
+import Logdown = require('logdown');
 
 export default class HttpClient {
   private _authAPI: AuthAPI;
+  private logger: Logdown;
   private requestQueue: PriorityQueue<number>;
 
   constructor(private baseURL: string, public accessTokenStore: AccessTokenStore) {
+    this.logger = new Logdown(this.constructor.name);
+
     this.requestQueue = new PriorityQueue({
       maxRetries: 0,
       retryDelay: 1000,
+    });
+
+    axios.interceptors.response.use(null, (error: AxiosError) => {
+      let backendResponse: string = undefined;
+      try {
+        backendResponse = JSON.stringify(error.response.data);
+      } finally {
+        this.logger.error(
+          `HTTP Error (${error.response.status}) on '${error.response.config
+            .url}': ${error.message} (${backendResponse}`,
+        );
+      }
+      return Promise.reject(error);
     });
   }
 
