@@ -12,11 +12,8 @@
  |
  */
 module.exports = {
-  "files": [
-    "dist/demo.js",
-    "index.html"
-  ],
-  "server": {
-    "directory": false
-  }
+  files: ['dist/demo.js', 'index.html'],
+  server: {
+    directory: false,
+  },
 };

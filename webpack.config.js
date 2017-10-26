@@ -3,7 +3,7 @@ module.exports = {
   devServer: {
     stats: {
       chunks: false,
-    }
+    },
   },
   entry: {
     demo: `${__dirname}/src/demo/demo.js`,
@@ -17,5 +17,5 @@ module.exports = {
     path: `${__dirname}/dist`,
     filename: `[name].js`,
     publicPath: '/',
-  }
+  },
 };

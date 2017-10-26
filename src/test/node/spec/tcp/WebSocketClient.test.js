@@ -11,7 +11,7 @@ const ACCESS_TOKEN_PAYLOAD = {
 
 const FAKE_HTTP_CLIENT = {
   accessTokenStore: {
-    accessToken: ACCESS_TOKEN_PAYLOAD
+    accessToken: ACCESS_TOKEN_PAYLOAD,
   },
   refreshAccessToken: () => Promise.resolve(ACCESS_TOKEN_PAYLOAD),
 };
@@ -23,7 +23,8 @@ let server = undefined;
 function startEchoServer() {
   server = new WebSocketServer({port: WEBSOCKET_PORT});
   server.on('connection', ws => {
-    ws.on('message', message => server.clients.forEach(client => {
+    ws.on('message', message =>
+      server.clients.forEach(client => {
         const payload = {
           fromServer: `Echo: ${message}`,
         };
@@ -34,8 +35,8 @@ function startEchoServer() {
         };
 
         client.send(JSON.stringify(payload), options);
-      }
-    ));
+      }),
+    );
   });
 
   server.on('error', error => console.error(`Echo WebSocket server error: "${error.message}"`));
@@ -69,12 +70,13 @@ describe('WebSocketClient', () => {
           });
 
           webSocketClient.socket.addEventListener('open', () => webSocketClient.socket.send(message));
-
         })
         .catch(done.fail);
     });
 
-    it('automatically reconnects with a WebSocket.', done => {
+    it(
+      'automatically reconnects with a WebSocket.',
+      done => {
         const client = new WebSocketClient(WEBSOCKET_URL, FAKE_HTTP_CLIENT);
 
         client

@@ -33,9 +33,7 @@ module.exports = function(config) {
     },
     colors: true,
     concurrency: Infinity,
-    files: [
-      `${dist}test.js`
-    ],
+    files: [`${dist}test.js`],
     frameworks: ['jasmine'],
     logLevel: config.LOG_INFO,
     port: 9876,
