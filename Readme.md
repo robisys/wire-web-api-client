@@ -33,7 +33,7 @@ yarn add @wireapp/api-client
 ```
 
 ## Usage
-
+ 
 **Browser**
 
 - [index.html](index.html)
