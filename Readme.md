@@ -1,6 +1,6 @@
 # mytest
 
-[![Build Status](https://secure.travis-ci.org/robisys/wire-api-client?branch=master)(https://travis-ci.org/robisys/wire-api-client)
+[![Build Status](https://secure.travis-ci.org/robisys/wire-api-client?branch=master)](https://travis-ci.org/robisys/wire-api-client)
 
 
 # Wire
