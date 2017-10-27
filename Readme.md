@@ -54,7 +54,7 @@ PASSWORD="password"
 
 node index.js --e="$EMAIL" --p="$PASSWORD"
 ```
-
+ 
 **Node**
 
 ```bash
