@@ -56,7 +56,7 @@ node index.js --e="$EMAIL" --p="$PASSWORD"
 ```
  
 **Node**
-
+ 
 ```bash
 npm run dist
 node index.js --e="name@email.com" --p="password"
